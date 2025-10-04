@@ -42,6 +42,14 @@ htmlcov/
 # Poetry
 poetry.lock
 
+# Database
+*.db
+*.db-journal
+
+# Alembic
+alembic/versions/*.py
+!alembic/versions/.gitkeep
+
 # OS
 .DS_Store
 Thumbs.db
