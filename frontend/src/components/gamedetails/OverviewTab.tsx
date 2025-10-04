@@ -77,13 +77,57 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
             <span className="text-gold font-semibold">{t('gameDetails.overview.duration')}: </span>
             <span className="text-darkText dark:text-offWhite">{scenario.estimated_duration} {t('gameDetails.overview.minutes')}</span>
           </div>
-          {scenario.introduction && (
-            <div className="pt-4 border-t border-lightBorder dark:border-teal">
-              <p className="text-darkText dark:text-offWhite whitespace-pre-wrap">{scenario.introduction}</p>
-            </div>
-          )}
         </CardContent>
       </Card>
+
+      {scenario.introduction && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Introduction</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-darkText dark:text-offWhite whitespace-pre-wrap">{scenario.introduction}</p>
+
+            {checkingAudio ? (
+              <div className="flex items-center justify-center py-4">
+                <Spinner size="sm" className="mr-2" />
+                <span className="text-sm text-gray-600 dark:text-lightGray">Checking audio status...</span>
+              </div>
+            ) : !hasAudio ? (
+              <div>
+                <p className="text-sm text-gray-600 dark:text-lightGray mb-4">
+                  Generate audio version of the introduction using text-to-speech.
+                </p>
+                <Button
+                  onClick={handleGenerateAudio}
+                  disabled={generatingAudio}
+                  className="w-full sm:w-auto"
+                >
+                  {generatingAudio ? (
+                    <>
+                      <Spinner size="sm" className="mr-2" />
+                      Generating Audio...
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-4 h-4 mr-2" />
+                      Generate Audio
+                    </>
+                  )}
+                </Button>
+                {audioError && (
+                  <p className="text-sm text-crimson mt-2">{audioError}</p>
+                )}
+              </div>
+            ) : (
+              <AudioPlayer
+                audioUrl={getAudioUrl(id!, 'introduction')}
+                label="Introduction Audio"
+              />
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {scenario.game_instructions && (
         <Card>
@@ -95,56 +139,6 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
           </CardContent>
         </Card>
       )}
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Volume2 className="w-5 h-5" />
-            Audio Files
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {checkingAudio ? (
-            <div className="flex items-center justify-center py-4">
-              <Spinner size="sm" className="mr-2" />
-              <span className="text-sm text-gray-600 dark:text-lightGray">Checking audio status...</span>
-            </div>
-          ) : !hasAudio ? (
-            <div>
-              <p className="text-sm text-gray-600 dark:text-lightGray mb-4">
-                Generate audio version of the introduction using text-to-speech.
-              </p>
-              <Button
-                onClick={handleGenerateAudio}
-                disabled={generatingAudio}
-                className="w-full sm:w-auto"
-              >
-                {generatingAudio ? (
-                  <>
-                    <Spinner size="sm" className="mr-2" />
-                    Generating Audio...
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="w-4 h-4 mr-2" />
-                    Generate Audio
-                  </>
-                )}
-              </Button>
-              {audioError && (
-                <p className="text-sm text-crimson mt-2">{audioError}</p>
-              )}
-            </div>
-          ) : (
-            <div className="space-y-3">
-              <AudioPlayer
-                audioUrl={getAudioUrl(id!, 'introduction')}
-                label="Introduction Audio"
-              />
-            </div>
-          )}
-        </CardContent>
-      </Card>
     </div>
   );
 }
