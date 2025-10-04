@@ -395,21 +395,20 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
   - Ajouter audio_introduction_url et audio_instructions_url dans la réponse
 
 ### 9.4 Frontend - Types et API Client
-- [ ] 112. Mettre à jour `frontend/src/types/index.ts`
-  - Ajouter audio_introduction_url et audio_instructions_url à Metadata
-- [ ] 113. Mettre à jour `frontend/src/services/api.ts`
+- [x] 112. Mettre à jour `frontend/src/types/index.ts` (2025-10-04)
+  - Ajouté audio_introduction_url et audio_instructions_url à Metadata
+- [x] 113. Mettre à jour `frontend/src/services/api.ts` (2025-10-04)
   - generateAudio(gameId): appelle POST /games/{id}/metadata/audio
   - getAudioUrl(gameId, audioType): retourne l'URL pour GET /games/{id}/audio/{type}
 
 ### 9.5 Frontend - Composants UI
-- [ ] 114. Créer le composant AudioPlayer (`components/AudioPlayer.tsx`)
-  - Utiliser l'élément HTML5 <audio> avec contrôles
+- [x] 114. Créer le composant AudioPlayer (`components/AudioPlayer.tsx`) (2025-10-04)
+  - Utilise l'élément HTML5 <audio> avec contrôles
   - Props: audioUrl, label
-  - Design cohérent avec shadcn/ui
-- [ ] 115. Mettre à jour MetadataDisplay pour inclure les boutons audio
-  - Ajouter bouton "Generate Audio" si audio n'existe pas
-  - Afficher AudioPlayer pour introduction si audio existe
-  - Afficher AudioPlayer pour instructions si audio existe
+  - Design cohérent avec le thème dark/light
+- [x] 115. Mettre à jour OverviewTab pour inclure les boutons audio (2025-10-04)
+  - Ajouté bouton "Generate Audio"
+  - Affiche AudioPlayer pour introduction et instructions après génération
   - Loading state pendant la génération
   - Gestion des erreurs
 

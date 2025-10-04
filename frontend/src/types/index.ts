@@ -72,6 +72,8 @@ export interface Metadata {
   estimated_duration: string;
   game_instructions: string;
   introduction: string;
+  audio_introduction_url?: string;
+  audio_instructions_url?: string;
 }
 
 // Validation Result

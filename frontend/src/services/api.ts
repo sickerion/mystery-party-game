@@ -109,4 +109,16 @@ export async function validateScenario(gameId: string): Promise<ValidationResult
   return handleResponse<ValidationResult>(response);
 }
 
+// Audio generation
+export async function generateAudio(gameId: string): Promise<{ audio_introduction_url: string; audio_instructions_url: string; message: string }> {
+  const response = await fetch(`${API_BASE_URL}/games/${gameId}/metadata/audio`, {
+    method: 'POST',
+  });
+  return handleResponse(response);
+}
+
+export function getAudioUrl(gameId: string, audioType: 'introduction' | 'instructions'): string {
+  return `${API_BASE_URL}/games/${gameId}/audio/${audioType}`;
+}
+
 export { ApiError };
