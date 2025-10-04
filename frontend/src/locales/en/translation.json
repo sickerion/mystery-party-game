@@ -1,0 +1,125 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "finish": "Finish"
+  },
+  "header": {
+    "title": "Mystery Party Generator",
+    "subtitle": "AI-Powered Murder Mystery Games",
+    "myGames": "My Games",
+    "newGame": "New Game"
+  },
+  "landing": {
+    "title": "My Mystery Games",
+    "noGames": "No games found. Create your first mystery!",
+    "createNew": "Create New Game",
+    "filterAll": "All",
+    "filterCompleted": "Completed",
+    "filterInProgress": "In Progress",
+    "players": "players",
+    "created": "Created",
+    "viewDetails": "View Details",
+    "deleteConfirm": "Are you sure you want to delete this game?"
+  },
+  "wizard": {
+    "title": "Create New Mystery Party",
+    "steps": {
+      "details": "Game Details",
+      "characters": "Characters",
+      "plot": "Plot",
+      "clues": "Clues",
+      "metadata": "Metadata",
+      "validation": "Validation"
+    },
+    "form": {
+      "theme": "Theme",
+      "themePlaceholder": "e.g., Film Noir, Victorian Era, Sci-Fi Space Station",
+      "numPlayers": "Number of Players",
+      "difficulty": "Difficulty",
+      "specialRequests": "Special Requests (optional)",
+      "specialRequestsPlaceholder": "Any specific requirements or preferences...",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard"
+    },
+    "generating": "Generating...",
+    "startGeneration": "Start Generation",
+    "generateCharacters": "Generate Characters",
+    "generatePlot": "Generate Plot",
+    "generateClues": "Generate Clues",
+    "generateMetadata": "Generate Metadata",
+    "validate": "Validate Scenario",
+    "viewGame": "View Complete Game"
+  },
+  "gameDetails": {
+    "tabs": {
+      "overview": "Overview",
+      "characters": "Characters",
+      "plot": "Plot",
+      "clues": "Clues",
+      "emails": "Send Emails"
+    },
+    "overview": {
+      "gameInfo": "Game Information",
+      "theme": "Theme",
+      "difficulty": "Difficulty",
+      "players": "Players",
+      "duration": "Duration",
+      "minutes": "minutes",
+      "instructions": "Game Instructions",
+      "introduction": "Introduction"
+    },
+    "characters": {
+      "title": "Characters",
+      "role": "Role",
+      "background": "Background",
+      "personality": "Personality",
+      "secret": "Secret",
+      "motive": "Motive",
+      "relationshipToVictim": "Relationship to Victim"
+    },
+    "plot": {
+      "title": "Plot Details",
+      "setting": "Setting",
+      "victim": "Victim",
+      "crime": "Crime",
+      "culprit": "Culprit",
+      "method": "Murder Method",
+      "timeline": "Timeline",
+      "resolution": "Resolution"
+    },
+    "clues": {
+      "title": "Clues",
+      "location": "Location",
+      "revealedBy": "Revealed by",
+      "significance": "Significance",
+      "redHerring": "Red Herring"
+    },
+    "emails": {
+      "title": "Send Character Emails",
+      "description": "Assign emails to each character to send them their role information",
+      "emailPlaceholder": "player@example.com",
+      "send": "Send Emails",
+      "notImplemented": "Email sending not yet implemented"
+    }
+  },
+  "status": {
+    "initialized": "Initialized",
+    "charactersGenerated": "Characters Generated",
+    "plotGenerated": "Plot Generated",
+    "cluesGenerated": "Clues Generated",
+    "metadataGenerated": "Metadata Generated",
+    "validated": "Validated",
+    "completed": "Completed",
+    "failed": "Failed"
+  }
+}

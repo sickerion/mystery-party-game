@@ -1,0 +1,125 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "finish": "Terminer"
+  },
+  "header": {
+    "title": "Générateur de Soirée Mystère",
+    "subtitle": "Jeux de Meurtre et Mystère Propulsés par l'IA",
+    "myGames": "Mes Jeux",
+    "newGame": "Nouveau Jeu"
+  },
+  "landing": {
+    "title": "Mes Jeux de Mystère",
+    "noGames": "Aucun jeu trouvé. Créez votre premier mystère !",
+    "createNew": "Créer un Nouveau Jeu",
+    "filterAll": "Tous",
+    "filterCompleted": "Terminés",
+    "filterInProgress": "En Cours",
+    "players": "joueurs",
+    "created": "Créé le",
+    "viewDetails": "Voir les Détails",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce jeu ?"
+  },
+  "wizard": {
+    "title": "Créer une Nouvelle Soirée Mystère",
+    "steps": {
+      "details": "Détails du Jeu",
+      "characters": "Personnages",
+      "plot": "Intrigue",
+      "clues": "Indices",
+      "metadata": "Métadonnées",
+      "validation": "Validation"
+    },
+    "form": {
+      "theme": "Thème",
+      "themePlaceholder": "ex: Film Noir, Ère Victorienne, Station Spatiale Sci-Fi",
+      "numPlayers": "Nombre de Joueurs",
+      "difficulty": "Difficulté",
+      "specialRequests": "Demandes Spéciales (optionnel)",
+      "specialRequestsPlaceholder": "Exigences ou préférences spécifiques...",
+      "easy": "Facile",
+      "medium": "Moyen",
+      "hard": "Difficile"
+    },
+    "generating": "Génération en cours...",
+    "startGeneration": "Démarrer la Génération",
+    "generateCharacters": "Générer les Personnages",
+    "generatePlot": "Générer l'Intrigue",
+    "generateClues": "Générer les Indices",
+    "generateMetadata": "Générer les Métadonnées",
+    "validate": "Valider le Scénario",
+    "viewGame": "Voir le Jeu Complet"
+  },
+  "gameDetails": {
+    "tabs": {
+      "overview": "Aperçu",
+      "characters": "Personnages",
+      "plot": "Intrigue",
+      "clues": "Indices",
+      "emails": "Envoyer les Courriels"
+    },
+    "overview": {
+      "gameInfo": "Informations du Jeu",
+      "theme": "Thème",
+      "difficulty": "Difficulté",
+      "players": "Joueurs",
+      "duration": "Durée",
+      "minutes": "minutes",
+      "instructions": "Instructions du Jeu",
+      "introduction": "Introduction"
+    },
+    "characters": {
+      "title": "Personnages",
+      "role": "Rôle",
+      "background": "Contexte",
+      "personality": "Personnalité",
+      "secret": "Secret",
+      "motive": "Mobile",
+      "relationshipToVictim": "Relation avec la Victime"
+    },
+    "plot": {
+      "title": "Détails de l'Intrigue",
+      "setting": "Décor",
+      "victim": "Victime",
+      "crime": "Crime",
+      "culprit": "Coupable",
+      "method": "Méthode de Meurtre",
+      "timeline": "Chronologie",
+      "resolution": "Résolution"
+    },
+    "clues": {
+      "title": "Indices",
+      "location": "Emplacement",
+      "revealedBy": "Révélé par",
+      "significance": "Importance",
+      "redHerring": "Fausse Piste"
+    },
+    "emails": {
+      "title": "Envoyer les Courriels aux Personnages",
+      "description": "Assignez des courriels à chaque personnage pour leur envoyer les informations de leur rôle",
+      "emailPlaceholder": "joueur@exemple.com",
+      "send": "Envoyer les Courriels",
+      "notImplemented": "L'envoi de courriels n'est pas encore implémenté"
+    }
+  },
+  "status": {
+    "initialized": "Initialisé",
+    "charactersGenerated": "Personnages Générés",
+    "plotGenerated": "Intrigue Générée",
+    "cluesGenerated": "Indices Générés",
+    "metadataGenerated": "Métadonnées Générées",
+    "validated": "Validé",
+    "completed": "Terminé",
+    "failed": "Échoué"
+  }
+}

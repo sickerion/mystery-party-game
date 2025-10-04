@@ -290,7 +290,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 ### 8.2 Internationalisation (i18n)
 - [x] 89. Installer react-i18next
   - npm install react-i18next i18next
-- [ ] 90. Créer la structure des fichiers de traduction
+- [x] 90. Créer la structure des fichiers de traduction
   - src/locales/en/translation.json
   - src/locales/fr/translation.json
 - [ ] 91. Configurer i18next
