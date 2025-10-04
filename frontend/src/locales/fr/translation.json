@@ -58,7 +58,47 @@
     "generateClues": "Générer les Indices",
     "generateMetadata": "Générer les Métadonnées",
     "validate": "Valider le Scénario",
-    "viewGame": "Voir le Jeu Complet"
+    "viewGame": "Voir le Jeu Complet",
+    "charactersStep": {
+      "title": "Générer les Personnages",
+      "ready": "Prêt à générer les personnages pour votre mystère",
+      "generate": "Générer les Personnages",
+      "generated": "personnages générés !",
+      "continue": "Continuer vers l'Intrigue"
+    },
+    "plotStep": {
+      "title": "Générer l'Intrigue",
+      "ready": "Créer l'histoire principale et le mystère",
+      "generate": "Générer l'Intrigue",
+      "generated": "Intrigue générée !",
+      "crime": "Crime",
+      "victim": "Victime",
+      "setting": "Décor",
+      "continue": "Continuer vers les Indices"
+    },
+    "cluesStep": {
+      "title": "Générer les Indices",
+      "ready": "Créer des indices et des fausses pistes",
+      "generate": "Générer les Indices",
+      "generated": "indices générés !",
+      "continue": "Continuer vers les Métadonnées"
+    },
+    "metadataStep": {
+      "title": "Générer les Métadonnées",
+      "ready": "Générer le titre et les instructions du jeu",
+      "generate": "Générer les Métadonnées",
+      "generated": "Métadonnées générées !",
+      "duration": "Durée",
+      "continue": "Valider le Scénario"
+    },
+    "validationStep": {
+      "title": "Validation",
+      "ready": "Valider le scénario complet",
+      "validate": "Valider",
+      "passed": "Validation réussie ! Redirection...",
+      "failed": "La validation a échoué :",
+      "viewAnyway": "Voir le Jeu Quand Même"
+    }
   },
   "gameDetails": {
     "tabs": {

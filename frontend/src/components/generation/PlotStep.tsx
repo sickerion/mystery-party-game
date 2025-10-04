@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import type { Plot } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
@@ -11,29 +12,31 @@ interface PlotStepProps {
 }
 
 export function PlotStep({ plot, loading, onGenerate, onContinue }: PlotStepProps) {
+  const { t } = useTranslation();
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Generate Plot</CardTitle>
+        <CardTitle>{t('wizard.plotStep.title')}</CardTitle>
       </CardHeader>
       <CardContent>
         {!plot ? (
           <div className="text-center py-8">
-            <p className="text-gray-600 dark:text-lightGray mb-4">Create the main storyline and mystery</p>
+            <p className="text-gray-600 dark:text-lightGray mb-4">{t('wizard.plotStep.ready')}</p>
             <Button onClick={onGenerate} disabled={loading}>
-              {loading ? <Spinner size="sm" /> : 'Generate Plot'}
+              {loading ? <Spinner size="sm" /> : t('wizard.plotStep.generate')}
             </Button>
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="text-green-500 font-semibold mb-2">✓ Plot generated!</div>
+            <div className="text-green-500 font-semibold mb-2">✓ {t('wizard.plotStep.generated')}</div>
             <div className="space-y-2 text-darkText dark:text-offWhite">
-              <p><span className="text-gold">Crime:</span> {plot.crime}</p>
-              <p><span className="text-gold">Victim:</span> {plot.victim}</p>
-              <p><span className="text-gold">Setting:</span> {plot.setting}</p>
+              <p><span className="text-gold">{t('wizard.plotStep.crime')}:</span> {plot.crime}</p>
+              <p><span className="text-gold">{t('wizard.plotStep.victim')}:</span> {plot.victim}</p>
+              <p><span className="text-gold">{t('wizard.plotStep.setting')}:</span> {plot.setting}</p>
             </div>
             <Button onClick={onContinue} disabled={loading} className="w-full">
-              {loading ? <Spinner size="sm" /> : 'Continue to Clues'}
+              {loading ? <Spinner size="sm" /> : t('wizard.plotStep.continue')}
             </Button>
           </div>
         )}
