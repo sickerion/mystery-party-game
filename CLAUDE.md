@@ -82,7 +82,7 @@ curl -X POST http://localhost:8000/generate \
 
 Environment variables (`.env`):
 - `ANTHROPIC_API_KEY`: Your Anthropic API key (required)
-- `LLM_MODEL`: Model to use (default: claude-3-5-sonnet-20241022)
+- `LLM_MODEL`: Model to use (default: claude-sonnet-4-5-20250929)
 - `LLM_TEMPERATURE`: Temperature for generation (default: 0.7)
 - `API_HOST`: API host (default: 0.0.0.0)
 - `API_PORT`: API port (default: 8000)

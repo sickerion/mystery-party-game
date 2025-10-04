@@ -17,7 +17,7 @@ class Settings(BaseSettings):
     anthropic_api_key: str
 
     # LLM Model Configuration
-    llm_model: str = "claude-3-5-sonnet-20241022"
+    llm_model: str = "claude-sonnet-4-5-20250929"
     llm_temperature: float = 0.7
 
     # API Configuration

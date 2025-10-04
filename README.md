@@ -128,7 +128,7 @@ Environment variables (`.env`):
 ANTHROPIC_API_KEY=your_api_key_here
 
 # Optional
-LLM_MODEL=claude-3-5-sonnet-20241022
+LLM_MODEL=claude-sonnet-4-5-20250929
 LLM_TEMPERATURE=0.7
 API_HOST=0.0.0.0
 API_PORT=8000
