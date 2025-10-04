@@ -478,3 +478,29 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 - [x] 139. Mettre à jour `.env.example` avec configuration DALL-E (2025-01-04)
 - [x] 140. Documenter la génération d'images dans CLAUDE.md (2025-01-04)
 - [ ] 141. Tests manuels de génération et affichage des images
+
+---
+
+## Phase 11: Génération d'Images de Personnages
+
+### Objectif
+Générer automatiquement une image de portrait pour chaque personnage du jeu et l'afficher dans la card du personnage.
+
+### 11.1 Backend - Génération d'Images de Personnages
+- [x] 142. Ajouter le champ `character_image_path` dans le modèle `GeneratedCharacter`
+- [ ] 143. Créer une migration Alembic pour ajouter le champ `character_image_path`
+- [ ] 144. Ajouter la fonction `generate_character_portrait()` dans `image_service.py`
+  - Utiliser Claude AI pour créer un prompt portrait sûr
+  - Générer l'image avec DALL-E 2 (512x512)
+  - Sauvegarder dans `images/{game_id}_{character_name}.png`
+- [ ] 145. Ajouter l'endpoint POST `/games/{game_id}/characters/{character_id}/image`
+- [ ] 146. Ajouter l'endpoint GET `/games/{game_id}/characters/{character_id}/image`
+- [ ] 147. Mettre à jour `character_service.py` pour inclure la génération d'images
+- [ ] 148. Intégrer la génération d'images de personnages dans le wizard (après validation)
+- [ ] 149. Ajouter la suppression d'images de personnages dans `delete_game`
+
+### 11.2 Frontend - Affichage des Images de Personnages
+- [ ] 150. Créer la fonction `generateCharacterImage()` dans `api.ts`
+- [ ] 151. Créer la fonction `getCharacterImageUrl()` dans `api.ts`
+- [ ] 152. Ajouter l'affichage de l'image dans la card de personnage (CharactersTab)
+- [ ] 153. Gérer les états de chargement et erreurs pour les images de personnages

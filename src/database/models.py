@@ -68,6 +68,7 @@ class GeneratedCharacter(Base):
     secret = Column(Text, nullable=False)
     motive = Column(Text, nullable=True)
     relationship_to_victim = Column(String, nullable=True)
+    character_image_path = Column(String, nullable=True)  # path to character portrait image file
 
     # Relationships
     game = relationship("Game", back_populates="characters")
