@@ -3,10 +3,12 @@ import type { Game } from '@/types';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Spinner } from '@/components/ui/spinner';
 
 interface GameCardProps {
   game: Game;
   onDelete?: (gameId: string) => void;
+  isDeleting?: boolean;
 }
 
 const statusColors: Record<string, "default" | "secondary" | "destructive" | "outline"> = {
@@ -31,7 +33,7 @@ const statusLabels: Record<string, string> = {
   failed: 'Failed',
 };
 
-export function GameCard({ game, onDelete }: GameCardProps) {
+export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) {
   return (
     <Card>
       <CardHeader>
@@ -59,7 +61,7 @@ export function GameCard({ game, onDelete }: GameCardProps) {
       </CardContent>
       <CardFooter className="gap-2">
         <Link to={`/games/${game.id}`} className="flex-1">
-          <Button variant="default" className="w-full">
+          <Button variant="default" className="w-full" disabled={isDeleting}>
             View Details
           </Button>
         </Link>
@@ -67,8 +69,9 @@ export function GameCard({ game, onDelete }: GameCardProps) {
           <Button
             variant="destructive"
             onClick={() => onDelete(game.id)}
+            disabled={isDeleting}
           >
-            Delete
+            {isDeleting ? <Spinner size="sm" /> : 'Delete'}
           </Button>
         )}
       </CardFooter>

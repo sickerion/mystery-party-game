@@ -150,13 +150,12 @@ export function GenerationWizard() {
             <div key={step.id} className="flex-1 relative">
               <div className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${
-                    index < currentStepIndex
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold ${index < currentStepIndex
                       ? 'bg-gold text-navy'
                       : index === currentStepIndex
-                      ? 'bg-teal text-offWhite'
-                      : 'bg-darkGray text-lightGray'
-                  }`}
+                        ? 'bg-teal text-offWhite'
+                        : 'bg-darkGray text-lightGray'
+                    }`}
                 >
                   {index + 1}
                 </div>
@@ -166,9 +165,8 @@ export function GenerationWizard() {
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={`absolute top-5 left-1/2 w-full h-0.5 ${
-                    index < currentStepIndex ? 'bg-gold' : 'bg-darkGray'
-                  }`}
+                  className={`absolute top-5 left-1/2 w-full h-0.5 ${index < currentStepIndex ? 'bg-gold' : 'bg-darkGray'
+                    }`}
                 />
               )}
             </div>
@@ -263,7 +261,7 @@ export function GenerationWizard() {
                   </div>
                 ))}
                 <Button onClick={handleGeneratePlot} disabled={loading} className="w-full">
-                  Continue to Plot
+                  {loading ? <Spinner size="sm" /> : 'Continue to Plot'}
                 </Button>
               </div>
             )}
@@ -293,7 +291,7 @@ export function GenerationWizard() {
                   <p><span className="text-gold">Setting:</span> {plot.setting}</p>
                 </div>
                 <Button onClick={handleGenerateClues} disabled={loading} className="w-full">
-                  Continue to Clues
+                  {loading ? <Spinner size="sm" /> : 'Continue to Clues'}
                 </Button>
               </div>
             )}
@@ -318,7 +316,7 @@ export function GenerationWizard() {
               <div className="space-y-4">
                 <div className="text-green-500 font-semibold mb-2">✓ {clues.length} clues generated!</div>
                 <Button onClick={handleGenerateMetadata} disabled={loading} className="w-full">
-                  Continue to Metadata
+                  {loading ? <Spinner size="sm" /> : 'Continue to Metadata'}
                 </Button>
               </div>
             )}
@@ -347,7 +345,7 @@ export function GenerationWizard() {
                   <p className="text-sm text-lightGray">Duration: {metadata.estimated_duration}</p>
                 </div>
                 <Button onClick={handleValidate} disabled={loading} className="w-full">
-                  Validate Scenario
+                  {loading ? <Spinner size="sm" /> : 'Validate Scenario'}
                 </Button>
               </div>
             )}

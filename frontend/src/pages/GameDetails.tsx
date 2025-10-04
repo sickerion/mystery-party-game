@@ -17,6 +17,7 @@ export function GameDetails() {
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'overview' | 'characters' | 'plot' | 'clues' | 'emails'>('overview');
   const [emailAssignments, setEmailAssignments] = useState<EmailAssignment[]>([]);
+  const [sendingEmails, setSendingEmails] = useState(false);
 
   useEffect(() => {
     if (!id) return;
@@ -44,10 +45,16 @@ export function GameDetails() {
   };
 
   const handleSendEmails = async () => {
-    // TODO: Implement email sending
-    alert('Email sending not yet implemented. Will send to:\n' +
-      emailAssignments.filter(a => a.email).map(a => `${a.character_name}: ${a.email}`).join('\n')
-    );
+    try {
+      setSendingEmails(true);
+      // TODO: Implement email sending
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      alert('Email sending not yet implemented. Will send to:\n' +
+        emailAssignments.filter(a => a.email).map(a => `${a.character_name}: ${a.email}`).join('\n')
+      );
+    } finally {
+      setSendingEmails(false);
+    }
   };
 
   if (loading) {
@@ -286,10 +293,10 @@ export function GameDetails() {
             ))}
             <Button
               onClick={handleSendEmails}
-              disabled={!emailAssignments.some(a => a.email)}
+              disabled={!emailAssignments.some(a => a.email) || sendingEmails}
               className="w-full"
             >
-              Send Emails
+              {sendingEmails ? <Spinner size="sm" /> : 'Send Emails'}
             </Button>
           </CardContent>
         </Card>

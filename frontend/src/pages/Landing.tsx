@@ -10,6 +10,7 @@ export function Landing() {
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const loadGames = async () => {
@@ -33,10 +34,13 @@ export function Landing() {
     if (!confirm('Are you sure you want to delete this game?')) return;
 
     try {
+      setDeletingId(gameId);
       await deleteGame(gameId);
       setGames(games.filter(g => g.id !== gameId));
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Failed to delete game');
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -91,6 +95,7 @@ export function Landing() {
               key={game.id}
               game={game}
               onDelete={handleDelete}
+              isDeleting={deletingId === game.id}
             />
           ))}
         </div>
