@@ -129,15 +129,21 @@ async def generate_character_portrait_endpoint(
     Uses DALL-E to create a character portrait.
     Saves image path in the database.
     """
+    print(f"[CHARACTER IMAGE] Received request for game {game_id}, character {character_id}")
+
     # Check game exists
     game = game_service.get_game(db, game_id)
     if not game:
+        print(f"[CHARACTER IMAGE] Game {game_id} not found")
         raise HTTPException(status_code=404, detail="Game not found")
 
     # Get character
     character = character_service.get_character_by_id(db, character_id)
     if not character or character.game_id != game_id:
+        print(f"[CHARACTER IMAGE] Character {character_id} not found or doesn't belong to game {game_id}")
         raise HTTPException(status_code=404, detail="Character not found")
+
+    print(f"[CHARACTER IMAGE] Generating portrait for {character.name} (theme: {game.theme})")
 
     # Get language from game
     language = game.language if hasattr(game, 'language') else 'en'
@@ -153,6 +159,8 @@ async def generate_character_portrait_endpoint(
             theme=game.theme,
             language=language
         )
+
+        print(f"[CHARACTER IMAGE] Successfully generated portrait: {image_path}")
 
         # Update character with image path
         character_service.update_character_image_path(db, character_id, image_path)
