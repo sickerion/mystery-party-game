@@ -65,9 +65,14 @@ IMPORTANT:
         plot_data = json.loads(content)
         plot = Plot(**plot_data)
         state["plot"] = plot
-    except Exception as e:
+    except json.JSONDecodeError as e:
         print(f"Error parsing plot: {e}")
-        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
+        print(f"Response content length: {len(response.content)}")
+        print(f"Response content (last 1000 chars): {response.content[-1000:]}")
+        state["plot"] = None
+    except Exception as e:
+        print(f"Unexpected error parsing plot: {e}")
+        print(f"Response content: {response.content[:1000]}")
         state["plot"] = None
 
     return state

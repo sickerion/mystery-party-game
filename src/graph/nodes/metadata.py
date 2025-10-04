@@ -51,8 +51,12 @@ Return as JSON object."""
         state["estimated_duration"] = metadata.get("estimated_duration")
         state["game_instructions"] = metadata.get("game_instructions")
         state["introduction"] = metadata.get("introduction")
-    except Exception as e:
+    except json.JSONDecodeError as e:
         print(f"Error parsing metadata: {e}")
-        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
+        print(f"Response content length: {len(response.content)}")
+        print(f"Response content (last 1000 chars): {response.content[-1000:]}")
+    except Exception as e:
+        print(f"Unexpected error parsing metadata: {e}")
+        print(f"Response content: {response.content[:1000]}")
 
     return state

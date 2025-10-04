@@ -75,8 +75,10 @@ Return the response as a JSON array of clue objects."""
 
         clues = [Clue(**clue) for clue in clues_data]
         state["clues"] = clues
-    except Exception as e:
+    except json.JSONDecodeError as e:
         print(f"Error parsing clues: {e}")
+        print(f"Response content length: {len(response.content)}")
+        print(f"Response content (last 1000 chars): {response.content[-1000:]}")
         print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
         state["clues"] = []
 

@@ -26,13 +26,25 @@ The victim will be a separate NPC (non-player character) defined later in the pl
 For each LIVING character, provide:
 - name: Full name
 - role: Their occupation or role
-- background: Brief background story (2-3 sentences)
-- personality: Key personality traits
-- secret: A hidden secret they're keeping
-- motive: A potential motive for murder (at least one character should be the future culprit)
-- relationship_to_victim: How they know the victim (will be defined in the plot)
+- background: Brief background story (2-3 sentences, keep concise)
+- personality: Key personality traits (one sentence)
+- secret: A hidden secret they're keeping (one sentence)
+- motive: A potential motive for murder (one sentence, at least one character should be the future culprit)
+- relationship_to_victim: How they know the victim (will be defined in the plot, one sentence)
 
-Return the response as a JSON array of character objects."""
+Return ONLY a valid JSON array of character objects, nothing else. Keep descriptions concise to ensure the JSON is complete.
+Example format:
+[
+  {{
+    "name": "John Smith",
+    "role": "Detective",
+    "background": "A veteran detective...",
+    "personality": "Cynical but fair...",
+    "secret": "Has a gambling debt...",
+    "motive": "Victim knew his secret...",
+    "relationship_to_victim": "Former partner..."
+  }}
+]"""
 
     messages = [
         SystemMessage(content=system_prompt),
@@ -63,9 +75,41 @@ Return the response as a JSON array of character objects."""
 
         characters = [Character(**char) for char in characters_data]
         state["characters"] = characters
-    except Exception as e:
+    except json.JSONDecodeError as e:
         print(f"Error parsing characters: {e}")
-        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
+        print(f"Response content length: {len(response.content)}")
+        print(f"Response content (last 1000 chars): {response.content[-1000:]}")
+
+        # Try to salvage partial JSON by finding the last complete object
+        try:
+            content = response.content
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+
+            # Try to find the last valid closing bracket
+            last_bracket = content.rfind(']')
+            if last_bracket > 0:
+                # Try parsing up to the last bracket
+                truncated_content = content[:last_bracket + 1]
+                characters_data = json.loads(truncated_content)
+
+                if isinstance(characters_data, dict) and "characters" in characters_data:
+                    characters_data = characters_data["characters"]
+
+                characters = [Character(**char) for char in characters_data]
+                state["characters"] = characters
+                print(f"Successfully recovered {len(characters)} characters from partial JSON")
+                return state
+        except Exception as recovery_error:
+            print(f"Recovery attempt failed: {recovery_error}")
+
+        # If all fails, set empty list
+        state["characters"] = []
+    except Exception as e:
+        print(f"Unexpected error parsing characters: {e}")
+        print(f"Response content: {response.content[:1000]}")
         state["characters"] = []
 
     return state
