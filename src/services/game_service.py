@@ -3,6 +3,7 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from src.database.models import Game, GameStatus
+from src.services import audio_service, image_service
 
 
 def create_game(
@@ -107,6 +108,7 @@ def list_games(
 def delete_game(db: Session, game_id: str) -> bool:
     """
     Delete a game and all related data (cascade).
+    Also deletes associated audio and image files.
 
     Args:
         db: Database session
@@ -117,6 +119,13 @@ def delete_game(db: Session, game_id: str) -> bool:
     """
     game = get_game(db, game_id)
     if game:
+        # Delete associated audio files
+        audio_service.delete_audio_files(game_id)
+
+        # Delete associated cover image
+        image_service.delete_cover_image(game_id)
+
+        # Delete from database (cascade will handle related records)
         db.delete(game)
         db.commit()
         return True

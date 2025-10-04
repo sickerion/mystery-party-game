@@ -459,11 +459,11 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
   - Fonction pour générer l'image à partir du thème et de l'intrigue
   - Téléchargement et sauvegarde de l'image
   - Gestion du stockage dans `images/`
-- [ ] 126. Ajouter l'endpoint POST `/games/{game_id}/metadata/image` pour générer l'image
-- [ ] 127. Ajouter l'endpoint GET `/games/{game_id}/image` pour servir l'image
-- [ ] 128. Mettre à jour `metadata_service.py` pour inclure la génération d'image
+- [x] 126. Ajouter l'endpoint POST `/games/{game_id}/metadata/image` pour générer l'image (2025-01-04)
+- [x] 127. Ajouter l'endpoint GET `/games/{game_id}/image` pour servir l'image (2025-01-04)
+- [x] 128. Mettre à jour `metadata_service.py` pour inclure la génération d'image (2025-01-04)
 - [ ] 129. Intégrer la génération d'image dans le workflow (après génération des métadonnées)
-- [ ] 130. Ajouter la suppression d'images dans `delete_game`
+- [x] 130. Ajouter la suppression d'images dans `delete_game` (2025-01-04)
 
 ### 10.2 Frontend - Affichage des Images
 - [ ] 131. Ajouter le champ `cover_image_url` dans les types TypeScript
@@ -471,8 +471,7 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 - [ ] 133. Créer la fonction `getImageUrl()` dans `api.ts`
 - [ ] 134. Ajouter l'affichage de l'image dans `GameCard.tsx`
 - [ ] 135. Ajouter l'affichage de l'image dans `GameDetails.tsx`
-- [ ] 136. Génération d'image dans le wizard
-- [ ] 137. Gérer les états de chargement et erreurs pour l'image
+- [ ] 136. Générer l'image à la fin du wizard et ne pas attendre le résultat pour continuer
 
 ### 10.3 Configuration et Documentation
 - [x] 138. Créer le répertoire `images/` avec .gitignore (2025-01-04)

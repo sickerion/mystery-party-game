@@ -4,12 +4,12 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from src.models.schema import GameRequest, MysteryScenario
 from src.graph.workflow import generate_mystery_scenario
-from src.api.routers import games, generation, audio
+from src.api.routers import games, generation, audio, images
 
 app = FastAPI(
     title="Mystery Party Game Generator API",
     description="AI-powered mystery party game generator using LangGraph and Anthropic Claude",
-    version="0.3.0",
+    version="0.4.0",
 )
 
 # Configure CORS
@@ -25,6 +25,7 @@ app.add_middleware(
 app.include_router(games.router)
 app.include_router(generation.router)
 app.include_router(audio.router)
+app.include_router(images.router)
 
 
 @app.get("/")

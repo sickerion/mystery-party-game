@@ -175,3 +175,30 @@ def generate_audio_files(db: Session, game_id: str, language: str = "en") -> dic
     return {
         "audio_introduction_path": intro_path
     }
+
+
+def update_image_path(
+    db: Session,
+    game_id: str,
+    cover_image_path: str,
+) -> Optional[GeneratedMetadata]:
+    """
+    Update cover image path in metadata.
+
+    Args:
+        db: Database session
+        game_id: Game UUID
+        cover_image_path: Path to cover image file
+
+    Returns:
+        Updated GeneratedMetadata object or None if not found
+    """
+    metadata = get_metadata_by_game(db, game_id)
+    if not metadata:
+        return None
+
+    metadata.cover_image_path = cover_image_path
+
+    db.commit()
+    db.refresh(metadata)
+    return metadata

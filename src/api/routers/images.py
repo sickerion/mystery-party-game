@@ -1,0 +1,110 @@
+"""Image generation API endpoints."""
+
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.responses import FileResponse
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
+
+from src.database.base import get_db
+from src.services import game_service, metadata_service, plot_service, image_service
+
+
+router = APIRouter(prefix="/games", tags=["images"])
+
+
+class ImageGenerationResponse(BaseModel):
+    """Response for image generation."""
+    cover_image_url: str
+    message: str
+
+
+@router.post("/{game_id}/metadata/image", response_model=ImageGenerationResponse)
+async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
+    """
+    Generate a cover image for the game.
+
+    Requires metadata and plot to be generated first.
+    Uses DALL-E to create a themed cover image.
+    Saves image path in the database.
+    """
+    # Check game exists
+    game = game_service.get_game(db, game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    # Check metadata exists
+    metadata = metadata_service.get_metadata_by_game(db, game_id)
+    if not metadata:
+        raise HTTPException(
+            status_code=400,
+            detail="Metadata must be generated first. Call POST /games/{game_id}/metadata"
+        )
+
+    # Check plot exists (need setting for image generation)
+    plot = plot_service.get_plot_by_game(db, game_id)
+    if not plot:
+        raise HTTPException(
+            status_code=400,
+            detail="Plot must be generated first. Call POST /games/{game_id}/plot"
+        )
+
+    # Get language from game
+    language = game.language if hasattr(game, 'language') else 'en'
+
+    try:
+        # Generate cover image
+        image_path = image_service.generate_cover_image(
+            game_id=game_id,
+            theme=game.theme,
+            setting=plot.setting,
+            language=language
+        )
+
+        # Update metadata with image path
+        metadata_service.update_image_path(db, game_id, image_path)
+
+        return ImageGenerationResponse(
+            cover_image_url=f"/games/{game_id}/image",
+            message="Cover image generated successfully"
+        )
+
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to generate image: {str(e)}"
+        )
+
+
+@router.get("/{game_id}/image")
+async def get_cover_image(game_id: str, db: Session = Depends(get_db)):
+    """
+    Serve cover image for a game.
+
+    Args:
+        game_id: Game UUID
+
+    Returns:
+        Cover image as PNG
+    """
+    # Check game exists
+    game = game_service.get_game(db, game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    # Get image file path
+    image_path = image_service.get_image_file_path(game_id)
+
+    if not image_path:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Cover image not found. Generate image first with POST /games/{game_id}/metadata/image"
+        )
+
+    # Serve the file
+    return FileResponse(
+        path=str(image_path),
+        media_type="image/png",
+        filename=f"{game_id}_cover.png"
+    )
