@@ -9,7 +9,6 @@ import {
   generateMetadata,
   validateScenario,
   generateImage,
-  generateCharacterImage,
 } from '@/services/api';
 import type { GameRequest, Character, Plot, Clue, Metadata, ValidationResult, GenerationStep } from '@/types';
 import { StepIndicator } from '@/components/generation/StepIndicator';
@@ -76,24 +75,8 @@ export function GenerationWizard() {
       const data = await generateCharacters(gameId);
       setCharacters(data);
 
-      // Start generating character portrait images in background after characters are ready
-      console.log('Starting character portrait generation for', data.length, 'characters');
-      data.forEach(character => {
-        console.log(`Character: ${character.name}, ID: ${character.id}`);
-        if (character.id) {
-          console.log(`Generating portrait for character ${character.name} (ID: ${character.id})`);
-          generateCharacterImage(gameId, character.id)
-            .then(() => {
-              console.log(`Successfully started portrait generation for ${character.name}`);
-            })
-            .catch(err => {
-              console.error(`Failed to generate portrait for ${character.name}:`, err);
-              // Don't show error to user, image generation is optional
-            });
-        } else {
-          console.warn(`Character ${character.name} has no ID, skipping portrait generation`);
-        }
-      });
+      // Character portrait images are now generated automatically by the backend
+      console.log('Characters generated. Backend will generate portraits in background.');
 
       setCurrentStep('plot');
     } catch (err) {

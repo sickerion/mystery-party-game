@@ -1,7 +1,8 @@
 """Generation API router - incremental mystery generation endpoints."""
 
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+import asyncio
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.orm import Session
 
 from src.database.base import get_db
@@ -14,6 +15,7 @@ from src.services import (
     clue_service,
     metadata_service,
     validation_service,
+    image_service,
 )
 from src.graph.nodes.characters import generate_characters_node
 from src.graph.nodes.plot import generate_plot_node
@@ -23,6 +25,34 @@ from src.graph.nodes.validation import validate_scenario_node
 from src.models.state import MysteryGenerationState
 
 router = APIRouter(prefix="/games", tags=["generation"])
+
+
+def generate_character_images_background(game_id: str, characters: List, theme: str, language: str):
+    """Background task to generate character portrait images."""
+    print(f"[BACKGROUND] Starting character portrait generation for game {game_id}")
+    for char in characters:
+        try:
+            print(f"[BACKGROUND] Generating portrait for character {char['id']}: {char['name']}")
+            image_path = image_service.generate_character_portrait(
+                game_id=game_id,
+                character_id=char['id'],
+                name=char['name'],
+                role=char['role'],
+                personality=char['personality'],
+                theme=theme,
+                language=language
+            )
+            # Update character with image path
+            # Need to create a new DB session for background task
+            from src.database.base import SessionLocal
+            db = SessionLocal()
+            try:
+                character_service.update_character_image_path(db, char['id'], image_path)
+                print(f"[BACKGROUND] Successfully generated portrait for {char['name']}: {image_path}")
+            finally:
+                db.close()
+        except Exception as e:
+            print(f"[BACKGROUND] Failed to generate portrait for {char['name']}: {e}")
 
 
 # Response models
@@ -45,12 +75,17 @@ class ValidationResponse(BaseModel):
 
 
 @router.post("/{game_id}/characters", response_model=List[Character])
-async def generate_characters(game_id: str, db: Session = Depends(get_db)):
+async def generate_characters(
+    game_id: str,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
     """
     Generate characters for a game.
 
     Calls the character generation node and saves results to database.
     Updates game status to CHARACTERS_GENERATED.
+    Triggers background task to generate character portrait images.
     """
     game = game_service.get_game(db, game_id)
     if not game:
@@ -105,6 +140,23 @@ async def generate_characters(game_id: str, db: Session = Depends(get_db)):
             "relationship_to_victim": db_char.relationship_to_victim,
         }
         characters_with_ids.append(Character(**char_dict))
+
+    # Start background task to generate character portrait images
+    background_tasks.add_task(
+        generate_character_images_background,
+        game_id=game_id,
+        characters=[char_dict for char_dict in [
+            {
+                "id": db_char.id,
+                "name": db_char.name,
+                "role": db_char.role,
+                "personality": db_char.personality,
+            }
+            for db_char in db_characters
+        ]],
+        theme=game.theme,
+        language=game.language
+    )
 
     return characters_with_ids
 
