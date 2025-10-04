@@ -17,14 +17,13 @@ def get_images_directory() -> Path:
     return images_dir
 
 
-def sanitize_prompt_with_ai(theme: str, title: str, language: str) -> str:
+def sanitize_prompt_with_ai(theme: str, language: str) -> str:
     """
-    Use Claude AI to sanitize theme and title, removing sensitive words
+    Use Claude AI to sanitize theme, removing sensitive words
     while keeping the essence for image generation.
 
     Args:
         theme: Original theme text
-        title: Game title
         language: Language code
 
     Returns:
@@ -43,7 +42,6 @@ Réponds UNIQUEMENT avec la description transformée, sans explication."""
 
         user_prompt = f"""Transforme cette description en un prompt sûr pour générer une image de couverture:
 Thème: {theme}
-Titre: {title}
 
 Crée une description courte (max 2 phrases) qui capture l'ambiance sans mots sensibles."""
     else:
@@ -56,7 +54,6 @@ Reply ONLY with the transformed description, no explanation."""
 
         user_prompt = f"""Transform this description into a safe prompt for cover image generation:
 Theme: {theme}
-Title: {title}
 
 Create a short description (max 2 sentences) that captures the atmosphere without sensitive words."""
 
@@ -79,14 +76,13 @@ Create a short description (max 2 sentences) that captures the atmosphere withou
             return "A mysterious and elegant scene with an atmosphere of suspense"
 
 
-def generate_cover_image(game_id: str, theme: str, title: str, language: str = "en") -> str:
+def generate_cover_image(game_id: str, theme: str, language: str = "en") -> str:
     """
     Generate a cover image for a mystery game using DALL-E.
 
     Args:
         game_id: Game ID for filename
         theme: Theme of the mystery
-        title: Game title
         language: Language code ('en' or 'fr')
 
     Returns:
@@ -104,7 +100,7 @@ def generate_cover_image(game_id: str, theme: str, title: str, language: str = "
     client = OpenAI(api_key=settings.openai_api_key)
 
     # Use Claude AI to sanitize the prompt, removing sensitive words
-    sanitized_description = sanitize_prompt_with_ai(theme, title, language)
+    sanitized_description = sanitize_prompt_with_ai(theme, language)
 
     # Create final DALL-E prompt with sanitized content
     if language == "fr":

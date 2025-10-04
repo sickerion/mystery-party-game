@@ -128,7 +128,7 @@ export function getAudioUrl(gameId: string, audioType: 'introduction'): string {
 
 // Image generation
 export async function generateImage(gameId: string): Promise<{ cover_image_url: string; message: string }> {
-  const response = await fetch(`${API_BASE_URL}/games/${gameId}/metadata/image`, {
+  const response = await fetch(`${API_BASE_URL}/games/${gameId}/image`, {
     method: 'POST',
   });
   return handleResponse(response);

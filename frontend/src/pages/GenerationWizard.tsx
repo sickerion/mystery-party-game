@@ -54,6 +54,13 @@ export function GenerationWizard() {
       setError(null);
       const game = await createGame(formData);
       setGameId(game.id);
+
+      // Start generating cover image in background right after game creation
+      generateImage(game.id).catch(err => {
+        console.error('Failed to generate cover image:', err);
+        // Don't show error to user, image generation is optional
+      });
+
       setCurrentStep('characters');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to create game');
@@ -130,13 +137,6 @@ export function GenerationWizard() {
       setError(null);
       const data = await generateMetadata(gameId);
       setMetadata(data);
-
-      // Start generating cover image in background after metadata is ready
-      generateImage(gameId).catch(err => {
-        console.error('Failed to generate cover image:', err);
-        // Don't show error to user, image generation is optional
-      });
-
       setCurrentStep('validation');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate metadata');

@@ -24,12 +24,12 @@ class CharacterImageGenerationResponse(BaseModel):
     message: str
 
 
-@router.post("/{game_id}/metadata/image", response_model=ImageGenerationResponse)
+@router.post("/{game_id}/image", response_model=ImageGenerationResponse)
 async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
     """
     Generate a cover image for the game.
 
-    Requires metadata to be generated first.
+    Only requires the game to exist (uses theme only).
     Uses DALL-E to create a themed cover image.
     Saves image path in the database.
     """
@@ -37,14 +37,6 @@ async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
     game = game_service.get_game(db, game_id)
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
-
-    # Check metadata exists (need title for image generation)
-    metadata = metadata_service.get_metadata_by_game(db, game_id)
-    if not metadata:
-        raise HTTPException(
-            status_code=400,
-            detail="Metadata must be generated first. Call POST /games/{game_id}/metadata"
-        )
 
     # Get language from game
     language = game.language if hasattr(game, 'language') else 'en'
@@ -54,7 +46,6 @@ async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
         image_path = image_service.generate_cover_image(
             game_id=game_id,
             theme=game.theme,
-            title=metadata.title,
             language=language
         )
 
