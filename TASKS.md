@@ -493,8 +493,8 @@ Générer automatiquement une image de portrait pour chaque personnage du jeu et
   - Utiliser Claude AI pour créer un prompt portrait sûr
   - Générer l'image avec DALL-E 2 (512x512)
   - Sauvegarder dans `images/{game_id}_{character_name}.png`
-- [ ] 145. Ajouter l'endpoint POST `/games/{game_id}/characters/{character_id}/image`
-- [ ] 146. Ajouter l'endpoint GET `/games/{game_id}/characters/{character_id}/image`
+- [x] 145. Ajouter l'endpoint POST `/games/{game_id}/characters/{character_id}/image`
+- [x] 146. Ajouter l'endpoint GET `/games/{game_id}/characters/{character_id}/image`
 - [ ] 147. Mettre à jour `character_service.py` pour inclure la génération d'images
 - [ ] 148. Intégrer la génération d'images de personnages dans le wizard (après validation)
 - [ ] 149. Ajouter la suppression d'images de personnages dans `delete_game`
