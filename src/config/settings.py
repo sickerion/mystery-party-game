@@ -16,6 +16,9 @@ class Settings(BaseSettings):
     # Anthropic API Configuration
     anthropic_api_key: str
 
+    # OpenAI API Configuration (for TTS)
+    openai_api_key: str = ""
+
     # LLM Model Configuration
     llm_model: str = "claude-sonnet-4-5-20250929"
     llm_temperature: float = 0.7

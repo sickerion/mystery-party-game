@@ -369,10 +369,13 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
 - [x] 105. Créer le répertoire pour stocker les fichiers audio (2025-10-04)
   - Créé `audio_files/` à la racine du projet
   - Ajouté au .gitignore
-- [ ] 106. Créer `src/services/audio_service.py`
-  - generate_audio(text, output_path, language): génère MP3 avec OpenAI TTS
+- [x] 106. Créer `src/services/audio_service.py` (2025-10-04)
+  - generate_audio(text, game_id, audio_type, language): génère MP3 avec OpenAI TTS
   - delete_audio_files(game_id): supprime les fichiers audio d'une partie
-- [ ] 107. Ajouter OPENAI_API_KEY à src/config/settings.py
+  - get_audio_file_path(game_id, audio_type): récupère le chemin d'un fichier audio
+- [x] 107. Ajouter OPENAI_API_KEY à src/config/settings.py (2025-10-04)
+  - Ajouté openai à requirements.txt
+  - Ajouté OPENAI_API_KEY à .env.example
 - [ ] 108. Mettre à jour metadata_service.py
   - Ajouter generate_audio_files(game_id)
   - Ajouter get_audio_file_path(game_id, audio_type)
