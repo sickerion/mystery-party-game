@@ -281,9 +281,9 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 86. Définir les couleurs pour le light mode dans Tailwind
   - Ajouter les variantes light des couleurs existantes
   - Utiliser les classes dark: de Tailwind
-- [ ] 87. Adapter tous les composants pour supporter les deux modes
+- [x] 87. Adapter tous les composants pour supporter les deux modes
   - Mettre à jour Button, Card, Input, Badge, etc.
-  - Mettre à jour les pages Landing, GameDetails, GenerationWizard
+  - Mettre à jour Layout et Header
   - Utiliser les classes dark: pour les couleurs de fond, texte, bordures
 - [ ] 88. Tester le theme toggle sur toutes les pages
 
