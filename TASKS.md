@@ -320,7 +320,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 
 ### 8.4 Documentation
 - [x] 99. Mettre à jour CLAUDE.md avec les nouvelles fonctionnalités
-- [ ] 100. Mettre à jour frontend/README.md
+- [x] 100. Mettre à jour frontend/README.md
   - Documenter le système de thème
   - Documenter le système i18n
   - Expliquer comment ajouter de nouvelles traductions

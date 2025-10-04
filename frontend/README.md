@@ -212,6 +212,122 @@ Access in code:
 const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 ```
 
+## Theme System
+
+### Dark/Light Mode
+
+The application supports both dark and light themes with automatic preference detection and persistence.
+
+**Features:**
+- Dark mode (default): Navy, teal, and gold mystery theme
+- Light mode: Clean white backgrounds with adjusted contrast
+- Theme toggle button in header (Sun/Moon icon)
+- Preference saved to localStorage
+- Smooth transitions between themes
+
+**Implementation:**
+
+The theme is managed by `ThemeContext`:
+
+```typescript
+import { useTheme } from '@/contexts/ThemeContext';
+
+function MyComponent() {
+  const { theme, toggleTheme } = useTheme();
+  // theme is 'dark' or 'light'
+}
+```
+
+**Using theme-aware styles:**
+
+All components use Tailwind's `dark:` and `light:` prefixes:
+
+```jsx
+<div className="bg-navy dark:bg-navy light:bg-lightBg">
+  <p className="text-offWhite dark:text-offWhite light:text-darkText">
+    Content
+  </p>
+</div>
+```
+
+## Internationalization (i18n)
+
+### Supported Languages
+
+- **English** (en)
+- **French** (fr)
+
+### Features
+
+- Automatic browser language detection
+- Language preference saved to localStorage
+- Language switcher with flag icons in header
+- Complete translation coverage for all UI elements
+- Date formatting according to selected locale
+
+### Usage
+
+```typescript
+import { useTranslation } from 'react-i18next';
+
+function MyComponent() {
+  const { t, i18n } = useTranslation();
+
+  return (
+    <div>
+      <h1>{t('header.title')}</h1>
+      <button onClick={() => i18n.changeLanguage('fr')}>
+        Français
+      </button>
+    </div>
+  );
+}
+```
+
+### Translation Files
+
+Located in `src/locales/`:
+- `en/translation.json` - English translations
+- `fr/translation.json` - French translations
+
+### Adding New Translations
+
+1. Add keys to both translation files:
+
+```json
+// en/translation.json
+{
+  "myFeature": {
+    "title": "My Feature",
+    "button": "Click Me"
+  }
+}
+
+// fr/translation.json
+{
+  "myFeature": {
+    "title": "Ma Fonctionnalité",
+    "button": "Cliquez Ici"
+  }
+}
+```
+
+2. Use in components:
+
+```typescript
+<h1>{t('myFeature.title')}</h1>
+<button>{t('myFeature.button')}</button>
+```
+
+### Date Localization
+
+Dates are automatically formatted according to the selected language:
+
+```typescript
+const { i18n } = useTranslation();
+const formattedDate = new Date(game.created_at).toLocaleDateString(i18n.language);
+```
+
 ## Troubleshooting
 
 ### Backend Connection Issues
@@ -226,6 +342,15 @@ const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 ### Tailwind CSS Issues
 - Ensure Tailwind v3 is installed (v4 has different PostCSS plugin)
 - Rebuild: `npm run build`
+
+### Theme Issues
+- Clear localStorage to reset theme preference
+- Check that `ThemeProvider` wraps your app in `main.tsx`
+
+### Translation Issues
+- Verify translation keys exist in both language files
+- Check i18n initialization in `src/i18n/config.ts`
+- Clear localStorage to reset language preference
 
 ## Contributing
 
