@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Character, EmailAssignment } from '@/types';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ interface EmailsTabProps {
 }
 
 export function EmailsTab({ characters }: EmailsTabProps) {
+  const { t } = useTranslation();
   const [emailAssignments, setEmailAssignments] = useState<EmailAssignment[]>(
     characters.map(c => ({ character_name: c.name, email: '' }))
   );
@@ -21,7 +23,7 @@ export function EmailsTab({ characters }: EmailsTabProps) {
       setSendingEmails(true);
       // TODO: Implement email sending
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      alert('Email sending not yet implemented. Will send to:\n' +
+      alert(t('gameDetails.emails.notImplemented') + ':\n' +
         emailAssignments.filter(a => a.email).map(a => `${a.character_name}: ${a.email}`).join('\n')
       );
     } finally {
@@ -32,9 +34,9 @@ export function EmailsTab({ characters }: EmailsTabProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Send Character Emails</CardTitle>
+        <CardTitle>{t('gameDetails.emails.title')}</CardTitle>
         <p className="text-sm text-gray-600 dark:text-lightGray">
-          Assign emails to each character to send them their role information
+          {t('gameDetails.emails.description')}
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -46,7 +48,7 @@ export function EmailsTab({ characters }: EmailsTabProps) {
             <div className="flex-[2]">
               <Input
                 type="email"
-                placeholder="player@example.com"
+                placeholder={t('gameDetails.emails.emailPlaceholder')}
                 value={assignment.email}
                 onChange={(e) => {
                   const updated = [...emailAssignments];
@@ -62,7 +64,7 @@ export function EmailsTab({ characters }: EmailsTabProps) {
           disabled={!emailAssignments.some(a => a.email) || sendingEmails}
           className="w-full"
         >
-          {sendingEmails ? <Spinner size="sm" /> : 'Send Emails'}
+          {sendingEmails ? <Spinner size="sm" /> : t('gameDetails.emails.send')}
         </Button>
       </CardContent>
     </Card>
