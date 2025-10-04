@@ -297,7 +297,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
   - Créer src/i18n/config.ts avec configuration
   - Détecter la langue du navigateur par défaut
   - Persister la langue choisie dans localStorage
-- [ ] 92. Créer le composant LanguageSwitcher
+- [x] 92. Créer le composant LanguageSwitcher
   - Dropdown avec drapeaux FR/EN (utiliser les assets existants)
   - Placer dans le Header à côté du ThemeToggle
 - [ ] 93. Traduire tous les textes de l'interface
