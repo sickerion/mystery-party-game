@@ -488,7 +488,7 @@ Générer automatiquement une image de portrait pour chaque personnage du jeu et
 
 ### 11.1 Backend - Génération d'Images de Personnages
 - [x] 142. Ajouter le champ `character_image_path` dans le modèle `GeneratedCharacter`
-- [ ] 143. Créer une migration Alembic pour ajouter le champ `character_image_path`
+- [x] 143. Créer une migration Alembic pour ajouter le champ `character_image_path`
 - [ ] 144. Ajouter la fonction `generate_character_portrait()` dans `image_service.py`
   - Utiliser Claude AI pour créer un prompt portrait sûr
   - Générer l'image avec DALL-E 2 (512x512)
