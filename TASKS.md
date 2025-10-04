@@ -264,6 +264,67 @@ Créer une interface web moderne avec React, Vite et shadcn/ui pour générer et
   - Tests avec React Testing Library
 - [x] 83. Créer un README pour le frontend
 
+---
+
+## Phase 8: Dark/Light Mode et Internationalisation (i18n)
+
+### Objectif
+Ajouter un système de thème (dark/light mode) et l'internationalisation pour supporter le français et l'anglais.
+
+### 8.1 Dark/Light Mode
+- [ ] 84. Installer et configurer next-themes ou créer un context pour le theme
+  - Créer ThemeProvider dans src/contexts/ThemeContext.tsx
+  - Utiliser localStorage pour persister la préférence
+- [ ] 85. Créer le composant ThemeToggle
+  - Bouton avec icône soleil/lune
+  - Placer dans le Header
+- [ ] 86. Définir les couleurs pour le light mode dans Tailwind
+  - Ajouter les variantes light des couleurs existantes
+  - Utiliser les classes dark: de Tailwind
+- [ ] 87. Adapter tous les composants pour supporter les deux modes
+  - Mettre à jour Button, Card, Input, Badge, etc.
+  - Mettre à jour les pages Landing, GameDetails, GenerationWizard
+  - Utiliser les classes dark: pour les couleurs de fond, texte, bordures
+- [ ] 88. Tester le theme toggle sur toutes les pages
+
+### 8.2 Internationalisation (i18n)
+- [ ] 89. Installer react-i18next
+  - npm install react-i18next i18next
+- [ ] 90. Créer la structure des fichiers de traduction
+  - src/locales/en/translation.json
+  - src/locales/fr/translation.json
+- [ ] 91. Configurer i18next
+  - Créer src/i18n/config.ts avec configuration
+  - Détecter la langue du navigateur par défaut
+  - Persister la langue choisie dans localStorage
+- [ ] 92. Créer le composant LanguageSwitcher
+  - Dropdown avec drapeaux FR/EN (utiliser les assets existants)
+  - Placer dans le Header à côté du ThemeToggle
+- [ ] 93. Traduire tous les textes de l'interface
+  - Traduire les pages: Landing, GameDetails, GenerationWizard
+  - Traduire les composants: Header, GameCard, tous les steps
+  - Traduire les messages d'erreur et de validation
+  - Traduire les labels de formulaire et boutons
+- [ ] 94. Adapter l'affichage des dates selon la locale
+  - Utiliser Intl.DateTimeFormat pour formater les dates
+- [ ] 95. Tester le changement de langue sur toutes les pages
+- [ ] 96. Mettre à jour les tests pour supporter l'i18n
+  - Wrapper les tests avec I18nextProvider
+
+### 8.3 Layout et Header
+- [ ] 97. Créer ou mettre à jour le composant Header
+  - Ajouter ThemeToggle (soleil/lune)
+  - Ajouter LanguageSwitcher (drapeaux FR/EN)
+  - Aligner les contrôles à droite du header
+- [ ] 98. Mettre à jour le Layout pour inclure le Header sur toutes les pages
+
+### 8.4 Documentation
+- [ ] 99. Mettre à jour CLAUDE.md avec les nouvelles fonctionnalités
+- [ ] 100. Mettre à jour frontend/README.md
+  - Documenter le système de thème
+  - Documenter le système i18n
+  - Expliquer comment ajouter de nouvelles traductions
+
 ### Palette de Couleurs (Tailwind Config)
 ```js
 colors: {
