@@ -35,42 +35,42 @@
 Diviser la génération de mystère en appels API séparés, un pour chaque étape du workflow, avec stockage intermédiaire en base de données.
 
 ### 6.1 Base de Données - Modèles SQLAlchemy
-- [ ] 11. Créer le modèle `Game` pour stocker l'état global d'une partie en cours
+- [x] 11. Créer le modèle `Game` pour stocker l'état global d'une partie en cours
   - Colonnes: id (UUID), theme, num_players, difficulty, special_requests, status, created_at, updated_at
   - Status: 'initialized', 'characters_generated', 'plot_generated', 'clues_generated', 'metadata_generated', 'validated', 'completed', 'failed'
-- [ ] 12. Créer le modèle `GeneratedCharacter` pour stocker les personnages générés
+- [x] 12. Créer le modèle `GeneratedCharacter` pour stocker les personnages générés
   - Colonnes: id, game_id (FK), name, role, background, personality, secret, motive, relationship_to_victim
-- [ ] 13. Créer le modèle `GeneratedPlot` pour stocker l'intrigue
+- [x] 13. Créer le modèle `GeneratedPlot` pour stocker l'intrigue
   - Colonnes: id, game_id (FK), setting, victim, crime, culprit, murder_method, timeline (JSON), resolution
-- [ ] 14. Créer le modèle `GeneratedClue` pour stocker les indices
+- [x] 14. Créer le modèle `GeneratedClue` pour stocker les indices
   - Colonnes: id, game_id (FK), clue_id, description, location, revealed_by, significance, misleading
-- [ ] 15. Créer le modèle `GeneratedMetadata` pour stocker les métadonnées
+- [x] 15. Créer le modèle `GeneratedMetadata` pour stocker les métadonnées
   - Colonnes: id, game_id (FK), title, estimated_duration, game_instructions, introduction
-- [ ] 16. Créer le modèle `ValidationResult` pour stocker les résultats de validation
+- [x] 16. Créer le modèle `ValidationResult` pour stocker les résultats de validation
   - Colonnes: id, game_id (FK), iteration, validation_passed, validation_errors (JSON), created_at
 
 ### 6.2 Base de Données - Migrations Alembic
-- [ ] 17. Créer la migration Alembic pour la table `games`
-- [ ] 18. Créer la migration Alembic pour la table `generated_characters`
-- [ ] 19. Créer la migration Alembic pour la table `generated_plots`
-- [ ] 20. Créer la migration Alembic pour la table `generated_clues`
-- [ ] 21. Créer la migration Alembic pour la table `generated_metadata`
-- [ ] 22. Créer la migration Alembic pour la table `validation_results`
-- [ ] 23. Exécuter les migrations pour créer les tables
+- [x] 17. Créer la migration Alembic pour la table `games`
+- [x] 18. Créer la migration Alembic pour la table `generated_characters`
+- [x] 19. Créer la migration Alembic pour la table `generated_plots`
+- [x] 20. Créer la migration Alembic pour la table `generated_clues`
+- [x] 21. Créer la migration Alembic pour la table `generated_metadata`
+- [x] 22. Créer la migration Alembic pour la table `validation_results`
+- [x] 23. Exécuter les migrations pour créer les tables
 
 ### 6.3 Services - Couche d'Accès aux Données
-- [ ] 24. Créer `src/services/game_service.py` avec les méthodes CRUD pour Game
-  - create_game(), get_game(), update_game_status(), list_games()
-- [ ] 25. Créer `src/services/character_service.py` avec les méthodes pour GeneratedCharacter
-  - save_characters(), get_characters_by_game()
-- [ ] 26. Créer `src/services/plot_service.py` avec les méthodes pour GeneratedPlot
-  - save_plot(), get_plot_by_game()
-- [ ] 27. Créer `src/services/clue_service.py` avec les méthodes pour GeneratedClue
-  - save_clues(), get_clues_by_game()
-- [ ] 28. Créer `src/services/metadata_service.py` avec les méthodes pour GeneratedMetadata
-  - save_metadata(), get_metadata_by_game()
-- [ ] 29. Créer `src/services/validation_service.py` avec les méthodes pour ValidationResult
-  - save_validation(), get_validations_by_game()
+- [x] 24. Créer `src/services/game_service.py` avec les méthodes CRUD pour Game
+  - create_game(), get_game(), update_game_status(), list_games(), delete_game()
+- [x] 25. Créer `src/services/character_service.py` avec les méthodes pour GeneratedCharacter
+  - save_characters(), get_characters_by_game(), delete_characters_by_game()
+- [x] 26. Créer `src/services/plot_service.py` avec les méthodes pour GeneratedPlot
+  - save_plot(), get_plot_by_game(), delete_plot_by_game()
+- [x] 27. Créer `src/services/clue_service.py` avec les méthodes pour GeneratedClue
+  - save_clues(), get_clues_by_game(), delete_clues_by_game()
+- [x] 28. Créer `src/services/metadata_service.py` avec les méthodes pour GeneratedMetadata
+  - save_metadata(), get_metadata_by_game(), delete_metadata_by_game()
+- [x] 29. Créer `src/services/validation_service.py` avec les méthodes pour ValidationResult
+  - save_validation(), get_validations_by_game(), get_latest_validation(), delete_validations_by_game()
 
 ### 6.4 API - Endpoints Incrémentaux
 - [ ] 30. POST `/games` - Créer une nouvelle partie avec paramètres initiaux
