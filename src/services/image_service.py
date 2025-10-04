@@ -41,10 +41,7 @@ def generate_cover_image(game_id: str, theme: str, setting: str, language: str =
     client = OpenAI(api_key=settings.openai_api_key)
 
     # Create prompt for DALL-E based on theme and setting
-    if language == "fr":
-        prompt = f"Une illustration atmosphérique et mystérieuse pour un jeu de soirée meurtre et mystère. Thème: {theme}. Décor: {setting}. Style: élégant, mystérieux, avec une ambiance de film noir. Pas de texte."
-    else:
-        prompt = f"An atmospheric and mysterious illustration for a murder mystery party game. Theme: {theme}. Setting: {setting}. Style: elegant, mysterious, with a film noir atmosphere. No text."
+    prompt = f"An atmospheric and mysterious illustration for a murder mystery party game. Theme: {theme}. Setting: {setting}. Style: elegant, mysterious. No text."
 
     # Create filename
     images_dir = get_images_directory()
@@ -52,12 +49,11 @@ def generate_cover_image(game_id: str, theme: str, setting: str, language: str =
     filepath = images_dir / filename
 
     try:
-        # Generate image using DALL-E
+        # Generate image using DALL-E 2 (faster, supports 512x512)
         response = client.images.generate(
-            model="dall-e-3",
+            model="dall-e-2",
             prompt=prompt,
-            size="1024x1024",
-            quality="standard",
+            size="512x512",
             n=1,
         )
 
