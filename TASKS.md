@@ -272,7 +272,7 @@ Créer une interface web moderne avec React, Vite et shadcn/ui pour générer et
 Ajouter un système de thème (dark/light mode) et l'internationalisation pour supporter le français et l'anglais.
 
 ### 8.1 Dark/Light Mode
-- [ ] 84. Installer et configurer next-themes ou créer un context pour le theme
+- [x] 84. Installer et configurer next-themes ou créer un context pour le theme
   - Créer ThemeProvider dans src/contexts/ThemeContext.tsx
   - Utiliser localStorage pour persister la préférence
 - [ ] 85. Créer le composant ThemeToggle
