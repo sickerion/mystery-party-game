@@ -4,7 +4,8 @@
       "Bash(pytest:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Read(//c/Users/etien/Pictures/Screenshots/**)"
     ],
     "deny": [],
     "ask": []

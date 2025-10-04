@@ -33,7 +33,7 @@ export function EmailsTab({ characters }: EmailsTabProps) {
     <Card>
       <CardHeader>
         <CardTitle>Send Character Emails</CardTitle>
-        <p className="text-sm text-lightGray">
+        <p className="text-sm text-gray-600 dark:text-lightGray">
           Assign emails to each character to send them their role information
         </p>
       </CardHeader>

@@ -20,8 +20,8 @@ export function CluesTab({ clues }: CluesTabProps) {
             </div>
           </CardHeader>
           <CardContent className="space-y-2">
-            <p className="text-offWhite">{clue.description}</p>
-            <div className="text-sm space-y-1">
+            <p className="text-darkText dark:text-offWhite">{clue.description}</p>
+            <div className="text-sm space-y-1 text-darkText dark:text-offWhite">
               <p><span className="text-gold">Location:</span> {clue.location}</p>
               <p><span className="text-gold">Revealed by:</span> {clue.revealed_by}</p>
               <p><span className="text-gold">Significance:</span> {clue.significance}</p>

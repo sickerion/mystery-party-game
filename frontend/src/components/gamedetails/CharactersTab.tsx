@@ -12,16 +12,16 @@ export function CharactersTab({ characters }: CharactersTabProps) {
         <Card key={i}>
           <CardHeader>
             <CardTitle>{char.name}</CardTitle>
-            <p className="text-sm text-lightGray">{char.role}</p>
+            <p className="text-sm text-gray-600 dark:text-lightGray">{char.role}</p>
           </CardHeader>
           <CardContent className="space-y-3">
             <div>
               <p className="text-gold font-semibold text-sm">Background</p>
-              <p className="text-offWhite text-sm">{char.background}</p>
+              <p className="text-darkText dark:text-offWhite text-sm">{char.background}</p>
             </div>
             <div>
               <p className="text-gold font-semibold text-sm">Personality</p>
-              <p className="text-offWhite text-sm">{char.personality}</p>
+              <p className="text-darkText dark:text-offWhite text-sm">{char.personality}</p>
             </div>
             <div>
               <p className="text-gold font-semibold text-sm">Secret</p>
@@ -30,7 +30,7 @@ export function CharactersTab({ characters }: CharactersTabProps) {
             {char.motive && (
               <div>
                 <p className="text-gold font-semibold text-sm">Motive</p>
-                <p className="text-offWhite text-sm">{char.motive}</p>
+                <p className="text-darkText dark:text-offWhite text-sm">{char.motive}</p>
               </div>
             )}
           </CardContent>

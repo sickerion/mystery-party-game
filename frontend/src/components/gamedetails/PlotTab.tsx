@@ -14,15 +14,15 @@ export function PlotTab({ plot }: PlotTabProps) {
       <CardContent className="space-y-4">
         <div>
           <p className="text-gold font-semibold">Setting</p>
-          <p className="text-offWhite">{plot.setting}</p>
+          <p className="text-darkText dark:text-offWhite">{plot.setting}</p>
         </div>
         <div>
           <p className="text-gold font-semibold">The Crime</p>
-          <p className="text-offWhite">{plot.crime}</p>
+          <p className="text-darkText dark:text-offWhite">{plot.crime}</p>
         </div>
         <div>
           <p className="text-gold font-semibold">Victim</p>
-          <p className="text-offWhite">{plot.victim}</p>
+          <p className="text-darkText dark:text-offWhite">{plot.victim}</p>
         </div>
         <div>
           <p className="text-gold font-semibold">The Culprit</p>
@@ -30,11 +30,11 @@ export function PlotTab({ plot }: PlotTabProps) {
         </div>
         <div>
           <p className="text-gold font-semibold">Method</p>
-          <p className="text-offWhite">{plot.murder_method}</p>
+          <p className="text-darkText dark:text-offWhite">{plot.murder_method}</p>
         </div>
         <div>
           <p className="text-gold font-semibold">Timeline</p>
-          <ul className="list-disc pl-5 space-y-1 text-offWhite">
+          <ul className="list-disc pl-5 space-y-1 text-darkText dark:text-offWhite">
             {plot.timeline.map((event, i) => (
               <li key={i}>{event}</li>
             ))}
@@ -42,7 +42,7 @@ export function PlotTab({ plot }: PlotTabProps) {
         </div>
         <div>
           <p className="text-gold font-semibold">Resolution</p>
-          <p className="text-offWhite">{plot.resolution}</p>
+          <p className="text-darkText dark:text-offWhite">{plot.resolution}</p>
         </div>
       </CardContent>
     </Card>
