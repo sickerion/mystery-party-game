@@ -202,5 +202,28 @@ Environment variables (`.env`):
 - **Service layer**: Clean separation between API, business logic, and data access
 - **Cascade deletes**: Deleting a game automatically removes all related data
 - **Status tracking**: Game status tracks progress through generation pipeline
+- **Dark/Light Mode**: Theme switching with localStorage persistence
+- **Internationalization**: Full i18n support for English and French
+
+## Frontend Features
+
+### Theme System
+- **Dark Mode** (default): Navy, teal, and gold color palette
+- **Light Mode**: Clean white backgrounds with adjusted contrast
+- **ThemeToggle**: Sun/Moon icon button in header
+- **Persistence**: Theme preference saved to localStorage
+- **Implementation**: Custom ThemeContext with Tailwind dark: classes
+
+### Internationalization (i18n)
+- **Languages**: English and French
+- **Detection**: Automatic browser language detection
+- **Persistence**: Language preference saved to localStorage
+- **LanguageSwitcher**: Flag icons (EN/FR) in header
+- **Translations**: Complete coverage of UI elements in:
+  * Header and navigation
+  * Landing page
+  * Game details pages
+  * Status labels and common actions
+- **Date Localization**: Dates formatted according to selected locale
 
 

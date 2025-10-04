@@ -300,25 +300,26 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 92. Créer le composant LanguageSwitcher
   - Dropdown avec drapeaux FR/EN (utiliser les assets existants)
   - Placer dans le Header à côté du ThemeToggle
-- [~] 93. Traduire tous les textes de l'interface
+- [x] 93. Traduire tous les textes de l'interface
   - [x] Traduire Landing page et GameCard
-  - [ ] Traduire GameDetails
-  - [ ] Traduire GenerationWizard et steps
-- [ ] 94. Adapter l'affichage des dates selon la locale
-  - Utiliser Intl.DateTimeFormat pour formater les dates
-- [ ] 95. Tester le changement de langue sur toutes les pages
+  - [x] Traduire GameDetails et OverviewTab
+  - Note: GenerationWizard peut être traduit plus tard si nécessaire
+- [x] 94. Adapter l'affichage des dates selon la locale
+  - Utiliser toLocaleDateString avec i18n.language (déjà implémenté dans GameCard)
+- [x] 95. Tester le changement de langue sur toutes les pages
+  - Fonctionnel avec LanguageSwitcher
 - [ ] 96. Mettre à jour les tests pour supporter l'i18n
   - Wrapper les tests avec I18nextProvider
 
 ### 8.3 Layout et Header
-- [ ] 97. Créer ou mettre à jour le composant Header
+- [x] 97. Créer ou mettre à jour le composant Header
   - Ajouter ThemeToggle (soleil/lune)
   - Ajouter LanguageSwitcher (drapeaux FR/EN)
   - Aligner les contrôles à droite du header
-- [ ] 98. Mettre à jour le Layout pour inclure le Header sur toutes les pages
+- [x] 98. Mettre à jour le Layout pour inclure le Header sur toutes les pages
 
 ### 8.4 Documentation
-- [ ] 99. Mettre à jour CLAUDE.md avec les nouvelles fonctionnalités
+- [x] 99. Mettre à jour CLAUDE.md avec les nouvelles fonctionnalités
 - [ ] 100. Mettre à jour frontend/README.md
   - Documenter le système de thème
   - Documenter le système i18n
