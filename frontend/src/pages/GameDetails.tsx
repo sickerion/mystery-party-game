@@ -70,7 +70,7 @@ export function GameDetails() {
           <h1 className="text-4xl font-bold text-gold mb-2">
             {scenario.title}
           </h1>
-          <div className="flex items-center gap-4 text-lightGray dark:text-lightGray light:text-gray-600">
+          <div className="flex items-center gap-4 text-gray-600 dark:text-lightGray">
             <span>{scenario.num_players} {t('landing.players')}</span>
             <span>•</span>
             <span>{scenario.difficulty}</span>

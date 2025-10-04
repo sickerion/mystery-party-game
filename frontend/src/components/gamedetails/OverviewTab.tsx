@@ -18,23 +18,23 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
         <CardContent className="space-y-3">
           <div>
             <span className="text-gold font-semibold">{t('gameDetails.overview.theme')}: </span>
-            <span className="text-offWhite dark:text-offWhite light:text-darkText">{scenario.theme}</span>
+            <span className="text-darkText dark:text-offWhite">{scenario.theme}</span>
           </div>
           <div>
             <span className="text-gold font-semibold">{t('gameDetails.overview.difficulty')}: </span>
-            <span className="text-offWhite dark:text-offWhite light:text-darkText">{scenario.difficulty}</span>
+            <span className="text-darkText dark:text-offWhite">{scenario.difficulty}</span>
           </div>
           <div>
             <span className="text-gold font-semibold">{t('gameDetails.overview.players')}: </span>
-            <span className="text-offWhite dark:text-offWhite light:text-darkText">{scenario.num_players}</span>
+            <span className="text-darkText dark:text-offWhite">{scenario.num_players}</span>
           </div>
           <div>
             <span className="text-gold font-semibold">{t('gameDetails.overview.duration')}: </span>
-            <span className="text-offWhite dark:text-offWhite light:text-darkText">{scenario.estimated_duration} {t('gameDetails.overview.minutes')}</span>
+            <span className="text-darkText dark:text-offWhite">{scenario.estimated_duration} {t('gameDetails.overview.minutes')}</span>
           </div>
           {scenario.introduction && (
-            <div className="pt-4 border-t border-teal dark:border-teal light:border-lightBorder">
-              <p className="text-offWhite dark:text-offWhite light:text-darkText whitespace-pre-wrap">{scenario.introduction}</p>
+            <div className="pt-4 border-t border-lightBorder dark:border-teal">
+              <p className="text-darkText dark:text-offWhite whitespace-pre-wrap">{scenario.introduction}</p>
             </div>
           )}
         </CardContent>
@@ -46,7 +46,7 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
             <CardTitle>{t('gameDetails.overview.instructions')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-offWhite dark:text-offWhite light:text-darkText whitespace-pre-wrap">{scenario.game_instructions}</p>
+            <p className="text-darkText dark:text-offWhite whitespace-pre-wrap">{scenario.game_instructions}</p>
           </CardContent>
         </Card>
       )}

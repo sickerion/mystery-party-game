@@ -46,10 +46,10 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-sm text-lightGray dark:text-lightGray light:text-gray-600 space-y-1">
+        <div className="text-sm text-gray-600 dark:text-lightGray space-y-1">
           <p>{t('landing.created')}: {new Date(game.created_at).toLocaleDateString(i18n.language)}</p>
           {game.special_requests && (
-            <p className="text-xs mt-2 text-offWhite dark:text-offWhite light:text-darkText italic">
+            <p className="text-xs mt-2 text-darkText dark:text-offWhite italic">
               "{game.special_requests}"
             </p>
           )}
