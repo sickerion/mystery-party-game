@@ -8,7 +8,7 @@ Mystery Party Game Generator - AI-powered application that generates complete mu
 
 ## Rules
 - Divide the code correctly (ex: one file per model not all models in the same file)
-- Always commit after finishing a task
+- Always commit and push after finishing a task
 - Write tests for implemented logics
 
 ## Architecture
