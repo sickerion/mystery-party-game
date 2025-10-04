@@ -5,6 +5,7 @@ import requests
 from pathlib import Path
 from typing import Optional
 from openai import OpenAI
+from anthropic import Anthropic
 from src.config.settings import get_settings
 
 
@@ -14,6 +15,68 @@ def get_images_directory() -> Path:
     images_dir = base_dir / "images"
     images_dir.mkdir(exist_ok=True)
     return images_dir
+
+
+def sanitize_prompt_with_ai(theme: str, setting: str, language: str) -> str:
+    """
+    Use Claude AI to sanitize theme and setting, removing sensitive words
+    while keeping the essence for image generation.
+
+    Args:
+        theme: Original theme text
+        setting: Original setting text
+        language: Language code
+
+    Returns:
+        Sanitized description suitable for DALL-E
+    """
+    settings = get_settings()
+    client = Anthropic(api_key=settings.anthropic_api_key)
+
+    if language == "fr":
+        system_prompt = """Tu es un assistant qui transforme des descriptions de jeux de mystère en prompts sûrs pour la génération d'images.
+
+Remplace tous les mots sensibles (meurtre, crime, victime, mort, violence, sang, arme, etc.) par des alternatives neutres et artistiques.
+Garde l'ambiance mystérieuse et le contexte visuel, mais rends le tout approprié pour un générateur d'images.
+
+Réponds UNIQUEMENT avec la description transformée, sans explication."""
+
+        user_prompt = f"""Transforme cette description en un prompt sûr pour générer une image:
+Thème: {theme}
+Décor: {setting}
+
+Crée une description courte (max 2 phrases) qui capture l'ambiance et le décor sans mots sensibles."""
+    else:
+        system_prompt = """You are an assistant that transforms mystery game descriptions into safe prompts for image generation.
+
+Replace all sensitive words (murder, crime, victim, death, violence, blood, weapon, etc.) with neutral and artistic alternatives.
+Keep the mysterious atmosphere and visual context, but make it appropriate for an image generator.
+
+Reply ONLY with the transformed description, no explanation."""
+
+        user_prompt = f"""Transform this description into a safe prompt for image generation:
+Theme: {theme}
+Setting: {setting}
+
+Create a short description (max 2 sentences) that captures the atmosphere and setting without sensitive words."""
+
+    try:
+        message = client.messages.create(
+            model=settings.llm_model,
+            max_tokens=200,
+            temperature=0.7,
+            system=system_prompt,
+            messages=[{"role": "user", "content": user_prompt}]
+        )
+
+        sanitized = message.content[0].text.strip()
+        return sanitized
+    except Exception as e:
+        # Fallback to generic prompt if AI sanitization fails
+        if language == "fr":
+            return "Une scène mystérieuse et élégante avec une ambiance de suspense"
+        else:
+            return "A mysterious and elegant scene with an atmosphere of suspense"
 
 
 def generate_cover_image(game_id: str, theme: str, setting: str, language: str = "en") -> str:
@@ -40,13 +103,14 @@ def generate_cover_image(game_id: str, theme: str, setting: str, language: str =
     # Initialize OpenAI client
     client = OpenAI(api_key=settings.openai_api_key)
 
-    # Create prompt for DALL-E based on theme and setting
-    # Keep it generic to avoid content policy violations
-    # Don't include user-provided text directly as it may contain restricted words
+    # Use Claude AI to sanitize the prompt, removing sensitive words
+    sanitized_description = sanitize_prompt_with_ai(theme, setting, language)
+
+    # Create final DALL-E prompt with sanitized content
     if language == "fr":
-        prompt = "Une illustration mystérieuse et élégante dans un style film noir, avec une ambiance de suspense et d'intrigue. Pas de texte."
+        prompt = f"Une illustration atmosphérique pour un jeu de mystère. {sanitized_description}. Style: élégant, mystérieux, film noir. Pas de texte."
     else:
-        prompt = "An elegant and mysterious illustration in film noir style, with an atmosphere of suspense and intrigue. No text."
+        prompt = f"An atmospheric illustration for a mystery game. {sanitized_description}. Style: elegant, mysterious, film noir. No text."
 
     # Create filename
     images_dir = get_images_directory()
