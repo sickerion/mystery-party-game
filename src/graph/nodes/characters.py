@@ -14,7 +14,7 @@ def generate_characters_node(state: MysteryGenerationState) -> MysteryGeneration
     language = state.get('language', 'en')
 
     if language == 'fr':
-        system_prompt = """Tu es un expert écrivain de mystères qui crée des personnages pour un jeu de soirée enquête policière.
+        system_prompt = """Tu es un expert écrivain de mystères qui crée des personnages pour un jeu de soirée meurtre et mystère.
 Génère des personnages diversifiés et intéressants avec des personnalités, des antécédents et des secrets distincts.
 Chaque personnage doit avoir un lien plausible avec le mystère."""
     else:

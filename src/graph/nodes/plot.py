@@ -19,14 +19,14 @@ def generate_plot_node(state: MysteryGenerationState) -> MysteryGenerationState:
     ])
 
     if language == 'fr':
-        system_prompt = """Tu es un expert écrivain de mystères qui crée des intrigues captivantes pour des soirées enquête policière.
+        system_prompt = """Tu es un expert écrivain de mystères qui crée des intrigues captivantes pour des soirées meurtre et mystère.
 Crée une intrigue cohérente et engageante qui lie tous les personnages ensemble avec une résolution satisfaisante."""
     else:
         system_prompt = """You are an expert mystery writer creating compelling murder mystery plots.
 Create a coherent, engaging plot that ties all characters together with a satisfying resolution."""
 
     if language == 'fr':
-        user_prompt = f"""Crée une intrigue de soirée enquête policière pour un jeu de société avec ces paramètres:
+        user_prompt = f"""Crée une intrigue de soirée meurtre et mystère pour un jeu de société avec ces paramètres:
 - Thème: {state['theme']}
 - Difficulté: {state['difficulty']}
 

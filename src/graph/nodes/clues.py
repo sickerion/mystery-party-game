@@ -34,14 +34,14 @@ Setting: {plot.setting}
     characters_list = ", ".join([char.name for char in state.get("characters", [])])
 
     if language == 'fr':
-        system_prompt = """Tu es un expert écrivain de mystères qui crée des indices pour un jeu de soirée enquête policière.
+        system_prompt = """Tu es un expert écrivain de mystères qui crée des indices pour un jeu de soirée meurtre et mystère.
 Crée un mélange d'indices utiles et de fausses pistes qui rendent le mystère difficile mais solvable."""
     else:
         system_prompt = """You are an expert mystery writer creating clues for a murder mystery game.
 Create a mix of helpful clues and red herrings that make the mystery challenging but solvable."""
 
     if language == 'fr':
-        user_prompt = f"""Crée des indices pour un jeu de soirée enquête policière avec ces paramètres:
+        user_prompt = f"""Crée des indices pour un jeu de soirée meurtre et mystère avec ces paramètres:
 - Thème: {state['theme']}
 - Difficulté: {state['difficulty']}
 - Nombre d'indices: {state['num_players'] + 3}

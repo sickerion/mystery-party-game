@@ -13,14 +13,14 @@ def generate_metadata_node(state: MysteryGenerationState) -> MysteryGenerationSt
     language = state.get('language', 'en')
 
     if language == 'fr':
-        system_prompt = """Tu es un expert concepteur de jeux qui crée des jeux de soirée enquête captivants.
+        system_prompt = """Tu es un expert concepteur de jeux qui crée des jeux de soirée meurtre et mystère captivants.
 Crée des titres accrocheurs, des instructions claires et des introductions atmosphériques."""
     else:
         system_prompt = """You are an expert game designer creating engaging mystery party games.
 Create compelling titles, clear instructions, and atmospheric introductions."""
 
     if language == 'fr':
-        user_prompt = f"""Crée les métadonnées pour un jeu de soirée enquête:
+        user_prompt = f"""Crée les métadonnées pour un jeu de soirée meurtre et mystère:
 - Thème: {state['theme']}
 - Nombre de joueurs: {state['num_players']}
 
