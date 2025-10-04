@@ -126,4 +126,16 @@ export function getAudioUrl(gameId: string, audioType: 'introduction'): string {
   return `${API_BASE_URL}/games/${gameId}/audio/${audioType}`;
 }
 
+// Image generation
+export async function generateImage(gameId: string): Promise<{ cover_image_url: string; message: string }> {
+  const response = await fetch(`${API_BASE_URL}/games/${gameId}/metadata/image`, {
+    method: 'POST',
+  });
+  return handleResponse(response);
+}
+
+export function getImageUrl(gameId: string): string {
+  return `${API_BASE_URL}/games/${gameId}/image`;
+}
+
 export { ApiError };

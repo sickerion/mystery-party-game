@@ -466,9 +466,9 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 - [x] 130. Ajouter la suppression d'images dans `delete_game` (2025-01-04)
 
 ### 10.2 Frontend - Affichage des Images
-- [ ] 131. Ajouter le champ `cover_image_url` dans les types TypeScript
-- [ ] 132. Créer la fonction `generateImage()` dans `api.ts`
-- [ ] 133. Créer la fonction `getImageUrl()` dans `api.ts`
+- [x] 131. Ajouter le champ `cover_image_url` dans les types TypeScript (2025-01-04)
+- [x] 132. Créer la fonction `generateImage()` dans `api.ts` (2025-01-04)
+- [x] 133. Créer la fonction `getImageUrl()` dans `api.ts` (2025-01-04)
 - [ ] 134. Ajouter l'affichage de l'image dans `GameCard.tsx`
 - [ ] 135. Ajouter l'affichage de l'image dans `GameDetails.tsx`
 - [ ] 136. Générer l'image à la fin du wizard et ne pas attendre le résultat pour continuer
