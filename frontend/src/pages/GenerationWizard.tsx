@@ -83,14 +83,7 @@ export function GenerationWizard() {
       const data = await generatePlot(gameId);
       setPlot(data);
 
-      // Start generating all images in background after plot is ready
-      // Cover image generation
-      generateImage(gameId).catch(err => {
-        console.error('Failed to generate cover image:', err);
-        // Don't show error to user, image generation is optional
-      });
-
-      // Character portrait images generation
+      // Start generating character portrait images in background after plot is ready
       characters.forEach(character => {
         if (character.id) {
           generateCharacterImage(gameId, character.id).catch(err => {
@@ -128,6 +121,13 @@ export function GenerationWizard() {
       setError(null);
       const data = await generateMetadata(gameId);
       setMetadata(data);
+
+      // Start generating cover image in background after metadata is ready
+      generateImage(gameId).catch(err => {
+        console.error('Failed to generate cover image:', err);
+        // Don't show error to user, image generation is optional
+      });
+
       setCurrentStep('validation');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate metadata');
