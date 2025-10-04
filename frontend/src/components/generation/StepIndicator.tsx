@@ -1,19 +1,22 @@
+import { useTranslation } from 'react-i18next';
 import type { GenerationStep } from '@/types';
 
 interface StepIndicatorProps {
   currentStep: GenerationStep;
 }
 
-const steps: { id: GenerationStep; label: string }[] = [
-  { id: 'initial', label: 'Game Details' },
-  { id: 'characters', label: 'Characters' },
-  { id: 'plot', label: 'Plot' },
-  { id: 'clues', label: 'Clues' },
-  { id: 'metadata', label: 'Metadata' },
-  { id: 'validation', label: 'Validation' },
-];
-
 export function StepIndicator({ currentStep }: StepIndicatorProps) {
+  const { t } = useTranslation();
+
+  const steps: { id: GenerationStep; label: string }[] = [
+    { id: 'initial', label: t('wizard.steps.details') },
+    { id: 'characters', label: t('wizard.steps.characters') },
+    { id: 'plot', label: t('wizard.steps.plot') },
+    { id: 'clues', label: t('wizard.steps.clues') },
+    { id: 'metadata', label: t('wizard.steps.metadata') },
+    { id: 'validation', label: t('wizard.steps.validation') },
+  ];
+
   const currentStepIndex = steps.findIndex(s => s.id === currentStep);
 
   return (

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   createGame,
   generateCharacters,
@@ -18,6 +19,7 @@ import { MetadataStep } from '@/components/generation/MetadataStep';
 import { ValidationStep } from '@/components/generation/ValidationStep';
 
 export function GenerationWizard() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState<GenerationStep>('initial');
   const [gameId, setGameId] = useState<string>('');
@@ -41,7 +43,7 @@ export function GenerationWizard() {
 
   const handleCreateGame = async () => {
     if (!formData.theme.trim()) {
-      setError('Theme is required');
+      setError(t('wizard.form.theme') + ' ' + t('common.error'));
       return;
     }
 
@@ -132,7 +134,7 @@ export function GenerationWizard() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold text-gold mb-8">Create New Mystery Game</h1>
+      <h1 className="text-4xl font-bold text-gold mb-8">{t('wizard.title')}</h1>
 
       <StepIndicator currentStep={currentStep} />
 
