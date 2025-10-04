@@ -86,12 +86,27 @@ async def generate_characters(game_id: str, db: Session = Depends(get_db)):
 
     # Save to database
     characters = result_state["characters"]
-    character_service.save_characters(db, game_id, characters)
+    db_characters = character_service.save_characters(db, game_id, characters)
 
     # Update game status
     game_service.update_game_status(db, game_id, GameStatus.CHARACTERS_GENERATED)
 
-    return characters
+    # Convert DB characters back to Pydantic models with IDs
+    characters_with_ids = []
+    for db_char in db_characters:
+        char_dict = {
+            "id": db_char.id,
+            "name": db_char.name,
+            "role": db_char.role,
+            "background": db_char.background,
+            "personality": db_char.personality,
+            "secret": db_char.secret,
+            "motive": db_char.motive,
+            "relationship_to_victim": db_char.relationship_to_victim,
+        }
+        characters_with_ids.append(Character(**char_dict))
+
+    return characters_with_ids
 
 
 @router.post("/{game_id}/plot", response_model=Plot)
