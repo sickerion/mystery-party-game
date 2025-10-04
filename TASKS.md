@@ -275,7 +275,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 84. Installer et configurer next-themes ou créer un context pour le theme
   - Créer ThemeProvider dans src/contexts/ThemeContext.tsx
   - Utiliser localStorage pour persister la préférence
-- [ ] 85. Créer le composant ThemeToggle
+- [x] 85. Créer le composant ThemeToggle
   - Bouton avec icône soleil/lune
   - Placer dans le Header
 - [ ] 86. Définir les couleurs pour le light mode dans Tailwind

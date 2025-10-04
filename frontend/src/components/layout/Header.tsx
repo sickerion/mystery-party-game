@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { ThemeToggle } from '../ThemeToggle';
 
 export function Header() {
   return (
@@ -25,6 +26,7 @@ export function Header() {
             >
               New Game
             </Link>
+            <ThemeToggle />
           </nav>
         </div>
       </div>
