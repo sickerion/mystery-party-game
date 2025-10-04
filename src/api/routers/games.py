@@ -163,6 +163,7 @@ async def get_game(game_id: str, db: Session = Depends(get_db)):
     # Convert to Pydantic models
     characters = [
         Character(
+            id=char.id,
             name=char.name,
             role=char.role,
             background=char.background,
@@ -170,6 +171,7 @@ async def get_game(game_id: str, db: Session = Depends(get_db)):
             secret=char.secret,
             motive=char.motive,
             relationship_to_victim=char.relationship_to_victim,
+            character_image_path=char.character_image_path,
         )
         for char in db_characters
     ]

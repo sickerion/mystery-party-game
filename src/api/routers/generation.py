@@ -138,6 +138,7 @@ async def generate_characters(
             "secret": db_char.secret,
             "motive": db_char.motive,
             "relationship_to_victim": db_char.relationship_to_victim,
+            "character_image_path": db_char.character_image_path,
         }
         characters_with_ids.append(Character(**char_dict))
 

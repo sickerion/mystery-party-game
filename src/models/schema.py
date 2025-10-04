@@ -15,6 +15,7 @@ class DifficultyLevel(str, Enum):
 class Character(BaseModel):
     """A character in the mystery party game."""
 
+    id: Optional[int] = Field(None, description="Character's database ID")
     name: str = Field(..., description="Character's name")
     role: str = Field(..., description="Character's role or occupation")
     background: str = Field(..., description="Character's background story")
@@ -22,6 +23,7 @@ class Character(BaseModel):
     secret: str = Field(..., description="Character's hidden secret")
     motive: Optional[str] = Field(None, description="Motive if character is involved in the crime")
     relationship_to_victim: Optional[str] = Field(None, description="Relationship to the victim")
+    character_image_path: Optional[str] = Field(None, description="Path to character portrait image")
 
 
 class Clue(BaseModel):
