@@ -48,11 +48,11 @@ Generate mystery components incrementally with database persistence:
 ### Database Schema
 
 **Tables:**
-- `games` - Main game state (id, theme, num_players, difficulty, status, timestamps)
+- `games` - Main game state (id, theme, num_players, difficulty, language, status, timestamps)
 - `generated_characters` - Character data linked to games
 - `generated_plots` - Plot details with JSON timeline
 - `generated_clues` - Clues with misleading flag
-- `generated_metadata` - Game metadata (title, instructions, introduction)
+- `generated_metadata` - Game metadata (title, instructions, introduction, audio paths)
 - `validation_results` - Validation history with iteration tracking
 
 **Game Status Flow:**
@@ -82,10 +82,12 @@ src/
 │   ├── main.py      # FastAPI app
 │   └── routers/     # API routers
 │       ├── games.py      # CRUD endpoints
-│       └── generation.py # Generation endpoints
+│       ├── generation.py # Generation endpoints
+│       └── audio.py      # Audio generation endpoints
 └── config/          # Settings and configuration
 
 alembic/             # Database migrations
+audio_files/         # Generated MP3 audio files (gitignored)
 tests/               # Comprehensive test suite (66 tests)
 ```
 
@@ -98,7 +100,7 @@ pip install -r requirements.txt
 
 # Configure environment
 cp .env.example .env
-# Edit .env and add your ANTHROPIC_API_KEY
+# Edit .env and add your ANTHROPIC_API_KEY and OPENAI_API_KEY (for audio TTS)
 
 # Run database migrations
 alembic upgrade head
@@ -159,7 +161,14 @@ curl -X POST http://localhost:8000/games/$GAME_ID/metadata
 # 6. Validate the complete scenario
 curl -X POST http://localhost:8000/games/$GAME_ID/validate
 
-# 7. Get complete scenario
+# 7. Generate audio files for introduction and instructions (optional)
+curl -X POST http://localhost:8000/games/$GAME_ID/metadata/audio
+
+# 8. Get audio file
+curl http://localhost:8000/games/$GAME_ID/audio/introduction > introduction.mp3
+curl http://localhost:8000/games/$GAME_ID/audio/instructions > instructions.mp3
+
+# 9. Get complete scenario
 curl http://localhost:8000/games/$GAME_ID
 
 # List all games with filtering
@@ -167,6 +176,32 @@ curl "http://localhost:8000/games?status=validated&limit=10"
 
 # Delete a game
 curl -X DELETE http://localhost:8000/games/$GAME_ID
+```
+
+### Audio Generation (Text-to-Speech)
+
+The application supports generating audio versions of the introduction and instructions using OpenAI's TTS API.
+
+**Features:**
+- Generates MP3 files for introduction and instructions
+- Language-aware voices (English/French)
+- Stores audio files locally in `audio_files/` directory
+- Serves audio via REST API
+
+**API Endpoints:**
+- POST `/games/{id}/metadata/audio` - Generate audio files
+- GET `/games/{id}/audio/introduction` - Download introduction audio
+- GET `/games/{id}/audio/instructions` - Download instructions audio
+
+**Setup:**
+1. Add `OPENAI_API_KEY` to your `.env` file
+2. Audio files are automatically generated when requested
+3. Files are stored in `audio_files/{game_id}_{type}.mp3`
+
+**Frontend:**
+- Audio generation button in Game Details page
+- HTML5 audio player with controls
+- Dark/light mode support
 ```
 
 ## Testing Guidelines
@@ -185,6 +220,7 @@ curl -X DELETE http://localhost:8000/games/$GAME_ID
 
 Environment variables (`.env`):
 - `ANTHROPIC_API_KEY`: Your Anthropic API key (required)
+- `OPENAI_API_KEY`: Your OpenAI API key (required for audio generation)
 - `LLM_MODEL`: Model to use (default: claude-sonnet-4-5-20250929)
 - `LLM_TEMPERATURE`: Temperature for generation (default: 0.7)
 - `API_HOST`: API host (default: 0.0.0.0)
