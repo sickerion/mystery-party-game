@@ -475,6 +475,6 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 
 ### 10.3 Configuration et Documentation
 - [x] 138. Créer le répertoire `images/` avec .gitignore (2025-01-04)
-- [ ] 139. Mettre à jour `.env.example` avec configuration DALL-E
-- [ ] 140. Documenter la génération d'images dans CLAUDE.md
+- [x] 139. Mettre à jour `.env.example` avec configuration DALL-E (2025-01-04)
+- [x] 140. Documenter la génération d'images dans CLAUDE.md (2025-01-04)
 - [ ] 141. Tests manuels de génération et affichage des images
