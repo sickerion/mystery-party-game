@@ -17,11 +17,13 @@ Mystery Party Game Generator - AI-powered application that generates complete mu
 
 ### Backend (Python)
 - **LangGraph**: Orchestrates the mystery generation workflow with 5 nodes
-- **LangChain + Anthropic**: LLM integration for content generation
+- **LangChain + Anthropic**: LLM integration for content generation and prompt sanitization
 - **FastAPI**: REST API with incremental generation endpoints
 - **SQLAlchemy**: Database layer for persistent storage
 - **Alembic**: Database migrations
 - **Pydantic**: Data validation and settings management
+- **OpenAI DALL-E 2**: Character portraits and cover image generation
+- **OpenAI TTS**: Audio narration generation
 
 ### Two API Modes
 
@@ -31,12 +33,14 @@ Complete mystery generation in one API call using LangGraph workflow.
 #### 2. Incremental Mode - Step-by-Step (NEW)
 Generate mystery components incrementally with database persistence:
 1. POST `/games` - Create game
-2. POST `/games/{id}/characters` - Generate characters
-3. POST `/games/{id}/plot` - Generate plot
-4. POST `/games/{id}/clues` - Generate clues
-5. POST `/games/{id}/metadata` - Generate metadata
-6. POST `/games/{id}/validate` - Validate scenario
-7. GET `/games/{id}` - Retrieve complete scenario
+2. POST `/games/{id}/image` - Generate cover image (uses theme only)
+3. POST `/games/{id}/characters` - Generate characters (portraits auto-generated in background)
+4. POST `/games/{id}/plot` - Generate plot
+5. POST `/games/{id}/clues` - Generate clues
+6. POST `/games/{id}/metadata` - Generate metadata
+7. POST `/games/{id}/audio` - Generate audio narration (optional)
+8. POST `/games/{id}/validate` - Validate scenario
+9. GET `/games/{id}` - Retrieve complete scenario
 
 ### Workflow Nodes
 1. **Character Generation** (`src/graph/nodes/characters.py`): Creates diverse characters with backgrounds and secrets
@@ -48,8 +52,8 @@ Generate mystery components incrementally with database persistence:
 ### Database Schema
 
 **Tables:**
-- `games` - Main game state (id, theme, num_players, difficulty, language, status, timestamps)
-- `generated_characters` - Character data linked to games
+- `games` - Main game state (id, theme, num_players, difficulty, language, status, cover_image_path, timestamps)
+- `generated_characters` - Character data linked to games (includes character_image_path)
 - `generated_plots` - Plot details with JSON timeline
 - `generated_clues` - Clues with misleading flag
 - `generated_metadata` - Game metadata (title, instructions, introduction, audio paths)
@@ -74,7 +78,9 @@ src/
 │   ├── plot_service.py
 │   ├── clue_service.py
 │   ├── metadata_service.py
-│   └── validation_service.py
+│   ├── validation_service.py
+│   ├── audio_service.py
+│   └── image_service.py
 ├── graph/
 │   ├── nodes/       # Individual LangGraph nodes
 │   └── workflow.py  # Graph definition and orchestration
@@ -82,12 +88,14 @@ src/
 │   ├── main.py      # FastAPI app
 │   └── routers/     # API routers
 │       ├── games.py      # CRUD endpoints
-│       ├── generation.py # Generation endpoints
+│       ├── generation.py # Generation endpoints (includes background task for character portraits)
+│       ├── images.py     # Image generation endpoints
 │       └── audio.py      # Audio generation endpoints
 └── config/          # Settings and configuration
 
 alembic/             # Database migrations
-audio_files/         # Generated MP3 audio files (gitignored)
+audio/               # Generated MP3 audio files (gitignored)
+images/              # Generated cover images and character portraits (gitignored)
 tests/               # Comprehensive test suite (66 tests)
 ```
 
@@ -100,7 +108,9 @@ pip install -r requirements.txt
 
 # Configure environment
 cp .env.example .env
-# Edit .env and add your ANTHROPIC_API_KEY and OPENAI_API_KEY (for audio TTS)
+# Edit .env and add your API keys:
+# - ANTHROPIC_API_KEY (required for content generation)
+# - OPENAI_API_KEY (required for images and audio)
 
 # Run database migrations
 alembic upgrade head
@@ -143,40 +153,84 @@ curl -X POST http://localhost:8000/generate \
 # 1. Create a new game
 GAME_ID=$(curl -X POST http://localhost:8000/games \
   -H "Content-Type: application/json" \
-  -d '{"theme": "film noir", "num_players": 6, "difficulty": "medium"}' \
+  -d '{"theme": "film noir", "num_players": 6, "difficulty": "medium", "language": "en"}' \
   | jq -r '.id')
 
-# 2. Generate characters
+# 2. Generate cover image (uses theme only)
+curl -X POST http://localhost:8000/games/$GAME_ID/image
+
+# 3. Generate characters (character portraits generated automatically in background)
 curl -X POST http://localhost:8000/games/$GAME_ID/characters
 
-# 3. Generate plot
+# 4. Generate plot
 curl -X POST http://localhost:8000/games/$GAME_ID/plot
 
-# 4. Generate clues
+# 5. Generate clues
 curl -X POST http://localhost:8000/games/$GAME_ID/clues
 
-# 5. Generate metadata (title, instructions, introduction)
+# 6. Generate metadata (title, instructions, introduction)
 curl -X POST http://localhost:8000/games/$GAME_ID/metadata
-
-# 6. Validate the complete scenario
-curl -X POST http://localhost:8000/games/$GAME_ID/validate
 
 # 7. Generate audio files for introduction and instructions (optional)
 curl -X POST http://localhost:8000/games/$GAME_ID/metadata/audio
 
-# 8. Get audio file
-curl http://localhost:8000/games/$GAME_ID/audio/introduction > introduction.mp3
-curl http://localhost:8000/games/$GAME_ID/audio/instructions > instructions.mp3
+# 8. Validate the complete scenario
+curl -X POST http://localhost:8000/games/$GAME_ID/validate
 
 # 9. Get complete scenario
 curl http://localhost:8000/games/$GAME_ID
 
+# Get cover image
+curl http://localhost:8000/images/$GAME_ID/cover > cover.png
+
+# Get character portrait (requires character_id)
+curl http://localhost:8000/images/$GAME_ID/characters/1 > character_1.png
+
+# Get audio files
+curl http://localhost:8000/games/$GAME_ID/audio/introduction > introduction.mp3
+curl http://localhost:8000/games/$GAME_ID/audio/instructions > instructions.mp3
+
 # List all games with filtering
 curl "http://localhost:8000/games?status=validated&limit=10"
 
-# Delete a game
+# Delete a game (also deletes all associated images and audio)
 curl -X DELETE http://localhost:8000/games/$GAME_ID
 ```
+
+### Image Generation (DALL-E 2)
+
+The application generates AI-powered images using OpenAI's DALL-E 2 API.
+
+**Cover Images:**
+- Generated immediately after game creation
+- Uses game theme to create atmospheric mystery cover art
+- 512x512 PNG images saved to `images/` directory
+- Claude AI sanitizes prompts to avoid DALL-E content policy violations
+
+**Character Portraits:**
+- Generated automatically in background after character creation
+- Uses character name, role, personality, and game theme
+- 512x512 PNG images optimized for character cards
+- Ultra-safe prompt sanitization to ensure DALL-E compliance
+
+**Prompt Sanitization Strategy:**
+All prompts are pre-processed through Claude AI to:
+- Remove ALL sensitive words (crime, violence, weapons, death, murder, etc.)
+- Replace problematic terms with neutral visual descriptions
+- Focus ONLY on visual elements: clothing, facial expression, lighting, artistic style
+- Keep mysterious atmosphere while making content policy-safe
+- Limit character portrait descriptions to max 15 words
+
+**API Endpoints:**
+- POST `/games/{id}/image` - Generate cover image
+- GET `/images/{id}/cover` - Serve cover image
+- GET `/images/{id}/characters/{character_id}` - Serve character portrait
+
+**Background Task Implementation:**
+Character portraits are generated using FastAPI's `BackgroundTasks` to avoid blocking the API response. Images are generated server-side after characters are saved to the database, and the frontend can retry loading images that are still being generated.
+
+**Setup:**
+1. Add `OPENAI_API_KEY` to your `.env` file
 
 ### Audio Generation (Text-to-Speech)
 
@@ -185,7 +239,7 @@ The application supports generating audio versions of the introduction and instr
 **Features:**
 - Generates MP3 files for introduction and instructions
 - Language-aware voices (English/French)
-- Stores audio files locally in `audio_files/` directory
+- Stores audio files locally in `audio/` directory
 - Serves audio via REST API
 
 **API Endpoints:**
@@ -219,8 +273,8 @@ The application supports generating audio versions of the introduction and instr
 ## Configuration
 
 Environment variables (`.env`):
-- `ANTHROPIC_API_KEY`: Your Anthropic API key (required)
-- `OPENAI_API_KEY`: Your OpenAI API key (required for audio generation)
+- `ANTHROPIC_API_KEY`: Your Anthropic API key (required for content generation)
+- `OPENAI_API_KEY`: Your OpenAI API key (required for images and audio)
 - `LLM_MODEL`: Model to use (default: claude-sonnet-4-5-20250929)
 - `LLM_TEMPERATURE`: Temperature for generation (default: 0.7)
 - `API_HOST`: API host (default: 0.0.0.0)
@@ -236,8 +290,11 @@ Environment variables (`.env`):
 - **Type safety**: Pydantic models ensure data validation throughout
 - **Database persistence**: SQLAlchemy with Alembic migrations for incremental generation
 - **Service layer**: Clean separation between API, business logic, and data access
-- **Cascade deletes**: Deleting a game automatically removes all related data
+- **Cascade deletes**: Deleting a game automatically removes all related data (including images and audio)
 - **Status tracking**: Game status tracks progress through generation pipeline
+- **Background tasks**: Character portraits generated server-side without blocking API response
+- **Prompt sanitization**: Claude AI pre-processes all image prompts to avoid DALL-E content policy violations
+- **Image retry mechanism**: Frontend automatically retries loading images that may still be generating
 - **Dark/Light Mode**: Theme switching with localStorage persistence
 - **Internationalization**: Full i18n support for English and French
 
