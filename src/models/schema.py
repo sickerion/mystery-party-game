@@ -71,3 +71,4 @@ class GameRequest(BaseModel):
     num_players: int = Field(..., ge=3, le=12, description="Number of players")
     difficulty: DifficultyLevel = Field(default=DifficultyLevel.MEDIUM, description="Desired difficulty level")
     special_requests: Optional[str] = Field(None, description="Any special requests or constraints")
+    language: str = Field(default="en", description="Language for generated content (en or fr)")

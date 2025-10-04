@@ -18,6 +18,7 @@ export interface GameRequest {
   num_players: number;
   difficulty: Difficulty;
   special_requests?: string;
+  language?: string;
 }
 
 // Game
@@ -27,6 +28,7 @@ export interface Game {
   num_players: number;
   difficulty: Difficulty;
   special_requests?: string;
+  language: string;
   status: GameStatus;
   created_at: string;
   updated_at: string;

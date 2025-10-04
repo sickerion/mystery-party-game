@@ -8,6 +8,7 @@ import type {
   ValidationResult,
   MysteryScenario,
 } from '../types';
+import i18n from '../i18n/config';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -28,10 +29,16 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
 // Games
 export async function createGame(request: GameRequest): Promise<Game> {
+  // Add current language to the request
+  const requestWithLanguage = {
+    ...request,
+    language: i18n.language || 'en',
+  };
+
   const response = await fetch(`${API_BASE_URL}/games`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(request),
+    body: JSON.stringify(requestWithLanguage),
   });
   return handleResponse<Game>(response);
 }

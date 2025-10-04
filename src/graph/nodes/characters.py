@@ -11,11 +11,50 @@ def generate_characters_node(state: MysteryGenerationState) -> MysteryGeneration
     """Generate characters for the mystery game."""
     llm = get_llm()
 
-    system_prompt = """You are an expert mystery writer creating characters for a murder mystery party game.
+    language = state.get('language', 'en')
+
+    if language == 'fr':
+        system_prompt = """Tu es un expert écrivain de mystères qui crée des personnages pour un jeu de soirée enquête policière.
+Génère des personnages diversifiés et intéressants avec des personnalités, des antécédents et des secrets distincts.
+Chaque personnage doit avoir un lien plausible avec le mystère."""
+    else:
+        system_prompt = """You are an expert mystery writer creating characters for a murder mystery party game.
 Generate diverse, interesting characters with distinct personalities, backgrounds, and secrets.
 Each character should have a plausible connection to the mystery."""
 
-    user_prompt = f"""Create {state['num_players']} LIVING player characters for a mystery party game with the following parameters:
+    if language == 'fr':
+        user_prompt = f"""Crée {state['num_players']} personnages VIVANTS jouables pour un jeu de soirée mystère avec les paramètres suivants:
+- Thème: {state['theme']}
+- Difficulté: {state['difficulty']}
+{f"- Demandes spéciales: {state['special_requests']}" if state.get('special_requests') else ""}
+
+IMPORTANT: Ce sont les personnages JOUABLES qui vont enquêter sur le meurtre. Ils sont tous VIVANTS au début du jeu.
+La victime sera un PNJ (personnage non-joueur) séparé défini plus tard dans l'intrigue.
+
+Pour chaque personnage VIVANT, fournis:
+- name: Nom complet
+- role: Leur occupation ou rôle
+- background: Bref historique (2-3 phrases, reste concis)
+- personality: Traits de personnalité clés (une phrase)
+- secret: Un secret caché qu'ils gardent (une phrase)
+- motive: Un motif potentiel de meurtre (une phrase, au moins un personnage doit être le futur coupable)
+- relationship_to_victim: Comment ils connaissent la victime (sera défini dans l'intrigue, une phrase)
+
+Retourne UNIQUEMENT un tableau JSON valide d'objets personnages, rien d'autre. Garde les descriptions concises pour assurer que le JSON soit complet.
+Format d'exemple:
+[
+  {{
+    "name": "Jean Dupont",
+    "role": "Détective",
+    "background": "Un détective vétéran...",
+    "personality": "Cynique mais juste...",
+    "secret": "A une dette de jeu...",
+    "motive": "La victime connaissait son secret...",
+    "relationship_to_victim": "Ancien partenaire..."
+  }}
+]"""
+    else:
+        user_prompt = f"""Create {state['num_players']} LIVING player characters for a mystery party game with the following parameters:
 - Theme: {state['theme']}
 - Difficulty: {state['difficulty']}
 {f"- Special requests: {state['special_requests']}" if state.get('special_requests') else ""}

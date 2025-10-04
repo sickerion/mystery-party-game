@@ -30,6 +30,7 @@ class GameResponse(BaseModel):
     num_players: int
     difficulty: str
     special_requests: Optional[str]
+    language: str
     status: str
     created_at: str
     updated_at: str
@@ -64,6 +65,7 @@ async def create_game(request: GameRequest, db: Session = Depends(get_db)):
         num_players=request.num_players,
         difficulty=request.difficulty,
         special_requests=request.special_requests,
+        language=request.language,
     )
 
     return GameResponse(
@@ -72,6 +74,7 @@ async def create_game(request: GameRequest, db: Session = Depends(get_db)):
         num_players=game.num_players,
         difficulty=game.difficulty,
         special_requests=game.special_requests,
+        language=game.language,
         status=game.status.value,
         created_at=game.created_at.isoformat(),
         updated_at=game.updated_at.isoformat(),

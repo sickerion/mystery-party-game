@@ -10,10 +10,29 @@ def generate_metadata_node(state: MysteryGenerationState) -> MysteryGenerationSt
     """Generate title, instructions, and introduction."""
     llm = get_llm()
 
-    system_prompt = """You are an expert game designer creating engaging mystery party games.
+    language = state.get('language', 'en')
+
+    if language == 'fr':
+        system_prompt = """Tu es un expert concepteur de jeux qui crée des jeux de soirée enquête captivants.
+Crée des titres accrocheurs, des instructions claires et des introductions atmosphériques."""
+    else:
+        system_prompt = """You are an expert game designer creating engaging mystery party games.
 Create compelling titles, clear instructions, and atmospheric introductions."""
 
-    user_prompt = f"""Create metadata for a mystery party game:
+    if language == 'fr':
+        user_prompt = f"""Crée les métadonnées pour un jeu de soirée enquête:
+- Thème: {state['theme']}
+- Nombre de joueurs: {state['num_players']}
+
+Fournis:
+- title: Titre accrocheur pour le jeu
+- estimated_duration: Durée estimée du jeu en minutes
+- game_instructions: Instructions claires pour l'hôte du jeu (2-3 paragraphes)
+- introduction: Scène d'ouverture atmosphérique pour planter le décor (2-3 paragraphes)
+
+Retourne comme objet JSON."""
+    else:
+        user_prompt = f"""Create metadata for a mystery party game:
 - Theme: {state['theme']}
 - Number of players: {state['num_players']}
 

@@ -41,6 +41,7 @@ class Game(Base):
     num_players = Column(Integer, nullable=False)
     difficulty = Column(String, nullable=False)
     special_requests = Column(Text, nullable=True)
+    language = Column(String, nullable=False, default="en")
     status = Column(SQLEnum(GameStatus), nullable=False, default=GameStatus.INITIALIZED)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)

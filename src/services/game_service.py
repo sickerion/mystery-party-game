@@ -11,6 +11,7 @@ def create_game(
     num_players: int,
     difficulty: str,
     special_requests: Optional[str] = None,
+    language: str = "en",
 ) -> Game:
     """
     Create a new game.
@@ -21,6 +22,7 @@ def create_game(
         num_players: Number of players
         difficulty: Difficulty level (easy, medium, hard)
         special_requests: Optional special requests
+        language: Language for generated content (en or fr)
 
     Returns:
         Created Game object
@@ -30,6 +32,7 @@ def create_game(
         num_players=num_players,
         difficulty=difficulty,
         special_requests=special_requests,
+        language=language,
         status=GameStatus.INITIALIZED,
     )
     db.add(game)

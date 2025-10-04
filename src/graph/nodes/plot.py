@@ -11,15 +11,52 @@ def generate_plot_node(state: MysteryGenerationState) -> MysteryGenerationState:
     """Generate the main plot and storyline."""
     llm = get_llm()
 
+    language = state.get('language', 'en')
+
     characters_summary = "\n".join([
         f"- {char.name} ({char.role}): {char.background}"
         for char in state.get("characters", [])
     ])
 
-    system_prompt = """You are an expert mystery writer creating compelling murder mystery plots.
+    if language == 'fr':
+        system_prompt = """Tu es un expert écrivain de mystères qui crée des intrigues captivantes pour des soirées enquête policière.
+Crée une intrigue cohérente et engageante qui lie tous les personnages ensemble avec une résolution satisfaisante."""
+    else:
+        system_prompt = """You are an expert mystery writer creating compelling murder mystery plots.
 Create a coherent, engaging plot that ties all characters together with a satisfying resolution."""
 
-    user_prompt = f"""Create a murder mystery plot for a party game with these parameters:
+    if language == 'fr':
+        user_prompt = f"""Crée une intrigue de soirée enquête policière pour un jeu de société avec ces paramètres:
+- Thème: {state['theme']}
+- Difficulté: {state['difficulty']}
+
+Personnages joueurs vivants (tous suspects/enquêteurs jouables):
+{characters_summary}
+
+Fournis un objet JSON avec ces champs exacts:
+- setting: STRING - Description du cadre (2 phrases max)
+- victim: STRING - Nom de la victime (doit être un PNJ, PAS un des personnages joueurs ci-dessus)
+- crime: STRING - Description du crime (1 phrase)
+- culprit: STRING - Nom du coupable (DOIT être un des personnages joueurs ci-dessus)
+- murder_method: STRING - Comment le crime a été commis (1 phrase)
+- timeline: ARRAY de STRINGS - 5-7 événements clés (bref, 1 phrase chacun)
+- resolution: STRING - Comment le mystère peut être résolu (2-3 phrases max)
+
+CRITIQUE: Garde TOUTES les descriptions CONCISES (1-3 phrases) pour assurer une réponse JSON complète.
+Retourne UNIQUEMENT du JSON valide, rien d'autre.
+
+Format d'exemple:
+{{
+  "setting": "Un manoir victorien pendant un orage. Les invités sont piégés à l'intérieur.",
+  "victim": "Lord Blackwood",
+  "crime": "Empoisonné pendant le dîner",
+  "culprit": "Lady Smith",
+  "murder_method": "Arsenic dans le vin",
+  "timeline": ["Les invités arrivent à 18h", "Le dîner est servi à 19h", "La victime s'effondre à 20h"],
+  "resolution": "Le verre de vin empoisonné porte des empreintes correspondant au coupable."
+}}"""
+    else:
+        user_prompt = f"""Create a murder mystery plot for a party game with these parameters:
 - Theme: {state['theme']}
 - Difficulty: {state['difficulty']}
 

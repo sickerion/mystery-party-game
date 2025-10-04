@@ -11,10 +11,20 @@ def generate_clues_node(state: MysteryGenerationState) -> MysteryGenerationState
     """Generate clues for the mystery."""
     llm = get_llm()
 
+    language = state.get('language', 'en')
+
     plot_summary = ""
     if state.get("plot"):
         plot = state["plot"]
-        plot_summary = f"""
+        if language == 'fr':
+            plot_summary = f"""
+Victime: {plot.victim}
+Coupable: {plot.culprit}
+Méthode: {plot.murder_method}
+Cadre: {plot.setting}
+"""
+        else:
+            plot_summary = f"""
 Victim: {plot.victim}
 Culprit: {plot.culprit}
 Method: {plot.murder_method}
@@ -23,10 +33,48 @@ Setting: {plot.setting}
 
     characters_list = ", ".join([char.name for char in state.get("characters", [])])
 
-    system_prompt = """You are an expert mystery writer creating clues for a murder mystery game.
+    if language == 'fr':
+        system_prompt = """Tu es un expert écrivain de mystères qui crée des indices pour un jeu de soirée enquête policière.
+Crée un mélange d'indices utiles et de fausses pistes qui rendent le mystère difficile mais solvable."""
+    else:
+        system_prompt = """You are an expert mystery writer creating clues for a murder mystery game.
 Create a mix of helpful clues and red herrings that make the mystery challenging but solvable."""
 
-    user_prompt = f"""Create clues for a murder mystery game with these parameters:
+    if language == 'fr':
+        user_prompt = f"""Crée des indices pour un jeu de soirée enquête policière avec ces paramètres:
+- Thème: {state['theme']}
+- Difficulté: {state['difficulty']}
+- Nombre d'indices: {state['num_players'] + 3}
+
+Détails de l'intrigue:
+{plot_summary}
+
+Personnages: {characters_list}
+
+Pour chaque indice fournis:
+- clue_id: Identifiant unique (ex: "clue_001")
+- description: Ce qu'est l'indice (1-2 phrases, reste concis)
+- location: Où il est trouvé (bref)
+- revealed_by: Quel personnage possède ou révèle cet indice
+- significance: Pourquoi c'est important (1 phrase)
+- misleading: Boolean - est-ce une fausse piste?
+
+IMPORTANT: Garde toutes les descriptions CONCISES (1-2 phrases max) pour assurer une réponse JSON complète.
+Retourne UNIQUEMENT un tableau JSON valide, rien d'autre.
+
+Format d'exemple:
+[
+  {{
+    "clue_id": "clue_001",
+    "description": "Un fragment de lettre déchiré trouvé dans la cheminée.",
+    "location": "Cheminée du bureau",
+    "revealed_by": "Jean Dupont",
+    "significance": "Montre que la victime était victime de chantage.",
+    "misleading": false
+  }}
+]"""
+    else:
+        user_prompt = f"""Create clues for a murder mystery game with these parameters:
 - Theme: {state['theme']}
 - Difficulty: {state['difficulty']}
 - Number of clues: {state['num_players'] + 3}

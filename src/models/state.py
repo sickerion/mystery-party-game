@@ -12,6 +12,7 @@ class MysteryGenerationState(TypedDict):
     num_players: int
     difficulty: DifficultyLevel
     special_requests: Optional[str]
+    language: str
 
     # Generated content
     characters: Optional[List[Character]]
