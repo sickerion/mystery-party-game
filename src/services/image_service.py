@@ -118,11 +118,11 @@ def generate_cover_image(game_id: str, theme: str, setting: str, language: str =
     filepath = images_dir / filename
 
     try:
-        # Generate image using DALL-E 2 (faster, supports 512x512)
+        # Generate image using DALL-E 2 (faster, supports 256x256)
         response = client.images.generate(
             model="dall-e-2",
             prompt=prompt,
-            size="512x512",
+            size="256x256",
             n=1,
         )
 
