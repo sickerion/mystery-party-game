@@ -27,20 +27,20 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                   index < currentStepIndex
                     ? 'bg-gold text-navy'
                     : index === currentStepIndex
-                    ? 'bg-teal text-offWhite'
-                    : 'bg-darkGray text-lightGray'
+                    ? 'bg-teal text-white'
+                    : 'bg-gray-300 text-gray-600 dark:bg-darkGray dark:text-lightGray'
                 }`}
               >
                 {index + 1}
               </div>
-              <p className={`text-xs mt-2 ${index <= currentStepIndex ? 'text-offWhite' : 'text-lightGray'}`}>
+              <p className={`text-xs mt-2 ${index <= currentStepIndex ? 'text-darkText dark:text-offWhite' : 'text-gray-500 dark:text-lightGray'}`}>
                 {step.label}
               </p>
             </div>
             {index < steps.length - 1 && (
               <div
                 className={`absolute top-5 left-1/2 w-full h-0.5 ${
-                  index < currentStepIndex ? 'bg-gold' : 'bg-darkGray'
+                  index < currentStepIndex ? 'bg-gold' : 'bg-gray-300 dark:bg-darkGray'
                 }`}
               />
             )}

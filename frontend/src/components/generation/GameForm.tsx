@@ -43,7 +43,7 @@ export function GameForm({ formData, loading, onChange, onSubmit }: GameFormProp
           <Label htmlFor="difficulty">Difficulty</Label>
           <select
             id="difficulty"
-            className="flex h-10 w-full rounded-md border border-teal bg-darkNavy px-3 py-2 text-sm text-offWhite"
+            className="flex h-10 w-full rounded-md border px-3 py-2 text-sm border-gray-300 bg-white text-darkText dark:border-teal dark:bg-darkNavy dark:text-offWhite"
             value={formData.difficulty}
             onChange={(e) => onChange({ ...formData, difficulty: e.target.value as any })}
           >
