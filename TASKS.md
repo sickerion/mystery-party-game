@@ -376,20 +376,21 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
 - [x] 107. Ajouter OPENAI_API_KEY à src/config/settings.py (2025-10-04)
   - Ajouté openai à requirements.txt
   - Ajouté OPENAI_API_KEY à .env.example
-- [ ] 108. Mettre à jour metadata_service.py
-  - Ajouter generate_audio_files(game_id)
-  - Ajouter get_audio_file_path(game_id, audio_type)
+- [x] 108. Mettre à jour metadata_service.py (2025-10-04)
+  - Ajouté generate_audio_files(game_id, language)
+  - Ajouté update_audio_paths()
 
 ### 9.3 Backend - API Endpoints
-- [ ] 109. Créer POST `/games/{game_id}/metadata/audio` endpoint
+- [x] 109. Créer POST `/games/{game_id}/metadata/audio` endpoint (2025-10-04)
   - Charge introduction et instructions depuis GeneratedMetadata
   - Génère les deux fichiers audio (introduction et instructions)
   - Sauvegarde les chemins dans la DB
   - Retourne les URLs des fichiers
-- [ ] 110. Créer GET `/games/{game_id}/audio/{audio_type}` endpoint
+- [x] 110. Créer GET `/games/{game_id}/audio/{audio_type}` endpoint (2025-10-04)
   - audio_type: 'introduction' ou 'instructions'
   - Retourne le fichier MP3 avec Content-Type: audio/mpeg
   - Gestion des erreurs si fichier n'existe pas
+- [x] 111. Créer src/api/routers/audio.py et intégrer dans main.py (2025-10-04)
 - [ ] 111. Mettre à jour GET `/games/{game_id}` pour inclure les URLs audio
   - Ajouter audio_introduction_url et audio_instructions_url dans la réponse
 
@@ -426,7 +427,6 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
   - Test état de chargement
 
 ### 9.7 Documentation et Déploiement
-- [ ] 119. Mettre à jour .env.example avec OPENAI_API_KEY
 - [ ] 120. Mettre à jour CLAUDE.md avec la fonctionnalité audio
 - [ ] 121. Documenter le format des fichiers audio et stockage
 - [ ] 122. Tester end-to-end la génération et lecture audio
