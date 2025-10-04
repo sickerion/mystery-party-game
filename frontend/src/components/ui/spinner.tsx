@@ -20,6 +20,7 @@ export function Spinner({ className, size = "md" }: SpinnerProps) {
         className
       )}
       role="status"
+      data-testid="spinner"
     >
       <span className="sr-only">Loading...</span>
     </div>

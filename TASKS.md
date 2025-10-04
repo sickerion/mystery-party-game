@@ -260,9 +260,9 @@ Créer une interface web moderne avec React, Vite et shadcn/ui pour générer et
 - [x] 77. Implémenter la navigation entre les pages
 
 ### 7.10 Tests et Finitions
-- [ ] 78. Ajouter des tests pour les composants principaux
+- [x] 78. Ajouter des tests pour les composants principaux
   - Tests avec React Testing Library
-- [ ] 83. Créer un README pour le frontend
+- [x] 83. Créer un README pour le frontend
 
 ### Palette de Couleurs (Tailwind Config)
 ```js
