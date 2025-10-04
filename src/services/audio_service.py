@@ -22,7 +22,7 @@ def generate_audio(text: str, game_id: str, audio_type: str, language: str = "en
     Args:
         text: Text to convert to speech
         game_id: Game ID for filename
-        audio_type: Type of audio ('introduction' or 'instructions')
+        audio_type: Type of audio ('introduction')
         language: Language code ('en' or 'fr')
 
     Returns:
@@ -81,11 +81,6 @@ def delete_audio_files(game_id: str) -> None:
     if intro_file.exists():
         intro_file.unlink()
 
-    # Delete instructions audio
-    instructions_file = audio_dir / f"{game_id}_instructions.mp3"
-    if instructions_file.exists():
-        instructions_file.unlink()
-
 
 def get_audio_file_path(game_id: str, audio_type: str) -> Optional[Path]:
     """
@@ -93,7 +88,7 @@ def get_audio_file_path(game_id: str, audio_type: str) -> Optional[Path]:
 
     Args:
         game_id: Game ID
-        audio_type: Type of audio ('introduction' or 'instructions')
+        audio_type: Type of audio ('introduction')
 
     Returns:
         Full path to the audio file if it exists, None otherwise

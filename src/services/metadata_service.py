@@ -92,7 +92,6 @@ def update_audio_paths(
     db: Session,
     game_id: str,
     audio_introduction_path: Optional[str] = None,
-    audio_instructions_path: Optional[str] = None,
 ) -> Optional[GeneratedMetadata]:
     """
     Update audio file paths in metadata.
@@ -101,7 +100,6 @@ def update_audio_paths(
         db: Database session
         game_id: Game UUID
         audio_introduction_path: Path to introduction audio file
-        audio_instructions_path: Path to instructions audio file
 
     Returns:
         Updated GeneratedMetadata object or None if not found
@@ -112,8 +110,6 @@ def update_audio_paths(
 
     if audio_introduction_path is not None:
         metadata.audio_introduction_path = audio_introduction_path
-    if audio_instructions_path is not None:
-        metadata.audio_instructions_path = audio_instructions_path
 
     db.commit()
     db.refresh(metadata)
@@ -122,7 +118,7 @@ def update_audio_paths(
 
 def generate_audio_files(db: Session, game_id: str, language: str = "en") -> dict:
     """
-    Generate audio files for introduction and instructions.
+    Generate audio file for introduction.
 
     Args:
         db: Database session
@@ -130,7 +126,7 @@ def generate_audio_files(db: Session, game_id: str, language: str = "en") -> dic
         language: Language code for TTS (en or fr)
 
     Returns:
-        Dictionary with generated file paths
+        Dictionary with generated file path
 
     Raises:
         ValueError: If metadata not found or OpenAI API key not configured
@@ -149,23 +145,13 @@ def generate_audio_files(db: Session, game_id: str, language: str = "en") -> dic
         language=language
     )
 
-    # Generate instructions audio
-    instructions_path = audio_service.generate_audio(
-        text=metadata.game_instructions,
-        game_id=game_id,
-        audio_type="instructions",
-        language=language
-    )
-
-    # Update metadata with audio paths
+    # Update metadata with audio path
     update_audio_paths(
         db,
         game_id,
-        audio_introduction_path=intro_path,
-        audio_instructions_path=instructions_path
+        audio_introduction_path=intro_path
     )
 
     return {
-        "audio_introduction_path": intro_path,
-        "audio_instructions_path": instructions_path
+        "audio_introduction_path": intro_path
     }

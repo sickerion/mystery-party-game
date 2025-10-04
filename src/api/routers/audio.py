@@ -15,18 +15,17 @@ router = APIRouter(prefix="/games", tags=["audio"])
 class AudioGenerationResponse(BaseModel):
     """Response for audio generation."""
     audio_introduction_url: str
-    audio_instructions_url: str
     message: str
 
 
 @router.post("/{game_id}/metadata/audio", response_model=AudioGenerationResponse)
 async def generate_audio(game_id: str, db: Session = Depends(get_db)):
     """
-    Generate audio files for introduction and instructions.
+    Generate audio file for introduction.
 
     Requires metadata to be generated first.
     Uses OpenAI TTS to convert text to speech.
-    Saves audio file paths in the database.
+    Saves audio file path in the database.
     """
     # Check game exists
     game = game_service.get_game(db, game_id)
@@ -45,13 +44,12 @@ async def generate_audio(game_id: str, db: Session = Depends(get_db)):
     language = game.language if hasattr(game, 'language') else 'en'
 
     try:
-        # Generate audio files
+        # Generate audio file
         result = metadata_service.generate_audio_files(db, game_id, language)
 
         return AudioGenerationResponse(
             audio_introduction_url=f"/games/{game_id}/audio/introduction",
-            audio_instructions_url=f"/games/{game_id}/audio/instructions",
-            message="Audio files generated successfully"
+            message="Audio file generated successfully"
         )
 
     except ValueError as e:
@@ -70,16 +68,16 @@ async def get_audio_file(game_id: str, audio_type: str, db: Session = Depends(ge
 
     Args:
         game_id: Game UUID
-        audio_type: Type of audio ('introduction' or 'instructions')
+        audio_type: Type of audio ('introduction')
 
     Returns:
         Audio file as MP3
     """
     # Validate audio type
-    if audio_type not in ["introduction", "instructions"]:
+    if audio_type not in ["introduction"]:
         raise HTTPException(
             status_code=400,
-            detail="audio_type must be 'introduction' or 'instructions'"
+            detail="audio_type must be 'introduction'"
         )
 
     # Check game exists

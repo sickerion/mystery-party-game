@@ -117,10 +117,6 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
                 audioUrl={getAudioUrl(id!, 'introduction')}
                 label="Introduction Audio"
               />
-              <AudioPlayer
-                audioUrl={getAudioUrl(id!, 'instructions')}
-                label="Instructions Audio"
-              />
             </div>
           )}
         </CardContent>
