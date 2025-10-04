@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { getGame } from '@/services/api';
+import { getGame, getImageUrl } from '@/services/api';
 import type { MysteryScenario } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
@@ -65,6 +65,20 @@ export function GameDetails() {
 
   return (
     <div>
+      {/* Cover Image Banner */}
+      <div className="w-full h-64 overflow-hidden rounded-lg mb-8 bg-gray-200 dark:bg-darkGray">
+        <img
+          src={getImageUrl(id!)}
+          alt={scenario.title}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Hide image if it fails to load (not generated yet)
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.parentElement!.style.display = 'none';
+          }}
+        />
+      </div>
+
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-bold text-gold mb-2">

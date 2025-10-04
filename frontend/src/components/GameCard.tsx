@@ -5,6 +5,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Spinner } from '@/components/ui/spinner';
+import { getImageUrl } from '@/services/api';
 
 interface GameCardProps {
   game: Game;
@@ -36,6 +37,20 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
 
   return (
     <Card>
+      {/* Cover Image */}
+      <div className="w-full h-48 overflow-hidden rounded-t-lg bg-gray-200 dark:bg-darkGray">
+        <img
+          src={getImageUrl(game.id)}
+          alt={game.theme}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Hide image if it fails to load (not generated yet)
+            e.currentTarget.style.display = 'none';
+            e.currentTarget.parentElement!.style.display = 'none';
+          }}
+        />
+      </div>
+
       <CardHeader>
         <div className="flex items-start justify-between">
           <div>
