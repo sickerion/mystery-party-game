@@ -453,8 +453,8 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
 Générer automatiquement une image illustrative pour chaque jeu de mystère en utilisant DALL-E, et l'afficher dans la liste des jeux et dans les détails du jeu.
 
 ### 10.1 Backend - Génération d'Images
-- [ ] 123. Ajouter le champ `cover_image_path` dans le modèle `GeneratedMetadata`
-- [ ] 124. Créer une migration Alembic pour ajouter le champ `cover_image_path`
+- [x] 123. Ajouter le champ `cover_image_path` dans le modèle `GeneratedMetadata` (2025-01-04)
+- [x] 124. Créer une migration Alembic pour ajouter le champ `cover_image_path` (2025-01-04)
 - [ ] 125. Créer le service `image_service.py` pour la génération d'images avec DALL-E
   - Fonction pour générer l'image à partir du thème et de l'intrigue
   - Téléchargement et sauvegarde de l'image

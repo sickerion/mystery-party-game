@@ -122,6 +122,7 @@ class GeneratedMetadata(Base):
     game_instructions = Column(Text, nullable=False)
     introduction = Column(Text, nullable=False)
     audio_introduction_path = Column(String, nullable=True)  # path to introduction audio file
+    cover_image_path = Column(String, nullable=True)  # path to cover image file
 
     # Relationships
     game = relationship("Game", back_populates="game_metadata")
