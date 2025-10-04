@@ -444,3 +444,38 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
 - Gestion des états de chargement et erreurs
 
 **Total:** 6 commits, toutes les tâches terminées avec succès!
+
+---
+
+## Phase 10: Génération d'Images avec DALL-E
+
+### Objectif
+Générer automatiquement une image illustrative pour chaque jeu de mystère en utilisant DALL-E, et l'afficher dans la liste des jeux et dans les détails du jeu.
+
+### 10.1 Backend - Génération d'Images
+- [ ] 123. Ajouter le champ `cover_image_path` dans le modèle `GeneratedMetadata`
+- [ ] 124. Créer une migration Alembic pour ajouter le champ `cover_image_path`
+- [ ] 125. Créer le service `image_service.py` pour la génération d'images avec DALL-E
+  - Fonction pour générer l'image à partir du thème et de l'intrigue
+  - Téléchargement et sauvegarde de l'image
+  - Gestion du stockage dans `images/`
+- [ ] 126. Ajouter l'endpoint POST `/games/{game_id}/metadata/image` pour générer l'image
+- [ ] 127. Ajouter l'endpoint GET `/games/{game_id}/image` pour servir l'image
+- [ ] 128. Mettre à jour `metadata_service.py` pour inclure la génération d'image
+- [ ] 129. Intégrer la génération d'image dans le workflow (après génération des métadonnées)
+- [ ] 130. Ajouter la suppression d'images dans `delete_game`
+
+### 10.2 Frontend - Affichage des Images
+- [ ] 131. Ajouter le champ `cover_image_url` dans les types TypeScript
+- [ ] 132. Créer la fonction `generateImage()` dans `api.ts`
+- [ ] 133. Créer la fonction `getImageUrl()` dans `api.ts`
+- [ ] 134. Ajouter l'affichage de l'image dans `GameCard.tsx`
+- [ ] 135. Ajouter l'affichage de l'image dans `GameDetails.tsx`
+- [ ] 136. Ajouter l'étape de génération d'image dans le wizard
+- [ ] 137. Gérer les états de chargement et erreurs pour l'image
+
+### 10.3 Configuration et Documentation
+- [ ] 138. Créer le répertoire `images/` avec .gitignore
+- [ ] 139. Mettre à jour `.env.example` avec configuration DALL-E
+- [ ] 140. Documenter la génération d'images dans CLAUDE.md
+- [ ] 141. Tests manuels de génération et affichage des images
