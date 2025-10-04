@@ -471,7 +471,7 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 - [x] 133. Créer la fonction `getImageUrl()` dans `api.ts` (2025-01-04)
 - [x] 134. Ajouter l'affichage de l'image dans `GameCard.tsx` (2025-01-04)
 - [x] 135. Ajouter l'affichage de l'image dans `GameDetails.tsx` (2025-01-04)
-- [ ] 136. Générer l'image à la fin du wizard et ne pas attendre le résultat pour continuer
+- [x] 136. Générer l'image à la fin du wizard et ne pas attendre le résultat pour continuer (2025-01-04)
 
 ### 10.3 Configuration et Documentation
 - [x] 138. Créer le répertoire `images/` avec .gitignore (2025-01-04)

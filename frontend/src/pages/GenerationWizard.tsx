@@ -8,6 +8,7 @@ import {
   generateClues,
   generateMetadata,
   validateScenario,
+  generateImage,
 } from '@/services/api';
 import type { GameRequest, Character, Plot, Clue, Metadata, ValidationResult, GenerationStep } from '@/types';
 import { StepIndicator } from '@/components/generation/StepIndicator';
@@ -123,6 +124,12 @@ export function GenerationWizard() {
       const data = await validateScenario(gameId);
       setValidation(data);
       if (data.validation_passed) {
+        // Generate cover image in background (don't wait for it)
+        generateImage(gameId).catch(err => {
+          console.error('Failed to generate cover image:', err);
+          // Don't show error to user, image generation is optional
+        });
+
         setTimeout(() => navigate(`/games/${gameId}`), 2000);
       }
     } catch (err) {
