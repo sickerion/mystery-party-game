@@ -285,7 +285,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
   - Mettre à jour Button, Card, Input, Badge, etc.
   - Mettre à jour Layout et Header
   - Utiliser les classes dark: pour les couleurs de fond, texte, bordures
-- [ ] 88. Tester le theme toggle sur toutes les pages
+- [x] 88. Tester le theme toggle sur toutes les pages
 
 ### 8.2 Internationalisation (i18n)
 - [ ] 89. Installer react-i18next
