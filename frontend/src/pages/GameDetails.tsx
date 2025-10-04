@@ -79,18 +79,14 @@ export function GameDetails() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="text-4xl font-bold text-gold mb-2">
-            {scenario.metadata?.title || scenario.game.theme}
+            {scenario.title}
           </h1>
           <div className="flex items-center gap-4 text-lightGray">
-            <span>{scenario.game.num_players} players</span>
+            <span>{scenario.num_players} players</span>
             <span>•</span>
-            <span>{scenario.game.difficulty}</span>
-            {scenario.metadata?.estimated_duration && (
-              <>
-                <span>•</span>
-                <span>{scenario.metadata.estimated_duration}</span>
-              </>
-            )}
+            <span>{scenario.difficulty}</span>
+            <span>•</span>
+            <span>{scenario.estimated_duration} minutes</span>
           </div>
         </div>
         <Button variant="outline" onClick={() => navigate('/')}>
@@ -124,52 +120,36 @@ export function GameDetails() {
             </CardHeader>
             <CardContent className="space-y-3">
               <div>
-                <span className="text-gold font-semibold">Status: </span>
-                <Badge>{scenario.game.status}</Badge>
+                <span className="text-gold font-semibold">Theme: </span>
+                <span className="text-offWhite">{scenario.theme}</span>
               </div>
               <div>
-                <span className="text-gold font-semibold">Created: </span>
-                <span className="text-offWhite">
-                  {new Date(scenario.game.created_at).toLocaleString()}
-                </span>
+                <span className="text-gold font-semibold">Difficulty: </span>
+                <span className="text-offWhite">{scenario.difficulty}</span>
               </div>
-              {scenario.metadata?.introduction && (
+              <div>
+                <span className="text-gold font-semibold">Players: </span>
+                <span className="text-offWhite">{scenario.num_players}</span>
+              </div>
+              <div>
+                <span className="text-gold font-semibold">Duration: </span>
+                <span className="text-offWhite">{scenario.estimated_duration} minutes</span>
+              </div>
+              {scenario.introduction && (
                 <div className="pt-4 border-t border-teal">
-                  <p className="text-offWhite whitespace-pre-wrap">{scenario.metadata.introduction}</p>
+                  <p className="text-offWhite whitespace-pre-wrap">{scenario.introduction}</p>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {scenario.metadata?.game_instructions && (
+          {scenario.game_instructions && (
             <Card>
               <CardHeader>
                 <CardTitle>Game Instructions</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-offWhite whitespace-pre-wrap">{scenario.metadata.game_instructions}</p>
-              </CardContent>
-            </Card>
-          )}
-
-          {scenario.validation_result && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Validation</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {scenario.validation_result.validation_passed ? (
-                  <div className="text-green-500 font-semibold">✓ Validation passed</div>
-                ) : (
-                  <div>
-                    <p className="text-crimson font-semibold mb-2">Validation issues:</p>
-                    <ul className="list-disc pl-5 space-y-1 text-lightGray">
-                      {scenario.validation_result.validation_errors.map((err, i) => (
-                        <li key={i}>{err}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <p className="text-offWhite whitespace-pre-wrap">{scenario.game_instructions}</p>
               </CardContent>
             </Card>
           )}

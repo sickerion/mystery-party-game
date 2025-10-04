@@ -82,14 +82,18 @@ export interface ValidationResult {
   created_at?: string;
 }
 
-// Mystery Scenario (complete)
+// Mystery Scenario (complete) - matches backend MysteryScenario model
 export interface MysteryScenario {
-  game: Game;
+  title: string;
+  theme: string;
+  difficulty: Difficulty;
+  num_players: number;
+  estimated_duration: number; // in minutes
+  plot: Plot;
   characters: Character[];
-  plot?: Plot;
   clues: Clue[];
-  metadata?: Metadata;
-  validation_result?: ValidationResult;
+  game_instructions: string;
+  introduction: string;
 }
 
 // Generation Step
