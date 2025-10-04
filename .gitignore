@@ -47,7 +47,7 @@ poetry.lock
 *.db-journal
 
 # Alembic
-alembic/versions/*.py
+# Keep migration files in git for deployment
 !alembic/versions/.gitkeep
 
 # OS
