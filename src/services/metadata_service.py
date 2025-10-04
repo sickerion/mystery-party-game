@@ -116,6 +116,26 @@ def update_audio_paths(
     return metadata
 
 
+def has_audio(db: Session, game_id: str) -> bool:
+    """
+    Check if audio has been generated for a game.
+
+    Args:
+        db: Database session
+        game_id: Game UUID
+
+    Returns:
+        True if audio_introduction_path is set and file exists, False otherwise
+    """
+    metadata = get_metadata_by_game(db, game_id)
+    if not metadata or not metadata.audio_introduction_path:
+        return False
+
+    # Check if file actually exists
+    audio_path = audio_service.get_audio_file_path(game_id, "introduction")
+    return audio_path is not None
+
+
 def generate_audio_files(db: Session, game_id: str, language: str = "en") -> dict:
     """
     Generate audio file for introduction.

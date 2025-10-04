@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import type { MysteryScenario } from '@/types';
@@ -6,7 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AudioPlayer } from '@/components/AudioPlayer';
-import { generateAudio, getAudioUrl } from '@/services/api';
+import { checkAudioStatus, generateAudio, getAudioUrl } from '@/services/api';
 import { Volume2 } from 'lucide-react';
 
 interface OverviewTabProps {
@@ -19,6 +19,25 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
   const [generatingAudio, setGeneratingAudio] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [hasAudio, setHasAudio] = useState(false);
+  const [checkingAudio, setCheckingAudio] = useState(true);
+
+  // Check if audio already exists on component mount
+  useEffect(() => {
+    const checkAudio = async () => {
+      if (!id) return;
+
+      try {
+        const status = await checkAudioStatus(id);
+        setHasAudio(status.has_audio);
+      } catch (error) {
+        console.error('Failed to check audio status:', error);
+      } finally {
+        setCheckingAudio(false);
+      }
+    };
+
+    checkAudio();
+  }, [id]);
 
   const handleGenerateAudio = async () => {
     if (!id) return;
@@ -85,10 +104,15 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {!hasAudio ? (
+          {checkingAudio ? (
+            <div className="flex items-center justify-center py-4">
+              <Spinner size="sm" className="mr-2" />
+              <span className="text-sm text-gray-600 dark:text-lightGray">Checking audio status...</span>
+            </div>
+          ) : !hasAudio ? (
             <div>
               <p className="text-sm text-gray-600 dark:text-lightGray mb-4">
-                Generate audio versions of the introduction and instructions using text-to-speech.
+                Generate audio version of the introduction using text-to-speech.
               </p>
               <Button
                 onClick={handleGenerateAudio}

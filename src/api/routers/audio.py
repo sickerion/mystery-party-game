@@ -12,10 +12,32 @@ from src.services import game_service, metadata_service, audio_service
 router = APIRouter(prefix="/games", tags=["audio"])
 
 
+class AudioStatusResponse(BaseModel):
+    """Response for audio status check."""
+    has_audio: bool
+
+
 class AudioGenerationResponse(BaseModel):
     """Response for audio generation."""
     audio_introduction_url: str
     message: str
+
+
+@router.get("/{game_id}/audio/status", response_model=AudioStatusResponse)
+async def check_audio_status(game_id: str, db: Session = Depends(get_db)):
+    """
+    Check if audio has been generated for a game.
+
+    Returns:
+        AudioStatusResponse with has_audio boolean
+    """
+    # Check game exists
+    game = game_service.get_game(db, game_id)
+    if not game:
+        raise HTTPException(status_code=404, detail="Game not found")
+
+    has_audio = metadata_service.has_audio(db, game_id)
+    return AudioStatusResponse(has_audio=has_audio)
 
 
 @router.post("/{game_id}/metadata/audio", response_model=AudioGenerationResponse)
