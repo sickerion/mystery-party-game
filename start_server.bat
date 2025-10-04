@@ -1,0 +1,3 @@
+@echo off
+echo Starting Mystery Party Game Generator API with 60s timeout...
+uvicorn src.api.main:app --reload --timeout-keep-alive 60 --host 0.0.0.0 --port 8000

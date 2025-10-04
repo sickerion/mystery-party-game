@@ -15,19 +15,22 @@ def generate_characters_node(state: MysteryGenerationState) -> MysteryGeneration
 Generate diverse, interesting characters with distinct personalities, backgrounds, and secrets.
 Each character should have a plausible connection to the mystery."""
 
-    user_prompt = f"""Create {state['num_players']} characters for a mystery party game with the following parameters:
+    user_prompt = f"""Create {state['num_players']} LIVING player characters for a mystery party game with the following parameters:
 - Theme: {state['theme']}
 - Difficulty: {state['difficulty']}
 {f"- Special requests: {state['special_requests']}" if state.get('special_requests') else ""}
 
-For each character, provide:
+IMPORTANT: These are the PLAYABLE characters who will investigate the murder. They are all ALIVE at the start of the game.
+The victim will be a separate NPC (non-player character) defined later in the plot.
+
+For each LIVING character, provide:
 - name: Full name
 - role: Their occupation or role
 - background: Brief background story (2-3 sentences)
 - personality: Key personality traits
 - secret: A hidden secret they're keeping
-- motive: A potential motive (for some characters)
-- relationship_to_victim: How they know the victim (if applicable)
+- motive: A potential motive for murder (at least one character should be the future culprit)
+- relationship_to_victim: How they know the victim (will be defined in the plot)
 
 Return the response as a JSON array of character objects."""
 

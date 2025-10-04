@@ -17,12 +17,15 @@ def validate_scenario_node(state: MysteryGenerationState) -> MysteryGenerationSt
         errors.append("No plot generated")
     else:
         plot = state["plot"]
-        # Verify victim and culprit are among characters
         character_names = [c.name for c in state.get("characters", [])]
-        if plot.victim not in character_names:
-            errors.append(f"Victim '{plot.victim}' is not in character list")
+
+        # Verify victim is NOT a player character (should be NPC)
+        if plot.victim in character_names:
+            errors.append(f"Victim '{plot.victim}' should be an NPC, not a player character")
+
+        # Verify culprit IS a player character
         if plot.culprit not in character_names:
-            errors.append(f"Culprit '{plot.culprit}' is not in character list")
+            errors.append(f"Culprit '{plot.culprit}' must be one of the player characters")
 
     if not state.get("clues"):
         errors.append("No clues generated")
