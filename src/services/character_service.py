@@ -68,3 +68,42 @@ def delete_characters_by_game(db: Session, game_id: str) -> int:
     count = db.query(GeneratedCharacter).filter(GeneratedCharacter.game_id == game_id).delete()
     db.commit()
     return count
+
+
+def get_character_by_id(db: Session, character_id: int) -> Optional[GeneratedCharacter]:
+    """
+    Get a character by ID.
+
+    Args:
+        db: Database session
+        character_id: Character ID
+
+    Returns:
+        GeneratedCharacter object or None if not found
+    """
+    return db.query(GeneratedCharacter).filter(GeneratedCharacter.id == character_id).first()
+
+
+def update_character_image_path(
+    db: Session,
+    character_id: int,
+    character_image_path: str,
+) -> Optional[GeneratedCharacter]:
+    """
+    Update character portrait image path.
+
+    Args:
+        db: Database session
+        character_id: Character ID
+        character_image_path: Path to the character portrait image
+
+    Returns:
+        Updated GeneratedCharacter object or None if not found
+    """
+    character = get_character_by_id(db, character_id)
+    if not character:
+        return None
+    character.character_image_path = character_image_path
+    db.commit()
+    db.refresh(character)
+    return character
