@@ -293,7 +293,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 90. Créer la structure des fichiers de traduction
   - src/locales/en/translation.json
   - src/locales/fr/translation.json
-- [ ] 91. Configurer i18next
+- [x] 91. Configurer i18next
   - Créer src/i18n/config.ts avec configuration
   - Détecter la langue du navigateur par défaut
   - Persister la langue choisie dans localStorage

@@ -13,13 +13,13 @@
     "finish": "Terminer"
   },
   "header": {
-    "title": "Générateur de Soirée Mystère",
+    "title": "Générateur de Soirée Meurtre et Mystère",
     "subtitle": "Jeux de Meurtre et Mystère Propulsés par l'IA",
     "myGames": "Mes Jeux",
     "newGame": "Nouveau Jeu"
   },
   "landing": {
-    "title": "Mes Jeux de Mystère",
+    "title": "Mes Jeux de Meurtre et Mystère",
     "noGames": "Aucun jeu trouvé. Créez votre premier mystère !",
     "createNew": "Créer un Nouveau Jeu",
     "filterAll": "Tous",
@@ -31,7 +31,7 @@
     "deleteConfirm": "Êtes-vous sûr de vouloir supprimer ce jeu ?"
   },
   "wizard": {
-    "title": "Créer une Nouvelle Soirée Mystère",
+    "title": "Créer une Nouvelle Soirée Meurtre et Mystère",
     "steps": {
       "details": "Détails du Jeu",
       "characters": "Personnages",
