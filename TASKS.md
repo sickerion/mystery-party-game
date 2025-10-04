@@ -8,7 +8,7 @@
 ## Tasks
 
 ### Phase 1: Setup & Architecture
-- [ ] 1. Initialiser le projet Python avec les dépendances (LangGraph, LangChain, etc.)
+- [x] 1. Initialiser le projet Python avec les dépendances (LangGraph, LangChain, etc.)
 - [ ] 2. Créer la structure de base du projet backend
 - [ ] 3. Ajouter la gestion de configuration (API keys, modèles LLM)
 
