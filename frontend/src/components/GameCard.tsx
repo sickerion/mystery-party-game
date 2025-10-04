@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { Game } from '@/types';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,18 +23,13 @@ const statusColors: Record<string, "default" | "secondary" | "destructive" | "ou
   failed: 'destructive',
 };
 
-const statusLabels: Record<string, string> = {
-  initialized: 'Initialized',
-  characters_generated: 'Characters Ready',
-  plot_generated: 'Plot Ready',
-  clues_generated: 'Clues Ready',
-  metadata_generated: 'Metadata Ready',
-  validated: 'Validated',
-  completed: 'Completed',
-  failed: 'Failed',
-};
-
 export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) {
+  const { t, i18n } = useTranslation();
+  const getStatusLabel = (status: string) => {
+    const statusKey = status.replace(/_/g, '');
+    return t(`status.${status}`, status);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -41,19 +37,19 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
           <div>
             <CardTitle>{game.theme}</CardTitle>
             <CardDescription>
-              {game.num_players} players • {game.difficulty}
+              {game.num_players} {t('landing.players')} • {game.difficulty}
             </CardDescription>
           </div>
           <Badge variant={statusColors[game.status] || 'outline'}>
-            {statusLabels[game.status] || game.status}
+            {getStatusLabel(game.status)}
           </Badge>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="text-sm text-lightGray space-y-1">
-          <p>Created: {new Date(game.created_at).toLocaleDateString()}</p>
+        <div className="text-sm text-lightGray dark:text-lightGray light:text-gray-600 space-y-1">
+          <p>{t('landing.created')}: {new Date(game.created_at).toLocaleDateString(i18n.language)}</p>
           {game.special_requests && (
-            <p className="text-xs mt-2 text-offWhite italic">
+            <p className="text-xs mt-2 text-offWhite dark:text-offWhite light:text-darkText italic">
               "{game.special_requests}"
             </p>
           )}
@@ -62,7 +58,7 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
       <CardFooter className="gap-2">
         <Link to={`/games/${game.id}`} className="flex-1">
           <Button variant="default" className="w-full" disabled={isDeleting}>
-            View Details
+            {t('landing.viewDetails')}
           </Button>
         </Link>
         {onDelete && (
@@ -71,7 +67,7 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
             onClick={() => onDelete(game.id)}
             disabled={isDeleting}
           >
-            {isDeleting ? <Spinner size="sm" /> : 'Delete'}
+            {isDeleting ? <Spinner size="sm" /> : t('common.delete')}
           </Button>
         )}
       </CardFooter>

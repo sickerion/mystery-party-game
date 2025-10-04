@@ -300,11 +300,10 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 92. Créer le composant LanguageSwitcher
   - Dropdown avec drapeaux FR/EN (utiliser les assets existants)
   - Placer dans le Header à côté du ThemeToggle
-- [ ] 93. Traduire tous les textes de l'interface
-  - Traduire les pages: Landing, GameDetails, GenerationWizard
-  - Traduire les composants: Header, GameCard, tous les steps
-  - Traduire les messages d'erreur et de validation
-  - Traduire les labels de formulaire et boutons
+- [~] 93. Traduire tous les textes de l'interface
+  - [x] Traduire Landing page et GameCard
+  - [ ] Traduire GameDetails
+  - [ ] Traduire GenerationWizard et steps
 - [ ] 94. Adapter l'affichage des dates selon la locale
   - Utiliser Intl.DateTimeFormat pour formater les dates
 - [ ] 95. Tester le changement de langue sur toutes les pages

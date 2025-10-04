@@ -11,6 +11,7 @@ Mystery Party Game Generator - AI-powered application that generates complete mu
 - Always commit and push after finishing a task
 - Write tests for implemented logics
 - Keep track of your progress in TASK.md
+- Add translations when adding texts in ui
 
 ## Architecture
 
