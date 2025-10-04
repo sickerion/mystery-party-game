@@ -20,7 +20,7 @@ export function ValidationStep({ validation, loading, onValidate, onViewGame }: 
       <CardContent>
         {!validation ? (
           <div className="text-center py-8">
-            <p className="text-lightGray mb-4">Validate the complete scenario</p>
+            <p className="text-gray-600 dark:text-lightGray mb-4">Validate the complete scenario</p>
             <Button onClick={onValidate} disabled={loading}>
               {loading ? <Spinner size="sm" /> : 'Validate'}
             </Button>

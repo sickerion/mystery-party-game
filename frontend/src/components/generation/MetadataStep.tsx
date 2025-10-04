@@ -19,7 +19,7 @@ export function MetadataStep({ metadata, loading, onGenerate, onContinue }: Meta
       <CardContent>
         {!metadata ? (
           <div className="text-center py-8">
-            <p className="text-lightGray mb-4">Generate title and game instructions</p>
+            <p className="text-gray-600 dark:text-lightGray mb-4">Generate title and game instructions</p>
             <Button onClick={onGenerate} disabled={loading}>
               {loading ? <Spinner size="sm" /> : 'Generate Metadata'}
             </Button>
@@ -29,7 +29,7 @@ export function MetadataStep({ metadata, loading, onGenerate, onContinue }: Meta
             <div className="text-green-500 font-semibold mb-2">✓ Metadata generated!</div>
             <div>
               <p className="text-2xl font-bold text-gold">{metadata.title}</p>
-              <p className="text-sm text-lightGray">Duration: {metadata.estimated_duration}</p>
+              <p className="text-sm text-gray-600 dark:text-lightGray">Duration: {metadata.estimated_duration}</p>
             </div>
             <Button onClick={onContinue} disabled={loading} className="w-full">
               {loading ? <Spinner size="sm" /> : 'Validate Scenario'}

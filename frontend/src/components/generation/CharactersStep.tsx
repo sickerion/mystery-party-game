@@ -19,7 +19,7 @@ export function CharactersStep({ characters, loading, onGenerate, onContinue }: 
       <CardContent>
         {characters.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-lightGray mb-4">Ready to generate characters for your mystery</p>
+            <p className="text-gray-600 dark:text-lightGray mb-4">Ready to generate characters for your mystery</p>
             <Button onClick={onGenerate} disabled={loading}>
               {loading ? <Spinner size="sm" /> : 'Generate Characters'}
             </Button>
@@ -30,9 +30,9 @@ export function CharactersStep({ characters, loading, onGenerate, onContinue }: 
               ✓ {characters.length} characters generated!
             </div>
             {characters.map((char, i) => (
-              <div key={i} className="border border-teal rounded p-3">
+              <div key={i} className="border border-gray-300 dark:border-teal rounded p-3">
                 <h4 className="font-semibold text-gold">{char.name}</h4>
-                <p className="text-sm text-lightGray">{char.role}</p>
+                <p className="text-sm text-gray-600 dark:text-lightGray">{char.role}</p>
               </div>
             ))}
             <Button onClick={onContinue} disabled={loading} className="w-full">

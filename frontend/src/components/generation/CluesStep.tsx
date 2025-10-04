@@ -19,7 +19,7 @@ export function CluesStep({ clues, loading, onGenerate, onContinue }: CluesStepP
       <CardContent>
         {clues.length === 0 ? (
           <div className="text-center py-8">
-            <p className="text-lightGray mb-4">Create clues and red herrings</p>
+            <p className="text-gray-600 dark:text-lightGray mb-4">Create clues and red herrings</p>
             <Button onClick={onGenerate} disabled={loading}>
               {loading ? <Spinner size="sm" /> : 'Generate Clues'}
             </Button>
