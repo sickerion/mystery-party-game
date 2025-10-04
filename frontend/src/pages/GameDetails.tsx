@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { getGame } from '@/services/api';
 import type { MysteryScenario } from '@/types';
 import { Button } from '@/components/ui/button';
@@ -11,6 +12,7 @@ import { CluesTab } from '@/components/gamedetails/CluesTab';
 import { EmailsTab } from '@/components/gamedetails/EmailsTab';
 
 export function GameDetails() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [scenario, setScenario] = useState<MysteryScenario | null>(null);
@@ -54,11 +56,11 @@ export function GameDetails() {
   }
 
   const tabs = [
-    { id: 'overview' as const, label: 'Overview' },
-    { id: 'characters' as const, label: 'Characters' },
-    { id: 'plot' as const, label: 'Plot' },
-    { id: 'clues' as const, label: 'Clues' },
-    { id: 'emails' as const, label: 'Send Emails' },
+    { id: 'overview' as const, label: t('gameDetails.tabs.overview') },
+    { id: 'characters' as const, label: t('gameDetails.tabs.characters') },
+    { id: 'plot' as const, label: t('gameDetails.tabs.plot') },
+    { id: 'clues' as const, label: t('gameDetails.tabs.clues') },
+    { id: 'emails' as const, label: t('gameDetails.tabs.emails') },
   ];
 
   return (
@@ -68,16 +70,16 @@ export function GameDetails() {
           <h1 className="text-4xl font-bold text-gold mb-2">
             {scenario.title}
           </h1>
-          <div className="flex items-center gap-4 text-lightGray">
-            <span>{scenario.num_players} players</span>
+          <div className="flex items-center gap-4 text-lightGray dark:text-lightGray light:text-gray-600">
+            <span>{scenario.num_players} {t('landing.players')}</span>
             <span>•</span>
             <span>{scenario.difficulty}</span>
             <span>•</span>
-            <span>{scenario.estimated_duration} minutes</span>
+            <span>{scenario.estimated_duration} {t('gameDetails.overview.minutes')}</span>
           </div>
         </div>
         <Button variant="outline" onClick={() => navigate('/')}>
-          Back to Games
+          {t('common.back')}
         </Button>
       </div>
 
