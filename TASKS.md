@@ -262,10 +262,6 @@ Créer une interface web moderne avec React, Vite et shadcn/ui pour générer et
 ### 7.10 Tests et Finitions
 - [ ] 78. Ajouter des tests pour les composants principaux
   - Tests avec React Testing Library
-- [ ] 79. Optimiser le responsive design pour mobile/tablette
-- [ ] 80. Ajouter des animations et transitions (framer-motion)
-- [ ] 81. Implémenter le dark mode (optionnel)
-- [ ] 82. Configurer le build de production (Vite)
 - [ ] 83. Créer un README pour le frontend
 
 ### Palette de Couleurs (Tailwind Config)
