@@ -8,20 +8,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Couleurs principales
-        navy: '#1a1a2e',        // Fond principal
-        darkNavy: '#16213e',    // Sections
-        teal: '#0f3460',        // Accents
+        // Dark mode colors (default)
+        navy: '#1a1a2e',        // Fond principal dark
+        darkNavy: '#16213e',    // Sections dark
+        teal: '#0f3460',        // Accents dark
 
-        // Couleurs d'accentuation
+        // Light mode colors
+        lightBg: '#f5f5f5',     // Fond principal light
+        lightCard: '#ffffff',   // Cartes light
+        lightBorder: '#e0e0e0', // Bordures light
+
+        // Couleurs d'accentuation (identiques en dark/light)
         gold: '#d4af37',        // CTA, éléments importants
         crimson: '#8b0000',     // Alertes, mystère
         purple: '#9b59b6',      // Liens, hover
 
         // Couleurs neutres
-        offWhite: '#e8e8e8',    // Texte principal
+        offWhite: '#e8e8e8',    // Texte principal dark mode
         lightGray: '#a8a8a8',   // Texte secondaire
-        darkGray: '#2d2d2d',    // Cartes, panels
+        darkGray: '#2d2d2d',    // Cartes dark mode
+        darkText: '#1a1a1a',    // Texte principal light mode
 
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

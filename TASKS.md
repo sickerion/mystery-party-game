@@ -278,7 +278,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 85. Créer le composant ThemeToggle
   - Bouton avec icône soleil/lune
   - Placer dans le Header
-- [ ] 86. Définir les couleurs pour le light mode dans Tailwind
+- [x] 86. Définir les couleurs pour le light mode dans Tailwind
   - Ajouter les variantes light des couleurs existantes
   - Utiliser les classes dark: de Tailwind
 - [ ] 87. Adapter tous les composants pour supporter les deux modes
