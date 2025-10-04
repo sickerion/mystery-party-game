@@ -186,37 +186,59 @@ def sanitize_character_prompt_with_ai(name: str, role: str, personality: str, th
     client = Anthropic(api_key=settings.anthropic_api_key)
 
     if language == "fr":
-        system_prompt = """Tu es un assistant qui crée des descriptions de portraits pour la génération d'images.
+        system_prompt = """Tu es un expert en création de prompts DALL-E ultra-sûrs.
 
-Crée une description visuelle d'un portrait de personnage basée sur leur rôle, personnalité et le thème du jeu.
-Focus sur: apparence physique, vêtements, expression faciale, style artistique, ambiance du thème.
-Évite tous les mots sensibles et tout contexte criminel.
+IMPORTANT: DALL-E rejette tout contenu lié au crime, violence, armes, mort, etc.
 
-Réponds UNIQUEMENT avec la description du portrait, sans explication."""
+Ton rôle:
+1. Analyser le contexte du personnage
+2. Créer un prompt portrait 100% neutre et artistique
+3. Remplacer TOUS les termes problématiques par des descriptions visuelles neutres
+4. Focus UNIQUEMENT sur: vêtements, expression faciale, éclairage, style artistique
 
-        user_prompt = f"""Crée une description de portrait pour ce personnage:
-Thème du jeu: {theme}
-Nom: {name}
-Rôle: {role}
-Personnalité: {personality}
+Réponds UNIQUEMENT avec la description du portrait, sans aucun contexte criminel."""
 
-Décris le portrait en 2 phrases maximum, style portrait artistique élégant qui reflète le thème."""
+        user_prompt = f"""Crée un prompt DALL-E ultra-sûr pour ce portrait:
+
+Contexte (à transformer en visuel neutre):
+- Thème: {theme}
+- Nom: {name}
+- Rôle: {role}
+- Personnalité: {personality}
+
+Crée une description courte (max 15 mots) qui décrit:
+- Apparence générale et vêtements
+- Expression et éclairage
+- Style artistique (portrait photographique, peinture, etc.)
+
+AUCUN mot lié au crime/mystère. Seulement des éléments visuels neutres."""
     else:
-        system_prompt = """You are an assistant that creates portrait descriptions for image generation.
+        system_prompt = """You are an expert in creating ultra-safe DALL-E prompts.
 
-Create a visual description of a character portrait based on their role, personality and game theme.
-Focus on: physical appearance, clothing, facial expression, artistic style, theme atmosphere.
-Avoid all sensitive words and criminal context.
+IMPORTANT: DALL-E rejects any content related to crime, violence, weapons, death, etc.
 
-Reply ONLY with the portrait description, no explanation."""
+Your role:
+1. Analyze the character context
+2. Create a 100% neutral and artistic portrait prompt
+3. Replace ALL problematic terms with neutral visual descriptions
+4. Focus ONLY on: clothing, facial expression, lighting, artistic style
 
-        user_prompt = f"""Create a portrait description for this character:
-Game theme: {theme}
-Name: {name}
-Role: {role}
-Personality: {personality}
+Reply ONLY with the portrait description, without any criminal context."""
 
-Describe the portrait in 2 sentences maximum, elegant artistic portrait style that reflects the theme."""
+        user_prompt = f"""Create an ultra-safe DALL-E prompt for this portrait:
+
+Context (to transform into neutral visuals):
+- Theme: {theme}
+- Name: {name}
+- Role: {role}
+- Personality: {personality}
+
+Create a short description (max 15 words) describing:
+- General appearance and clothing
+- Expression and lighting
+- Artistic style (photographic portrait, painting, etc.)
+
+NO words related to crime/mystery. Only neutral visual elements."""
 
     try:
         message = client.messages.create(
