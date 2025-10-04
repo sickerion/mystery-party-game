@@ -9,6 +9,7 @@ import {
   generateMetadata,
   validateScenario,
   generateImage,
+  generateCharacterImage,
 } from '@/services/api';
 import type { GameRequest, Character, Plot, Clue, Metadata, ValidationResult, GenerationStep } from '@/types';
 import { StepIndicator } from '@/components/generation/StepIndicator';
@@ -128,6 +129,16 @@ export function GenerationWizard() {
         generateImage(gameId).catch(err => {
           console.error('Failed to generate cover image:', err);
           // Don't show error to user, image generation is optional
+        });
+
+        // Generate character portrait images in background
+        characters.forEach(character => {
+          if (character.id) {
+            generateCharacterImage(gameId, character.id).catch(err => {
+              console.error(`Failed to generate portrait for ${character.name}:`, err);
+              // Don't show error to user, image generation is optional
+            });
+          }
         });
 
         setTimeout(() => navigate(`/games/${gameId}`), 2000);

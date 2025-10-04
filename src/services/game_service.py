@@ -125,6 +125,12 @@ def delete_game(db: Session, game_id: str) -> bool:
         # Delete associated cover image
         image_service.delete_cover_image(game_id)
 
+        # Delete associated character portrait images
+        from src.services import character_service
+        characters = character_service.get_characters_by_game(db, game_id)
+        for character in characters:
+            image_service.delete_character_image(game_id, character.id, character.name)
+
         # Delete from database (cascade will handle related records)
         db.delete(game)
         db.commit()

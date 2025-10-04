@@ -496,11 +496,11 @@ Générer automatiquement une image de portrait pour chaque personnage du jeu et
 - [x] 145. Ajouter l'endpoint POST `/games/{game_id}/characters/{character_id}/image`
 - [x] 146. Ajouter l'endpoint GET `/games/{game_id}/characters/{character_id}/image`
 - [x] 147. Mettre à jour `character_service.py` pour inclure la génération d'images
-- [ ] 148. Intégrer la génération d'images de personnages dans le wizard (après validation)
-- [ ] 149. Ajouter la suppression d'images de personnages dans `delete_game`
+- [x] 148. Intégrer la génération d'images de personnages dans le wizard (après validation)
+- [x] 149. Ajouter la suppression d'images de personnages dans `delete_game`
 
 ### 11.2 Frontend - Affichage des Images de Personnages
-- [ ] 150. Créer la fonction `generateCharacterImage()` dans `api.ts`
-- [ ] 151. Créer la fonction `getCharacterImageUrl()` dans `api.ts`
+- [x] 150. Créer la fonction `generateCharacterImage()` dans `api.ts`
+- [x] 151. Créer la fonction `getCharacterImageUrl()` dans `api.ts`
 - [ ] 152. Ajouter l'affichage de l'image dans la card de personnage (CharactersTab)
 - [ ] 153. Gérer les états de chargement et erreurs pour les images de personnages

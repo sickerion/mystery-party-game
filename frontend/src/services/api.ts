@@ -138,4 +138,22 @@ export function getImageUrl(gameId: string): string {
   return `${API_BASE_URL}/games/${gameId}/image`;
 }
 
+// Character image generation
+export async function generateCharacterImage(
+  gameId: string,
+  characterId: number
+): Promise<{ character_image_url: string; message: string }> {
+  const response = await fetch(
+    `${API_BASE_URL}/games/${gameId}/characters/${characterId}/image`,
+    {
+      method: 'POST',
+    }
+  );
+  return handleResponse(response);
+}
+
+export function getCharacterImageUrl(gameId: string, characterId: number): string {
+  return `${API_BASE_URL}/games/${gameId}/characters/${characterId}/image`;
+}
+
 export { ApiError };
