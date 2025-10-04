@@ -26,6 +26,9 @@ Once the project structure is established, update this file with:
 - Test execution
 - Development server setup
 - Deployment process
+- Update readme
+- Write unit test
+- Verify if it compiles after each step
 
 ## Testing
 

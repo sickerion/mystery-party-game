@@ -13,7 +13,7 @@
 - [x] 3. Ajouter la gestion de configuration (API keys, modèles LLM)
 
 ### Phase 2: Data Models
-- [ ] 4. Implémenter les modèles de données (Character, Clue, Mystery, Scenario)
+- [x] 4. Implémenter les modèles de données (Character, Clue, Mystery, Scenario)
 
 ### Phase 3: LangGraph Workflow
 - [ ] 5. Créer le graph LangGraph pour la génération de mystères
