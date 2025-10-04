@@ -27,19 +27,27 @@ Living player characters (all playable suspects/investigators):
 {characters_summary}
 
 Provide a JSON object with these exact fields:
-- setting: STRING - Detailed setting description combining time, place, and atmosphere (2-3 sentences)
-- victim: STRING - Name of the victim (must be an NPC, NOT one of the player characters listed above. Create a new character name for the victim)
-- crime: STRING - Description of the crime
-- culprit: STRING - Name of the culprit (MUST be one of the player characters listed above)
-- murder_method: STRING - How the crime was committed
-- timeline: ARRAY of STRINGS - 5-8 key events in chronological order (the murder should occur BEFORE the game starts)
-- resolution: STRING - How the mystery can be solved
+- setting: STRING - Setting description (2 sentences max)
+- victim: STRING - Name of the victim (must be an NPC, NOT one of the player characters above)
+- crime: STRING - Description of the crime (1 sentence)
+- culprit: STRING - Name of the culprit (MUST be one of the player characters above)
+- murder_method: STRING - How the crime was committed (1 sentence)
+- timeline: ARRAY of STRINGS - 5-7 key events (brief, 1 sentence each)
+- resolution: STRING - How the mystery can be solved (2-3 sentences max)
 
-IMPORTANT:
-1. Return ONLY a valid JSON object. The 'setting' field must be a single string, not an object.
-2. The VICTIM must be an NPC (not a player character).
-3. The CULPRIT must be one of the player characters listed above.
-4. The victim is already DEAD when the game starts. The timeline should show the murder happened before gameplay begins."""
+CRITICAL: Keep ALL descriptions CONCISE (1-3 sentences) to ensure complete JSON response.
+Return ONLY valid JSON, nothing else.
+
+Example format:
+{{
+  "setting": "A Victorian mansion during a thunderstorm. Guests are trapped inside.",
+  "victim": "Lord Blackwood",
+  "crime": "Poisoned during dinner",
+  "culprit": "Lady Smith",
+  "murder_method": "Arsenic in the wine",
+  "timeline": ["Guest arrive at 6pm", "Dinner served at 7pm", "Victim collapses at 8pm"],
+  "resolution": "The poisoned wine glass has fingerprints matching the culprit."
+}}"""
 
     messages = [
         SystemMessage(content=system_prompt),
@@ -69,6 +77,28 @@ IMPORTANT:
         print(f"Error parsing plot: {e}")
         print(f"Response content length: {len(response.content)}")
         print(f"Response content (last 1000 chars): {response.content[-1000:]}")
+
+        # Try to salvage partial JSON by finding the last complete closing brace
+        try:
+            content = response.content
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+
+            # Try to find the last valid closing brace
+            last_brace = content.rfind('}')
+            if last_brace > 0:
+                # Try parsing up to the last brace
+                truncated_content = content[:last_brace + 1]
+                plot_data = json.loads(truncated_content)
+                plot = Plot(**plot_data)
+                state["plot"] = plot
+                print(f"Successfully recovered plot from partial JSON")
+                return state
+        except Exception as recovery_error:
+            print(f"Recovery attempt failed: {recovery_error}")
+
         state["plot"] = None
     except Exception as e:
         print(f"Unexpected error parsing plot: {e}")
