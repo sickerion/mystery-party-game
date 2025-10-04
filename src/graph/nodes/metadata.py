@@ -1,0 +1,44 @@
+"""Metadata generation node."""
+
+import json
+from langchain_core.messages import SystemMessage, HumanMessage
+from src.models.state import MysteryGenerationState
+from src.graph.nodes.utils import get_llm
+
+
+def generate_metadata_node(state: MysteryGenerationState) -> MysteryGenerationState:
+    """Generate title, instructions, and introduction."""
+    llm = get_llm()
+
+    system_prompt = """You are an expert game designer creating engaging mystery party games.
+Create compelling titles, clear instructions, and atmospheric introductions."""
+
+    user_prompt = f"""Create metadata for a mystery party game:
+- Theme: {state['theme']}
+- Number of players: {state['num_players']}
+
+Provide:
+- title: Catchy title for the game
+- estimated_duration: Estimated play time in minutes
+- game_instructions: Clear instructions for the game host (2-3 paragraphs)
+- introduction: Atmospheric opening scene to set the stage (2-3 paragraphs)
+
+Return as JSON object."""
+
+    messages = [
+        SystemMessage(content=system_prompt),
+        HumanMessage(content=user_prompt)
+    ]
+
+    response = llm.invoke(messages)
+
+    try:
+        metadata = json.loads(response.content)
+        state["title"] = metadata.get("title")
+        state["estimated_duration"] = metadata.get("estimated_duration")
+        state["game_instructions"] = metadata.get("game_instructions")
+        state["introduction"] = metadata.get("introduction")
+    except Exception as e:
+        print(f"Error parsing metadata: {e}")
+
+    return state

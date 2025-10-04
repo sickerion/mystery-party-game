@@ -2,13 +2,11 @@
 
 from langgraph.graph import StateGraph, END
 from src.models.state import MysteryGenerationState
-from src.graph.nodes import (
-    generate_characters_node,
-    generate_plot_node,
-    generate_clues_node,
-    generate_metadata_node,
-    validate_scenario_node,
-)
+from src.graph.nodes.characters import generate_characters_node
+from src.graph.nodes.plot import generate_plot_node
+from src.graph.nodes.clues import generate_clues_node
+from src.graph.nodes.metadata import generate_metadata_node
+from src.graph.nodes.validation import validate_scenario_node
 
 
 def should_retry(state: MysteryGenerationState) -> str:

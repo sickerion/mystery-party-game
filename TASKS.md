@@ -16,9 +16,9 @@
 - [x] 4. Implémenter les modèles de données (Character, Clue, Mystery, Scenario)
 
 ### Phase 3: LangGraph Workflow
-- [ ] 5. Créer le graph LangGraph pour la génération de mystères
-- [ ] 6. Implémenter les nodes du graph (génération personnages, intrigue, indices)
-- [ ] 7. Ajouter la logique de validation et cohérence du scénario
+- [x] 5. Créer le graph LangGraph pour la génération de mystères
+- [x] 6. Implémenter les nodes du graph (génération personnages, intrigue, indices)
+- [x] 7. Ajouter la logique de validation et cohérence du scénario
 
 ### Phase 4: API
 - [ ] 8. Créer l'API REST/FastAPI pour exposer les fonctionnalités
