@@ -60,6 +60,18 @@
     "validate": "Validate Scenario",
     "viewGame": "View Complete Game"
   },
+  "difficulty": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard"
+  },
+  "audio": {
+    "checkingStatus": "Checking audio status...",
+    "generateDescription": "Generate audio version of the introduction using text-to-speech.",
+    "generateButton": "Generate Audio",
+    "generating": "Generating Audio...",
+    "introductionLabel": "Introduction Audio"
+  },
   "gameDetails": {
     "tabs": {
       "overview": "Overview",

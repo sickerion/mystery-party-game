@@ -30,6 +30,10 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
     return t(`status.${status}`, status);
   };
 
+  const getDifficultyLabel = (difficulty: string) => {
+    return t(`difficulty.${difficulty}`, difficulty);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -37,7 +41,7 @@ export function GameCard({ game, onDelete, isDeleting = false }: GameCardProps) 
           <div>
             <CardTitle>{game.theme}</CardTitle>
             <CardDescription>
-              {game.num_players} {t('landing.players')} • {game.difficulty}
+              {game.num_players} {t('landing.players')} • {getDifficultyLabel(game.difficulty)}
             </CardDescription>
           </div>
           <Badge variant={statusColors[game.status] || 'outline'}>

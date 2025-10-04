@@ -67,7 +67,7 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
           </div>
           <div>
             <span className="text-gold font-semibold">{t('gameDetails.overview.difficulty')}: </span>
-            <span className="text-darkText dark:text-offWhite">{scenario.difficulty}</span>
+            <span className="text-darkText dark:text-offWhite">{t(`difficulty.${scenario.difficulty}`, scenario.difficulty)}</span>
           </div>
           <div>
             <span className="text-gold font-semibold">{t('gameDetails.overview.players')}: </span>
@@ -91,12 +91,12 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
             {checkingAudio ? (
               <div className="flex items-center justify-center py-4">
                 <Spinner size="sm" className="mr-2" />
-                <span className="text-sm text-gray-600 dark:text-lightGray">Checking audio status...</span>
+                <span className="text-sm text-gray-600 dark:text-lightGray">{t('audio.checkingStatus')}</span>
               </div>
             ) : !hasAudio ? (
               <div>
                 <p className="text-sm text-gray-600 dark:text-lightGray mb-4">
-                  Generate audio version of the introduction using text-to-speech.
+                  {t('audio.generateDescription')}
                 </p>
                 <Button
                   onClick={handleGenerateAudio}
@@ -106,12 +106,12 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
                   {generatingAudio ? (
                     <>
                       <Spinner size="sm" className="mr-2" />
-                      Generating Audio...
+                      {t('audio.generating')}
                     </>
                   ) : (
                     <>
                       <Volume2 className="w-4 h-4 mr-2" />
-                      Generate Audio
+                      {t('audio.generateButton')}
                     </>
                   )}
                 </Button>
@@ -122,7 +122,7 @@ export function OverviewTab({ scenario }: OverviewTabProps) {
             ) : (
               <AudioPlayer
                 audioUrl={getAudioUrl(id!, 'introduction')}
-                label="Introduction Audio"
+                label={t('audio.introductionLabel')}
               />
             )}
           </CardContent>

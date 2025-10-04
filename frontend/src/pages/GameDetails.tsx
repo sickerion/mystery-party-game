@@ -73,7 +73,7 @@ export function GameDetails() {
           <div className="flex items-center gap-4 text-gray-600 dark:text-lightGray">
             <span>{scenario.num_players} {t('landing.players')}</span>
             <span>•</span>
-            <span>{scenario.difficulty}</span>
+            <span>{t(`difficulty.${scenario.difficulty}`, scenario.difficulty)}</span>
             <span>•</span>
             <span>{scenario.estimated_duration} {t('gameDetails.overview.minutes')}</span>
           </div>
