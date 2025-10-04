@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
 from src.database.base import get_db
-from src.services import game_service, metadata_service, plot_service, image_service, character_service
+from src.services import game_service, metadata_service, image_service, character_service
 
 
 router = APIRouter(prefix="/games", tags=["images"])
@@ -29,7 +29,7 @@ async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
     """
     Generate a cover image for the game.
 
-    Requires metadata and plot to be generated first.
+    Requires metadata to be generated first.
     Uses DALL-E to create a themed cover image.
     Saves image path in the database.
     """
@@ -38,20 +38,12 @@ async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
     if not game:
         raise HTTPException(status_code=404, detail="Game not found")
 
-    # Check metadata exists
+    # Check metadata exists (need title for image generation)
     metadata = metadata_service.get_metadata_by_game(db, game_id)
     if not metadata:
         raise HTTPException(
             status_code=400,
             detail="Metadata must be generated first. Call POST /games/{game_id}/metadata"
-        )
-
-    # Check plot exists (need setting for image generation)
-    plot = plot_service.get_plot_by_game(db, game_id)
-    if not plot:
-        raise HTTPException(
-            status_code=400,
-            detail="Plot must be generated first. Call POST /games/{game_id}/plot"
         )
 
     # Get language from game
@@ -62,7 +54,7 @@ async def generate_cover_image(game_id: str, db: Session = Depends(get_db)):
         image_path = image_service.generate_cover_image(
             game_id=game_id,
             theme=game.theme,
-            setting=plot.setting,
+            title=metadata.title,
             language=language
         )
 
