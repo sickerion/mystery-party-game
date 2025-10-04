@@ -288,7 +288,7 @@ Ajouter un système de thème (dark/light mode) et l'internationalisation pour s
 - [x] 88. Tester le theme toggle sur toutes les pages
 
 ### 8.2 Internationalisation (i18n)
-- [ ] 89. Installer react-i18next
+- [x] 89. Installer react-i18next
   - npm install react-i18next i18next
 - [ ] 90. Créer la structure des fichiers de traduction
   - src/locales/en/translation.json
