@@ -61,14 +61,14 @@
     "viewGame": "Voir le Jeu Complet",
     "charactersStep": {
       "title": "Générer les Personnages",
-      "ready": "Prêt à générer les personnages pour votre mystère",
+      "ready": "Prêt à générer les personnages pour votre meurtre et mystère",
       "generate": "Générer les Personnages",
       "generated": "personnages générés !",
       "continue": "Continuer vers l'Intrigue"
     },
     "plotStep": {
       "title": "Générer l'Intrigue",
-      "ready": "Créer l'histoire principale et le mystère",
+      "ready": "Créer l'histoire principale et le meurtre et mystère",
       "generate": "Générer l'Intrigue",
       "generated": "Intrigue générée !",
       "crime": "Crime",

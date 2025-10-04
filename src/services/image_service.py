@@ -172,7 +172,7 @@ def get_image_file_path(game_id: str) -> Optional[Path]:
     return filepath if filepath.exists() else None
 
 
-def sanitize_character_prompt_with_ai(name: str, role: str, personality: str, language: str) -> str:
+def sanitize_character_prompt_with_ai(name: str, role: str, personality: str, theme: str, language: str) -> str:
     """
     Use Claude AI to create a safe character portrait prompt.
 
@@ -180,6 +180,7 @@ def sanitize_character_prompt_with_ai(name: str, role: str, personality: str, la
         name: Character name
         role: Character role
         personality: Character personality
+        theme: Game theme for context
         language: Language code
 
     Returns:
@@ -191,33 +192,35 @@ def sanitize_character_prompt_with_ai(name: str, role: str, personality: str, la
     if language == "fr":
         system_prompt = """Tu es un assistant qui crée des descriptions de portraits pour la génération d'images.
 
-Crée une description visuelle d'un portrait de personnage basée sur leur rôle et personnalité.
-Focus sur: apparence physique, vêtements, expression faciale, style artistique.
+Crée une description visuelle d'un portrait de personnage basée sur leur rôle, personnalité et le thème du jeu.
+Focus sur: apparence physique, vêtements, expression faciale, style artistique, ambiance du thème.
 Évite tous les mots sensibles et tout contexte criminel.
 
 Réponds UNIQUEMENT avec la description du portrait, sans explication."""
 
         user_prompt = f"""Crée une description de portrait pour ce personnage:
+Thème du jeu: {theme}
 Nom: {name}
 Rôle: {role}
 Personnalité: {personality}
 
-Décris le portrait en 2 phrases maximum, style portrait artistique élégant."""
+Décris le portrait en 2 phrases maximum, style portrait artistique élégant qui reflète le thème."""
     else:
         system_prompt = """You are an assistant that creates portrait descriptions for image generation.
 
-Create a visual description of a character portrait based on their role and personality.
-Focus on: physical appearance, clothing, facial expression, artistic style.
+Create a visual description of a character portrait based on their role, personality and game theme.
+Focus on: physical appearance, clothing, facial expression, artistic style, theme atmosphere.
 Avoid all sensitive words and criminal context.
 
 Reply ONLY with the portrait description, no explanation."""
 
         user_prompt = f"""Create a portrait description for this character:
+Game theme: {theme}
 Name: {name}
 Role: {role}
 Personality: {personality}
 
-Describe the portrait in 2 sentences maximum, elegant artistic portrait style."""
+Describe the portrait in 2 sentences maximum, elegant artistic portrait style that reflects the theme."""
 
     try:
         message = client.messages.create(
@@ -244,6 +247,7 @@ def generate_character_portrait(
     name: str,
     role: str,
     personality: str,
+    theme: str,
     language: str = "en"
 ) -> str:
     """
@@ -255,6 +259,7 @@ def generate_character_portrait(
         name: Character name
         role: Character role
         personality: Character personality
+        theme: Game theme for context
         language: Language code ('en' or 'fr')
 
     Returns:
@@ -272,7 +277,7 @@ def generate_character_portrait(
     client = OpenAI(api_key=settings.openai_api_key)
 
     # Use Claude AI to sanitize the prompt, creating a safe portrait description
-    sanitized_description = sanitize_character_prompt_with_ai(name, role, personality, language)
+    sanitized_description = sanitize_character_prompt_with_ai(name, role, personality, theme, language)
 
     # Create final DALL-E prompt with sanitized content
     if language == "fr":

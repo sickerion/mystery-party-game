@@ -150,6 +150,7 @@ async def generate_character_portrait_endpoint(
             name=character.name,
             role=character.role,
             personality=character.personality,
+            theme=game.theme,
             language=language
         )
 

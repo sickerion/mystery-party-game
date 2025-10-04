@@ -68,6 +68,17 @@ export function GenerationWizard() {
       setError(null);
       const data = await generateCharacters(gameId);
       setCharacters(data);
+
+      // Start generating character portrait images in background after characters are ready
+      data.forEach(character => {
+        if (character.id) {
+          generateCharacterImage(gameId, character.id).catch(err => {
+            console.error(`Failed to generate portrait for ${character.name}:`, err);
+            // Don't show error to user, image generation is optional
+          });
+        }
+      });
+
       setCurrentStep('plot');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate characters');
@@ -82,17 +93,6 @@ export function GenerationWizard() {
       setError(null);
       const data = await generatePlot(gameId);
       setPlot(data);
-
-      // Start generating character portrait images in background after plot is ready
-      characters.forEach(character => {
-        if (character.id) {
-          generateCharacterImage(gameId, character.id).catch(err => {
-            console.error(`Failed to generate portrait for ${character.name}:`, err);
-            // Don't show error to user, image generation is optional
-          });
-        }
-      });
-
       setCurrentStep('clues');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate plot');
