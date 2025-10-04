@@ -38,13 +38,26 @@ Characters: {characters_list}
 
 For each clue provide:
 - clue_id: Unique identifier (e.g., "clue_001")
-- description: What the clue is
-- location: Where it's found
+- description: What the clue is (1-2 sentences, keep concise)
+- location: Where it's found (brief)
 - revealed_by: Which character has or reveals this clue
-- significance: Why it's important
+- significance: Why it's important (1 sentence)
 - misleading: Boolean - is this a red herring?
 
-Return the response as a JSON array of clue objects."""
+IMPORTANT: Keep all descriptions CONCISE (1-2 sentences max) to ensure the complete JSON response.
+Return ONLY a valid JSON array, nothing else.
+
+Example format:
+[
+  {{
+    "clue_id": "clue_001",
+    "description": "A torn letter fragment found in the fireplace.",
+    "location": "Study fireplace",
+    "revealed_by": "John Smith",
+    "significance": "Shows victim was being blackmailed.",
+    "misleading": false
+  }}
+]"""
 
     messages = [
         SystemMessage(content=system_prompt),
@@ -79,7 +92,36 @@ Return the response as a JSON array of clue objects."""
         print(f"Error parsing clues: {e}")
         print(f"Response content length: {len(response.content)}")
         print(f"Response content (last 1000 chars): {response.content[-1000:]}")
-        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
+
+        # Try to salvage partial JSON by finding the last complete object
+        try:
+            content = response.content
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+
+            # Try to find the last valid closing bracket
+            last_bracket = content.rfind(']')
+            if last_bracket > 0:
+                # Try parsing up to the last bracket
+                truncated_content = content[:last_bracket + 1]
+                clues_data = json.loads(truncated_content)
+
+                if isinstance(clues_data, dict) and "clues" in clues_data:
+                    clues_data = clues_data["clues"]
+
+                clues = [Clue(**clue) for clue in clues_data]
+                state["clues"] = clues
+                print(f"Successfully recovered {len(clues)} clues from partial JSON")
+                return state
+        except Exception as recovery_error:
+            print(f"Recovery attempt failed: {recovery_error}")
+
+        state["clues"] = []
+    except Exception as e:
+        print(f"Unexpected error parsing clues: {e}")
+        print(f"Response content: {response.content[:1000]}")
         state["clues"] = []
 
     return state
