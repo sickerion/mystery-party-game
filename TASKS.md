@@ -502,5 +502,5 @@ Générer automatiquement une image de portrait pour chaque personnage du jeu et
 ### 11.2 Frontend - Affichage des Images de Personnages
 - [x] 150. Créer la fonction `generateCharacterImage()` dans `api.ts`
 - [x] 151. Créer la fonction `getCharacterImageUrl()` dans `api.ts`
-- [ ] 152. Ajouter l'affichage de l'image dans la card de personnage (CharactersTab)
-- [ ] 153. Gérer les états de chargement et erreurs pour les images de personnages
+- [x] 152. Ajouter l'affichage de l'image dans la card de personnage (CharactersTab)
+- [x] 153. Gérer les états de chargement et erreurs pour les images de personnages

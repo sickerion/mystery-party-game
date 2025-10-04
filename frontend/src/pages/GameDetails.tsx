@@ -116,7 +116,7 @@ export function GameDetails() {
 
       {/* Tab Content */}
       {activeTab === 'overview' && <OverviewTab scenario={scenario} />}
-      {activeTab === 'characters' && <CharactersTab characters={scenario.characters} />}
+      {activeTab === 'characters' && <CharactersTab characters={scenario.characters} gameId={id!} />}
       {activeTab === 'plot' && <PlotTab plot={scenario.plot} />}
       {activeTab === 'clues' && <CluesTab clues={scenario.clues} />}
       {activeTab === 'emails' && <EmailsTab characters={scenario.characters} />}
