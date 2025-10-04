@@ -82,6 +82,24 @@ export function GenerationWizard() {
       setError(null);
       const data = await generatePlot(gameId);
       setPlot(data);
+
+      // Start generating all images in background after plot is ready
+      // Cover image generation
+      generateImage(gameId).catch(err => {
+        console.error('Failed to generate cover image:', err);
+        // Don't show error to user, image generation is optional
+      });
+
+      // Character portrait images generation
+      characters.forEach(character => {
+        if (character.id) {
+          generateCharacterImage(gameId, character.id).catch(err => {
+            console.error(`Failed to generate portrait for ${character.name}:`, err);
+            // Don't show error to user, image generation is optional
+          });
+        }
+      });
+
       setCurrentStep('clues');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to generate plot');
@@ -125,22 +143,6 @@ export function GenerationWizard() {
       const data = await validateScenario(gameId);
       setValidation(data);
       if (data.validation_passed) {
-        // Generate cover image in background (don't wait for it)
-        generateImage(gameId).catch(err => {
-          console.error('Failed to generate cover image:', err);
-          // Don't show error to user, image generation is optional
-        });
-
-        // Generate character portrait images in background
-        characters.forEach(character => {
-          if (character.id) {
-            generateCharacterImage(gameId, character.id).catch(err => {
-              console.error(`Failed to generate portrait for ${character.name}:`, err);
-              // Don't show error to user, image generation is optional
-            });
-          }
-        });
-
         setTimeout(() => navigate(`/games/${gameId}`), 2000);
       }
     } catch (err) {
