@@ -1,7 +1,5 @@
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
-import enFlag from '../assets/en.png';
-import frFlag from '../assets/fr.png';
 
 export function LanguageSwitcher() {
   const { i18n } = useTranslation();
@@ -14,16 +12,12 @@ export function LanguageSwitcher() {
   return (
     <Button
       variant="outline"
-      size="icon"
+      size="sm"
       onClick={toggleLanguage}
       aria-label="Toggle language"
-      className="relative overflow-hidden"
+      className="font-semibold"
     >
-      <img
-        src={i18n.language === 'en' ? enFlag : frFlag}
-        alt={i18n.language === 'en' ? 'English' : 'Français'}
-        className="h-5 w-5 object-cover rounded-sm"
-      />
+      {i18n.language === 'en' ? 'FR' : 'EN'}
     </Button>
   );
 }
