@@ -455,7 +455,7 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 ### 10.1 Backend - Génération d'Images
 - [x] 123. Ajouter le champ `cover_image_path` dans le modèle `GeneratedMetadata` (2025-01-04)
 - [x] 124. Créer une migration Alembic pour ajouter le champ `cover_image_path` (2025-01-04)
-- [ ] 125. Créer le service `image_service.py` pour la génération d'images avec DALL-E
+- [x] 125. Créer le service `image_service.py` pour la génération d'images avec DALL-E (2025-01-04)
   - Fonction pour générer l'image à partir du thème et de l'intrigue
   - Téléchargement et sauvegarde de l'image
   - Gestion du stockage dans `images/`
@@ -471,11 +471,11 @@ Générer automatiquement une image illustrative pour chaque jeu de mystère en 
 - [ ] 133. Créer la fonction `getImageUrl()` dans `api.ts`
 - [ ] 134. Ajouter l'affichage de l'image dans `GameCard.tsx`
 - [ ] 135. Ajouter l'affichage de l'image dans `GameDetails.tsx`
-- [ ] 136. Ajouter l'étape de génération d'image dans le wizard
+- [ ] 136. Génération d'image dans le wizard
 - [ ] 137. Gérer les états de chargement et erreurs pour l'image
 
 ### 10.3 Configuration et Documentation
-- [ ] 138. Créer le répertoire `images/` avec .gitignore
+- [x] 138. Créer le répertoire `images/` avec .gitignore (2025-01-04)
 - [ ] 139. Mettre à jour `.env.example` avec configuration DALL-E
 - [ ] 140. Documenter la génération d'images dans CLAUDE.md
 - [ ] 141. Tests manuels de génération et affichage des images

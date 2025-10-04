@@ -55,6 +55,12 @@ audio_files/*.mp3
 audio_files/*.wav
 !audio_files/README.md
 
+# Images (generated content)
+images/*.png
+images/*.jpg
+images/*.jpeg
+!images/README.md
+
 # OS
 .DS_Store
 Thumbs.db
