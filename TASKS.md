@@ -125,7 +125,7 @@ Diviser la génération de mystère en appels API séparés, un pour chaque éta
 ### 6.6 Tests
 - [x] 41. Tests unitaires pour les services de base de données (20 tests dans test_services.py)
 - [x] 42. Tests d'intégration pour les nouveaux endpoints API (14 tests dans test_api_incremental.py)
-- [ ] 43. Tests end-to-end du workflow complet incrémental avec mocks LLM
+- [x] 43. Tests end-to-end du workflow complet incrémental avec mocks LLM
 
 ### 6.7 Documentation
 - [x] 44. Mettre à jour CLAUDE.md avec la nouvelle architecture API incrémentale
@@ -161,3 +161,129 @@ TypedDict:
 - FastAPI: API REST
 - Pydantic: Validation des modèles
 - Python 3.11+
+
+---
+
+## Phase 7: Frontend Web Application
+
+### Objectif
+Créer une interface web moderne avec React, Vite et shadcn/ui pour générer et gérer les mystery party games.
+
+### 7.1 Configuration Initiale
+- [x] 47. Initialiser le projet React avec Vite et TypeScript
+  - Créer le projet dans le répertoire `frontend/`
+  - Configurer TypeScript, ESLint, Prettier
+- [x] 48. Installer et configurer shadcn/ui
+  - Installer les dépendances (tailwindcss, shadcn/ui)
+  - Configurer la palette de couleurs personnalisée
+- [x] 49. Configurer la palette de couleurs dans Tailwind
+  - Couleurs principales: navy (#1a1a2e), darkNavy (#16213e), teal (#0f3460)
+  - Couleurs d'accentuation: gold (#d4af37), crimson (#8b0000), purple (#9b59b6)
+  - Couleurs neutres: offWhite (#e8e8e8), lightGray (#a8a8a8), darkGray (#2d2d2d)
+- [x] 50. Créer la structure de base du projet frontend
+  - Dossiers: components/, pages/, services/, hooks/, types/, utils/
+
+### 7.2 Services API
+- [x] 51. Créer le service API client pour communiquer avec le backend
+  - Fonctions pour tous les endpoints: POST /games, POST /games/{id}/characters, etc.
+  - Gestion des erreurs et loading states
+- [x] 52. Créer les types TypeScript pour les modèles de données
+  - Game, Character, Plot, Clue, Metadata, ValidationResult
+  - GameRequest, MysteryScenario
+
+### 7.3 Composants de Base
+- [x] 53. Créer le composant Layout avec navigation
+- [x] 54. Créer le composant Header avec branding
+- [x] 55. Créer le composant LoadingSpinner
+- [x] 56. Créer le composant ErrorAlert
+- [x] 57. Créer le composant GameCard pour afficher une partie dans la liste
+
+### 7.4 Page Landing (Liste des Parties)
+- [x] 58. Créer la page Landing (`pages/Landing.tsx`)
+  - Afficher la liste des parties générées (GET /games)
+  - Filtres par status
+  - Bouton "Nouvelle Partie"
+- [ ] 59. Implémenter la pagination pour la liste des parties
+- [x] 60. Ajouter la fonctionnalité de suppression de partie (DELETE /games/{id})
+
+### 7.5 Pipeline de Génération
+- [x] 61. Créer le composant GenerationWizard avec stepper
+  - Étape 1: Formulaire initial (thème, nombre de joueurs, difficulté)
+  - Étape 2: Génération des personnages
+  - Étape 3: Génération de l'intrigue
+  - Étape 4: Génération des indices
+  - Étape 5: Génération des métadonnées
+  - Étape 6: Validation
+- [x] 62. Créer le composant StepIndicator pour visualiser la progression
+- [x] 63. Créer le formulaire de création de partie (GameForm)
+  - Champs: theme, num_players, difficulty, special_requests
+  - Validation des champs
+- [x] 64. Implémenter la logique de génération séquentielle
+  - Appels API successifs pour chaque étape
+  - Affichage des résultats intermédiaires
+  - Gestion des erreurs et retry
+
+### 7.6 Composants d'Affichage des Résultats
+- [x] 65. Créer le composant CharacterDisplay pour afficher un personnage
+  - Afficher name, role, background, personality, secret, motive
+- [x] 66. Créer le composant PlotDisplay pour afficher l'intrigue
+  - Afficher setting, victim, crime, culprit, method, timeline, resolution
+- [x] 67. Créer le composant ClueDisplay pour afficher un indice
+  - Afficher description, location, revealed_by, significance
+  - Badge pour les red herrings
+- [x] 68. Créer le composant MetadataDisplay pour titre et instructions
+- [x] 69. Créer le composant ValidationDisplay pour résultats de validation
+
+### 7.7 Page de Détails d'une Partie
+- [x] 70. Créer la page GameDetails (`pages/GameDetails.tsx`)
+  - Route: /games/{id}
+  - Charger et afficher toutes les informations (GET /games/{id})
+  - Sections: Characters, Plot, Clues, Metadata, Validation
+- [x] 71. Ajouter des onglets pour organiser les sections
+- [ ] 72. Implémenter le bouton "Exporter PDF" (optionnel)
+
+### 7.8 Formulaire d'Envoi de Courriels
+- [x] 73. Créer le composant EmailAssignmentForm
+  - Liste des personnages avec champ email
+  - Validation des emails
+  - Bouton "Envoyer les emails"
+- [ ] 74. Créer l'endpoint backend POST /games/{id}/send-emails
+  - Service d'envoi d'emails (SMTP ou service tiers)
+  - Template d'email avec informations du personnage
+- [x] 75. Intégrer le formulaire dans la page GameDetails
+
+### 7.9 Routing et Navigation
+- [x] 76. Configurer React Router
+  - Route "/" → Landing
+  - Route "/games/new" → GenerationWizard
+  - Route "/games/{id}" → GameDetails
+- [x] 77. Implémenter la navigation entre les pages
+
+### 7.10 Tests et Finitions
+- [ ] 78. Ajouter des tests pour les composants principaux
+  - Tests avec React Testing Library
+- [ ] 79. Optimiser le responsive design pour mobile/tablette
+- [ ] 80. Ajouter des animations et transitions (framer-motion)
+- [ ] 81. Implémenter le dark mode (optionnel)
+- [ ] 82. Configurer le build de production (Vite)
+- [ ] 83. Créer un README pour le frontend
+
+### Palette de Couleurs (Tailwind Config)
+```js
+colors: {
+  // Couleurs principales
+  navy: '#1a1a2e',        // Fond principal
+  darkNavy: '#16213e',    // Sections
+  teal: '#0f3460',        // Accents
+
+  // Couleurs d'accentuation
+  gold: '#d4af37',        // CTA, éléments importants
+  crimson: '#8b0000',     // Alertes, mystère
+  purple: '#9b59b6',      // Liens, hover
+
+  // Couleurs neutres
+  offWhite: '#e8e8e8',    // Texte principal
+  lightGray: '#a8a8a8',   // Texte secondaire
+  darkGray: '#2d2d2d',    // Cartes, panels
+}
+```

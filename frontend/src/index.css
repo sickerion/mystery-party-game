@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 26 26 46; /* #1a1a2e navy */
+    --foreground: 232 232 232; /* #e8e8e8 offWhite */
+
+    --card: 45 45 45; /* #2d2d2d darkGray */
+    --card-foreground: 232 232 232; /* #e8e8e8 offWhite */
+
+    --popover: 22 33 62; /* #16213e darkNavy */
+    --popover-foreground: 232 232 232; /* #e8e8e8 offWhite */
+
+    --primary: 212 175 55; /* #d4af37 gold */
+    --primary-foreground: 26 26 46; /* #1a1a2e navy */
+
+    --secondary: 15 52 96; /* #0f3460 teal */
+    --secondary-foreground: 232 232 232; /* #e8e8e8 offWhite */
+
+    --muted: 22 33 62; /* #16213e darkNavy */
+    --muted-foreground: 168 168 168; /* #a8a8a8 lightGray */
+
+    --accent: 155 89 182; /* #9b59b6 purple */
+    --accent-foreground: 232 232 232; /* #e8e8e8 offWhite */
+
+    --destructive: 139 0 0; /* #8b0000 crimson */
+    --destructive-foreground: 232 232 232; /* #e8e8e8 offWhite */
+
+    --border: 15 52 96; /* #0f3460 teal */
+    --input: 15 52 96; /* #0f3460 teal */
+    --ring: 212 175 55; /* #d4af37 gold */
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-navy text-offWhite;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+}

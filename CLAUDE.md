@@ -6,10 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Mystery Party Game Generator - AI-powered application that generates complete murder mystery party game scenarios using LangGraph and Anthropic Claude.
 
-## Rules
+## Instructions
 - Divide the code correctly (ex: one file per model not all models in the same file)
 - Always commit and push after finishing a task
 - Write tests for implemented logics
+- Keep track of your progress in TASK.md
 
 ## Architecture
 
