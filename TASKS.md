@@ -344,3 +344,86 @@ colors: {
   darkGray: '#2d2d2d',    // Cartes, panels
 }
 ```
+
+---
+
+## Phase 9: Audio Generation for Introduction and Instructions
+
+### Objectif
+Générer des fichiers audio MP3 pour l'introduction et les instructions du jeu en utilisant text-to-speech. Ajouter des boutons pour générer et lire ces fichiers audio.
+
+### Approche Technique
+Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de text-to-speech.
+
+### 9.1 Backend - Database et Migrations
+- [x] 101. Analyser les capacités de génération audio d'Anthropic et alternatives (2025-10-04)
+  - Confirmé qu'Anthropic Claude API n'a pas de TTS natif
+  - Sélectionné OpenAI TTS comme solution (haute qualité, intégration simple)
+- [x] 102. Ajouter les champs audio à la table GeneratedMetadata (2025-10-04)
+  - audio_introduction_path: chemin vers le fichier MP3 de l'introduction
+  - audio_instructions_path: chemin vers le fichier MP3 des instructions
+- [x] 103. Créer la migration Alembic pour ajouter les champs audio (2025-10-04)
+- [x] 104. Exécuter la migration (2025-10-04)
+
+### 9.2 Backend - Stockage et Service Audio
+- [ ] 105. Créer le répertoire pour stocker les fichiers audio
+  - Créer `audio_files/` à la racine du projet
+  - Ajouter au .gitignore
+- [ ] 106. Créer `src/services/audio_service.py`
+  - generate_audio(text, output_path, language): génère MP3 avec OpenAI TTS
+  - delete_audio_files(game_id): supprime les fichiers audio d'une partie
+- [ ] 107. Ajouter OPENAI_API_KEY à src/config/settings.py
+- [ ] 108. Mettre à jour metadata_service.py
+  - Ajouter generate_audio_files(game_id)
+  - Ajouter get_audio_file_path(game_id, audio_type)
+
+### 9.3 Backend - API Endpoints
+- [ ] 109. Créer POST `/games/{game_id}/metadata/audio` endpoint
+  - Charge introduction et instructions depuis GeneratedMetadata
+  - Génère les deux fichiers audio (introduction et instructions)
+  - Sauvegarde les chemins dans la DB
+  - Retourne les URLs des fichiers
+- [ ] 110. Créer GET `/games/{game_id}/audio/{audio_type}` endpoint
+  - audio_type: 'introduction' ou 'instructions'
+  - Retourne le fichier MP3 avec Content-Type: audio/mpeg
+  - Gestion des erreurs si fichier n'existe pas
+- [ ] 111. Mettre à jour GET `/games/{game_id}` pour inclure les URLs audio
+  - Ajouter audio_introduction_url et audio_instructions_url dans la réponse
+
+### 9.4 Frontend - Types et API Client
+- [ ] 112. Mettre à jour `frontend/src/types/index.ts`
+  - Ajouter audio_introduction_url et audio_instructions_url à Metadata
+- [ ] 113. Mettre à jour `frontend/src/services/api.ts`
+  - generateAudio(gameId): appelle POST /games/{id}/metadata/audio
+  - getAudioUrl(gameId, audioType): retourne l'URL pour GET /games/{id}/audio/{type}
+
+### 9.5 Frontend - Composants UI
+- [ ] 114. Créer le composant AudioPlayer (`components/AudioPlayer.tsx`)
+  - Utiliser l'élément HTML5 <audio> avec contrôles
+  - Props: audioUrl, label
+  - Design cohérent avec shadcn/ui
+- [ ] 115. Mettre à jour MetadataDisplay pour inclure les boutons audio
+  - Ajouter bouton "Generate Audio" si audio n'existe pas
+  - Afficher AudioPlayer pour introduction si audio existe
+  - Afficher AudioPlayer pour instructions si audio existe
+  - Loading state pendant la génération
+  - Gestion des erreurs
+
+### 9.6 Tests
+- [ ] 116. Tests unitaires pour audio_service.py
+  - Mock OpenAI API
+  - Tester génération de fichier
+  - Tester gestion des erreurs
+- [ ] 117. Tests d'intégration pour les endpoints audio
+  - Test POST /games/{id}/metadata/audio
+  - Test GET /games/{id}/audio/{type}
+  - Test avec des fichiers manquants
+- [ ] 118. Tests frontend pour AudioPlayer
+  - Test rendering avec URL valide
+  - Test état de chargement
+
+### 9.7 Documentation et Déploiement
+- [ ] 119. Mettre à jour .env.example avec OPENAI_API_KEY
+- [ ] 120. Mettre à jour CLAUDE.md avec la fonctionnalité audio
+- [ ] 121. Documenter le format des fichiers audio et stockage
+- [ ] 122. Tester end-to-end la génération et lecture audio

@@ -121,6 +121,8 @@ class GeneratedMetadata(Base):
     estimated_duration = Column(Integer, nullable=False)  # in minutes
     game_instructions = Column(Text, nullable=False)
     introduction = Column(Text, nullable=False)
+    audio_introduction_path = Column(String, nullable=True)  # path to introduction audio file
+    audio_instructions_path = Column(String, nullable=True)  # path to instructions audio file
 
     # Relationships
     game = relationship("Game", back_populates="game_metadata")
