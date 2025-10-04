@@ -115,22 +115,22 @@ Diviser la génération de mystère en appels API séparés, un pour chaque éta
   - Supprime en cascade tous les éléments associés
 
 ### 6.5 Adaptations des Nodes
-- [ ] 39. Modifier les nodes pour accepter des données en entrée depuis la DB
-  - Actuellement les nodes utilisent MysteryGenerationState du graph
-  - Adapter pour recevoir des objets Pydantic depuis la DB
-- [ ] 40. Créer des fonctions wrapper pour chaque node
-  - `generate_characters_from_db(game_id)` charge Game, appelle node, sauvegarde résultat
-  - Idem pour plot, clues, metadata, validation
+- [x] 39. Modifier les nodes pour accepter des données en entrée depuis la DB
+  - Les endpoints API chargent depuis la DB et construisent MysteryGenerationState
+  - Les nodes reçoivent des objets Pydantic depuis la DB via les endpoints
+- [x] 40. Créer des fonctions wrapper pour chaque node
+  - Implémenté dans generation.py: charge Game, appelle node, sauvegarde résultat
+  - Chaque endpoint (characters, plot, clues, metadata, validate) fait ce workflow
 
 ### 6.6 Tests
-- [ ] 41. Tests unitaires pour les services de base de données
-- [ ] 42. Tests d'intégration pour les nouveaux endpoints API
-- [ ] 43. Tests end-to-end du workflow complet incrémental
+- [x] 41. Tests unitaires pour les services de base de données (20 tests dans test_services.py)
+- [x] 42. Tests d'intégration pour les nouveaux endpoints API (14 tests dans test_api_incremental.py)
+- [ ] 43. Tests end-to-end du workflow complet incrémental avec mocks LLM
 
 ### 6.7 Documentation
-- [ ] 44. Mettre à jour CLAUDE.md avec la nouvelle architecture API incrémentale
-- [ ] 45. Documenter le schéma de base de données
-- [ ] 46. Créer des exemples d'utilisation de l'API incrémentale
+- [x] 44. Mettre à jour CLAUDE.md avec la nouvelle architecture API incrémentale
+- [x] 45. Documenter le schéma de base de données (docs/DATABASE_SCHEMA.md)
+- [x] 46. Créer des exemples d'utilisation de l'API incrémentale (docs/API_EXAMPLES.md)
 
 ## Architecture Overview
 
