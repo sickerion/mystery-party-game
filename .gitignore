@@ -50,6 +50,11 @@ poetry.lock
 # Keep migration files in git for deployment
 !alembic/versions/.gitkeep
 
+# Audio files (generated content)
+audio_files/*.mp3
+audio_files/*.wav
+!audio_files/README.md
+
 # OS
 .DS_Store
 Thumbs.db

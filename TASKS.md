@@ -366,9 +366,9 @@ Utilisation d'OpenAI TTS API car Anthropic Claude n'a pas de capacité native de
 - [x] 104. Exécuter la migration (2025-10-04)
 
 ### 9.2 Backend - Stockage et Service Audio
-- [ ] 105. Créer le répertoire pour stocker les fichiers audio
-  - Créer `audio_files/` à la racine du projet
-  - Ajouter au .gitignore
+- [x] 105. Créer le répertoire pour stocker les fichiers audio (2025-10-04)
+  - Créé `audio_files/` à la racine du projet
+  - Ajouté au .gitignore
 - [ ] 106. Créer `src/services/audio_service.py`
   - generate_audio(text, output_path, language): génère MP3 avec OpenAI TTS
   - delete_audio_files(game_id): supprime les fichiers audio d'une partie
