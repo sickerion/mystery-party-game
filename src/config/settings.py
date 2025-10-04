@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     api_host: str = "0.0.0.0"
     api_port: int = 8000
 
+    # Database Configuration
+    database_url: str = "sqlite:///./mystery_party.db"
+
 
 def get_settings() -> Settings:
     """Get application settings singleton."""
