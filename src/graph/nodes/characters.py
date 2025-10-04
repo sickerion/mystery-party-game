@@ -40,11 +40,29 @@ Return the response as a JSON array of character objects."""
 
     # Parse the response and create Character objects
     try:
-        characters_data = json.loads(response.content)
+        content = response.content
+
+        # Try to extract JSON from markdown code blocks if present
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        # Remove any leading/trailing whitespace
+        content = content.strip()
+
+        # Parse JSON
+        characters_data = json.loads(content)
+
+        # Handle both array and object with "characters" key
+        if isinstance(characters_data, dict) and "characters" in characters_data:
+            characters_data = characters_data["characters"]
+
         characters = [Character(**char) for char in characters_data]
         state["characters"] = characters
     except Exception as e:
         print(f"Error parsing characters: {e}")
+        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
         state["characters"] = []
 
     return state

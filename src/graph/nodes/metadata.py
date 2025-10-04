@@ -32,13 +32,27 @@ Return as JSON object."""
 
     response = llm.invoke(messages)
 
+    # Parse the response and extract metadata
     try:
-        metadata = json.loads(response.content)
+        content = response.content
+
+        # Try to extract JSON from markdown code blocks if present
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        # Remove any leading/trailing whitespace
+        content = content.strip()
+
+        # Parse JSON
+        metadata = json.loads(content)
         state["title"] = metadata.get("title")
         state["estimated_duration"] = metadata.get("estimated_duration")
         state["game_instructions"] = metadata.get("game_instructions")
         state["introduction"] = metadata.get("introduction")
     except Exception as e:
         print(f"Error parsing metadata: {e}")
+        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
 
     return state

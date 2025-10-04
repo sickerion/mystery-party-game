@@ -53,12 +53,31 @@ Return the response as a JSON array of clue objects."""
 
     response = llm.invoke(messages)
 
+    # Parse the response and create Clue objects
     try:
-        clues_data = json.loads(response.content)
+        content = response.content
+
+        # Try to extract JSON from markdown code blocks if present
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        # Remove any leading/trailing whitespace
+        content = content.strip()
+
+        # Parse JSON
+        clues_data = json.loads(content)
+
+        # Handle both array and object with "clues" key
+        if isinstance(clues_data, dict) and "clues" in clues_data:
+            clues_data = clues_data["clues"]
+
         clues = [Clue(**clue) for clue in clues_data]
         state["clues"] = clues
     except Exception as e:
         print(f"Error parsing clues: {e}")
+        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
         state["clues"] = []
 
     return state

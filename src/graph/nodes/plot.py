@@ -44,12 +44,26 @@ Return the response as a JSON object."""
 
     response = llm.invoke(messages)
 
+    # Parse the response and create Plot object
     try:
-        plot_data = json.loads(response.content)
+        content = response.content
+
+        # Try to extract JSON from markdown code blocks if present
+        if "```json" in content:
+            content = content.split("```json")[1].split("```")[0].strip()
+        elif "```" in content:
+            content = content.split("```")[1].split("```")[0].strip()
+
+        # Remove any leading/trailing whitespace
+        content = content.strip()
+
+        # Parse JSON
+        plot_data = json.loads(content)
         plot = Plot(**plot_data)
         state["plot"] = plot
     except Exception as e:
         print(f"Error parsing plot: {e}")
+        print(f"Response content: {response.content[:500]}")  # Print first 500 chars for debugging
         state["plot"] = None
 
     return state
