@@ -29,6 +29,7 @@ Once the project structure is established, update this file with:
 - Update readme
 - Write unit test
 - Verify if it compiles after each step
+- Run all tests after each step
 
 ## Testing
 
