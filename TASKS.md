@@ -21,10 +21,10 @@
 - [x] 7. Ajouter la logique de validation et cohérence du scénario
 
 ### Phase 4: API
-- [ ] 8. Créer l'API REST/FastAPI pour exposer les fonctionnalités
+- [x] 8. Créer l'API REST/FastAPI pour exposer les fonctionnalités
 
 ### Phase 5: Testing & Documentation
-- [ ] 9. Créer des tests pour les composants critiques
+- [x] 9. Créer des tests pour les composants critiques
 - [ ] 10. Documenter l'architecture et l'utilisation dans CLAUDE.md
 
 ## Architecture Overview
