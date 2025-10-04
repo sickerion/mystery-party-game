@@ -141,19 +141,25 @@ async def generate_characters(
         }
         characters_with_ids.append(Character(**char_dict))
 
+    # Prepare character data for background task
+    characters_for_bg = [
+        {
+            "id": db_char.id,
+            "name": db_char.name,
+            "role": db_char.role,
+            "personality": db_char.personality,
+        }
+        for db_char in db_characters
+    ]
+
+    print(f"[API] Adding background task to generate {len(characters_for_bg)} character portraits")
+    print(f"[API] Characters: {[c['name'] for c in characters_for_bg]}")
+
     # Start background task to generate character portrait images
     background_tasks.add_task(
         generate_character_images_background,
         game_id=game_id,
-        characters=[char_dict for char_dict in [
-            {
-                "id": db_char.id,
-                "name": db_char.name,
-                "role": db_char.role,
-                "personality": db_char.personality,
-            }
-            for db_char in db_characters
-        ]],
+        characters=characters_for_bg,
         theme=game.theme,
         language=game.language
     )

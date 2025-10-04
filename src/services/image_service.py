@@ -264,9 +264,13 @@ def generate_character_portrait(
     Raises:
         Exception: If OpenAI API key is not configured or generation fails
     """
+    print(f"[IMAGE SERVICE] Starting portrait generation for {name} (character_id: {character_id})")
+    print(f"[IMAGE SERVICE] Theme: {theme}, Language: {language}")
+
     settings = get_settings()
 
     if not settings.openai_api_key:
+        print(f"[IMAGE SERVICE] ERROR: OpenAI API key not configured!")
         raise ValueError("OpenAI API key is not configured. Set OPENAI_API_KEY in .env")
 
     # Initialize OpenAI client
