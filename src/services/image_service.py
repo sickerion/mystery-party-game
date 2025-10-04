@@ -41,7 +41,8 @@ def generate_cover_image(game_id: str, theme: str, setting: str, language: str =
     client = OpenAI(api_key=settings.openai_api_key)
 
     # Create prompt for DALL-E based on theme and setting
-    prompt = f"An atmospheric and mysterious illustration for a murder mystery party game. Theme: {theme}. Setting: {setting}. Style: elegant, mysterious. No text."
+    # Avoid words like "murder" which trigger content policy
+    prompt = f"An atmospheric and mysterious illustration for a detective mystery party game. Theme: {theme}. Setting: {setting}. Style: elegant, mysterious, film noir atmosphere. No text or words."
 
     # Create filename
     images_dir = get_images_directory()
