@@ -33,6 +33,6 @@ Once the project structure is established, update this file with:
 
 ## Testing
 
-Write unit tests for your work
+Write unit tests for every file with logic
 
 
