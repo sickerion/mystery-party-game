@@ -73,45 +73,45 @@ Diviser la génération de mystère en appels API séparés, un pour chaque éta
   - save_validation(), get_validations_by_game(), get_latest_validation(), delete_validations_by_game()
 
 ### 6.4 API - Endpoints Incrémentaux
-- [ ] 30. POST `/games` - Créer une nouvelle partie avec paramètres initiaux
+- [x] 30. POST `/games` - Créer une nouvelle partie avec paramètres initiaux
   - Input: GameRequest (theme, num_players, difficulty, special_requests)
   - Output: Game (id, status='initialized')
-- [ ] 31. POST `/games/{game_id}/characters` - Générer les personnages
+- [x] 31. POST `/games/{game_id}/characters` - Générer les personnages
   - Appelle generate_characters_node()
   - Sauvegarde dans GeneratedCharacter
   - Met à jour status à 'characters_generated'
   - Output: List[Character]
-- [ ] 32. POST `/games/{game_id}/plot` - Générer l'intrigue
+- [x] 32. POST `/games/{game_id}/plot` - Générer l'intrigue
   - Charge les personnages depuis la DB
   - Appelle generate_plot_node()
   - Sauvegarde dans GeneratedPlot
   - Met à jour status à 'plot_generated'
   - Output: Plot
-- [ ] 33. POST `/games/{game_id}/clues` - Générer les indices
+- [x] 33. POST `/games/{game_id}/clues` - Générer les indices
   - Charge personnages et intrigue depuis la DB
   - Appelle generate_clues_node()
   - Sauvegarde dans GeneratedClue
   - Met à jour status à 'clues_generated'
   - Output: List[Clue]
-- [ ] 34. POST `/games/{game_id}/metadata` - Générer les métadonnées
+- [x] 34. POST `/games/{game_id}/metadata` - Générer les métadonnées
   - Charge tous les éléments depuis la DB
   - Appelle generate_metadata_node()
   - Sauvegarde dans GeneratedMetadata
   - Met à jour status à 'metadata_generated'
   - Output: Metadata (title, duration, instructions, introduction)
-- [ ] 35. POST `/games/{game_id}/validate` - Valider le scénario
+- [x] 35. POST `/games/{game_id}/validate` - Valider le scénario
   - Charge tous les éléments depuis la DB
   - Appelle validate_scenario_node()
   - Sauvegarde dans ValidationResult
   - Met à jour status à 'validated' ou 'failed'
   - Output: ValidationResult
-- [ ] 36. GET `/games/{game_id}` - Récupérer l'état complet d'une partie
+- [x] 36. GET `/games/{game_id}` - Récupérer l'état complet d'une partie
   - Charge Game + tous les éléments associés
   - Output: MysteryScenario complet
-- [ ] 37. GET `/games` - Lister toutes les parties
+- [x] 37. GET `/games` - Lister toutes les parties
   - Query params: status, limit, offset
   - Output: List[Game] (métadonnées uniquement, sans détails)
-- [ ] 38. DELETE `/games/{game_id}` - Supprimer une partie
+- [x] 38. DELETE `/games/{game_id}` - Supprimer une partie
   - Supprime en cascade tous les éléments associés
 
 ### 6.5 Adaptations des Nodes
